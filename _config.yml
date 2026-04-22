@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------
 # Site
 # ---------------------------------------------------------------------------
-title: Hajin
+title: Sangjin Kim
 tagline: Student Researcher · SIAI Lab
 description: >
   Personal website of Hajin, an ML student researcher at Chung-Ang
@@ -10,7 +10,7 @@ url: https://hajin322.github.io
 baseurl: ""
 
 author:
-  name: Hajin
+  name: Sangjin Kim
   email: daramg0314@cau.ac.kr
   github: hajin322
   scholar: ""

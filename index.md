@@ -12,7 +12,7 @@ permalink: /
 
 <span class="hero-label"><span class="dot"></span>MSc · SIAI Lab · Chung-Ang University</span>
 
-<h1>Sangjin Kim (Hajin)</h1>
+<h1>Sangjin Kim</h1>
 <h2><span class="italic">stduent researcher</span></h2>
 
 
