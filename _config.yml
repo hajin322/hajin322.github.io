@@ -27,7 +27,7 @@ permalink: /blog/:year/:title/
 timezone: Asia/Seoul
 
 kramdown:
-  math_engine: katex
+  math_engine: null
   syntax_highlighter: rouge
 
 sass:
