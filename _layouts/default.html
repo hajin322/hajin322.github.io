@@ -2,10 +2,16 @@
 <html lang="en">
 <head>{% include head.html %}</head>
 <body>
+  <!-- Atmospheric layers (pure decorative, pointer-events: none) -->
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="cursor-blob" aria-hidden="true"></div>
+
   {% include nav.html %}
+
   <main class="site-main">
     {{ content }}
   </main>
+
   {% include footer.html %}
 </body>
 </html>

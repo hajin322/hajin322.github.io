@@ -4,10 +4,13 @@
 
 {% seo %}
 
-<!-- Inter for sans, JetBrains Mono for code -->
+<!-- View Transitions API opt-in (progressive enhancement) -->
+<meta name="view-transition" content="same-origin">
+
+<!-- Fonts: Fraunces (display serif) + Inter Tight (body) + JetBrains Mono -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- KaTeX for math -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -21,4 +24,5 @@
   ]});"></script>
 
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+<script defer src="{{ '/assets/js/main.js' | relative_url }}"></script>
 <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">

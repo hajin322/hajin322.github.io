@@ -1,94 +1,76 @@
-# hajin322.github.io
+# v2 redesign — apply notes
 
-Personal website of Hajin — a minimal Jekyll site with `jekyll-scholar`
-for BibTeX-driven publications. Inspired by [al-folio](https://github.com/alshedivat/al-folio)
-but stripped down to a quiet, Vercel/Linear-adjacent layout.
+This zip contains **only the changed files** from the v1 site. Overlay them
+onto your existing `hajin322.github.io` repo — every path matches exactly.
 
-## Local development
+## Files changed
 
-Prereqs: **Ruby 3.2+**, Bundler.
+```
+_includes/head.html        ← new font stack (Fraunces + Inter Tight + JBM)
+_includes/nav.html         ← pulsing dot on logo
+_includes/footer.html      ← mono styling
+_layouts/default.html      ← adds .aurora + .cursor-blob layers, loads main.js
+assets/css/main.scss       ← full rewrite
+assets/js/main.js          ← NEW: cursor blob, scroll reveal, view transitions
+index.md                   ← new hero with Fraunces display + italic accent
+```
+
+Files you should **keep as-is** (not in this zip):
+- `_config.yml`
+- `Gemfile`
+- `.github/workflows/deploy.yml`
+- `_bibliography/papers.bib`
+- `_posts/*`
+- `_projects/*`
+- `publications.md` / `projects.md` / `blog.md`
+- `_layouts/page.html` / `_layouts/post.html`
+
+## Applying
+
+From the zip's root directory (where this README lives):
 
 ```bash
-bundle install
-bundle exec jekyll serve
+# From inside your local git repo root:
+cp -R /path/to/redesign-v2/_includes/. _includes/
+cp -R /path/to/redesign-v2/_layouts/. _layouts/
+cp -R /path/to/redesign-v2/assets/. assets/
+cp /path/to/redesign-v2/index.md index.md
+
+git status   # 7 modified, 1 new file (assets/js/main.js)
+git add .
+git commit -m "Redesign v2: Fraunces display, cursor blob, scroll reveals"
+git push
 ```
 
-Open <http://localhost:4000>. The site rebuilds on save.
+## What changed visually
 
-## Deploying
+- **Fonts**. Fraunces (opsz-variable serif) for all display headings with
+  italic accent in blue. Inter Tight for body. JetBrains Mono for dates,
+  labels, and monospace chrome.
+- **Cursor blob**. A soft blue radial gradient (440px) follows the pointer
+  on hover-capable devices. Respects `prefers-reduced-motion`.
+- **Aurora**. Two slowly drifting blurred blobs in the background (blue +
+  subtle amber) give the page atmosphere without being distracting.
+- **Scroll reveal**. Hero + every section/card/list item fades in as it
+  enters the viewport. Slight stagger.
+- **Page transition**. View Transitions API where supported (Chromium,
+  Safari 18+); on older browsers a quick 220 ms fade before navigation.
+- **Hero**. Display h1 with italic blue accent on role word; hoverable
+  tagline with highlight sweep on key phrases (`.hl`); mono status pill
+  with pulsing dot at top.
+- **Ticker**. Keyword marquee between hero and sections.
+- **News list**. Terminal-log style — left border grows on row hover.
+- **Publication cards**. Left accent border expands on hover, underline
+  grows under the title link.
+- **All transitions** use a single easing curve `cubic-bezier(0.22, 1, 0.36, 1)`
+  for consistency.
 
-Push to `main`. The GitHub Actions workflow in
-`.github/workflows/deploy.yml` builds the site (with `jekyll-scholar`)
-and deploys it to GitHub Pages automatically.
+## Customizing
 
-**One-time setup** in the GitHub repo:
+Every color / radius / font token lives at the top of `assets/css/main.scss`
+(the `:root` block). Changing `--accent` recolors the entire site.
 
-1. Settings → Pages → **Source: GitHub Actions**.
-2. That's it. No `gh-pages` branch needed.
+If you want a different cursor blob color, change `--accent-glow`. If it
+feels too strong on white, lower the opacity in that rgba value.
 
-## Adding content
-
-### A new publication
-
-Append to `_bibliography/papers.bib`:
-
-```bibtex
-@inproceedings{hajin2027glm,
-  title     = {GLM extension for best arm identification},
-  author    = {Hajin and Kim, Wonyoung},
-  booktitle = {ICML},
-  year      = {2027}
-}
-```
-
-It shows up on `/publications/` grouped by year, newest first.
-
-### A new blog post
-
-Create `_posts/YYYY-MM-DD-slug.md`:
-
-```yaml
----
-title: Title of the note
-subtitle: Optional one-line summary.
-date: 2026-05-01
-tags: [research, notes]
----
-
-Markdown content. LaTeX math with `$ ... $` and `$$ ... $$`.
-```
-
-### A new project
-
-Create `_projects/slug.md` with `title`, `description`, and `date`.
-
-## Retheming
-
-Every design token lives at the top of `assets/css/main.scss`. Change
-`--color-accent` to shift the whole palette. No other file needs edits.
-
-## Structure
-
-```
-_config.yml             site config
-_layouts/               default / page / post
-_includes/              head, nav, footer
-_sass/                  (reserved — currently unused; main.scss is self-contained)
-_posts/                 blog
-_projects/              projects collection
-_bibliography/          papers.bib for jekyll-scholar
-assets/css/main.scss    entire design system, single file
-index.md                About / landing
-publications.md         renders _bibliography/papers.bib
-projects.md             lists _projects/
-blog.md                 lists _posts/ grouped by year
-.github/workflows/      deploy pipeline
-```
-
-## What's not included from al-folio
-
-Removed on purpose: news feed, CV page, teaching page, talks page,
-Disqus, Google Analytics, Bootstrap, jQuery, the default photo grid,
-the news flash banner, and the background image header. Add any back
-by writing a new `.md` page and linking it in `_includes/nav.html` — no
-plugin work needed for most of them.
+If the ticker feels noisy, delete the `.ticker` block in `index.md`.
