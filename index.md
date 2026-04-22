@@ -6,10 +6,15 @@ permalink: /
 
 <section class="hero">
 
-<span class="hero-label"><span class="dot"></span>SIAI Lab · Chung-Ang University</span>
+<div class="hero-grid">
+
+<div class="hero-text">
+
+<span class="hero-label"><span class="dot"></span>MSc · SIAI Lab · Chung-Ang University</span>
 
 <h1>Sangjin Kim (Hajin)</h1>
-<h1><span class="italic">stduent researcher</span></h1>
+<h2><span class="italic">stduent researcher</span></h2>
+
 
 <p class="hero-tagline">
   I work on <span class="hl">bandit theory</span> and sequential decision-making,
@@ -25,12 +30,20 @@ permalink: /
   learning meets sequential decision-making. Planning to apply for PhD in 2027.
 </p>
 
+
+</div>
+<div class="hero-photo">
+  <img src="{{ '/assets/images/hajin.jpg' | relative_url }}" alt="Hajin" loading="eager" fetchpriority="high">
+  <div class="hero-photo-frame" aria-hidden="true"></div>
+</div>
+
 <div class="pill-row">
-  <span class="pill">Best arm identification</span>
-  <span class="pill">Linear bandits</span>
-  <span class="pill">Latent variable models</span>
+  <span class="pill">Contextual Bandits</span>
+  <span class="pill">Best Arm Identification</span>
+  <span class="pill">Representation Learning</span>
   <span class="pill">Causal ML</span>
-  <span class="pill">Representation learning</span>
+</div>
+
 </div>
 
 <div class="hero-links">
@@ -39,6 +52,7 @@ permalink: /
   <a href="https://www.linkedin.com/in/hajin322/">LinkedIn</a>
   {% if site.author.scholar != "" %}<a href="https://scholar.google.com/citations?user={{ site.author.scholar }}">Scholar</a>{% endif %}
 </div>
+
 
 </section>
 
