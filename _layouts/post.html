@@ -1,0 +1,19 @@
+---
+layout: default
+---
+<article class="post">
+  <header class="post-head">
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
+      {% if page.tags %} · {{ page.tags | join: ", " }}{% endif %}
+    </p>
+    <h1>{{ page.title }}</h1>
+    {% if page.subtitle %}<p class="post-sub">{{ page.subtitle }}</p>{% endif %}
+  </header>
+  <div class="post-body prose">
+    {{ content }}
+  </div>
+  <footer class="post-foot">
+    <a href="{{ '/blog/' | relative_url }}">← All notes</a>
+  </footer>
+</article>

@@ -1,0 +1,83 @@
+# ---------------------------------------------------------------------------
+# Site
+# ---------------------------------------------------------------------------
+title: Hajin
+tagline: AI undergraduate researcher · SIAI Lab
+description: >
+  Personal website of Hajin, an AI undergraduate researcher at Chung-Ang
+  University working on bandit theory and sequential decision-making.
+url: https://hajin322.github.io
+baseurl: ""
+
+author:
+  name: Hajin
+  email: hajin322@cau.ac.kr   # ← change to your real address
+  github: hajin322
+  scholar: ""                  # ← Google Scholar profile id, optional
+  orcid: ""                    # ← optional
+  affiliation: Chung-Ang University · SIAI Lab
+  advisor: Prof. Wonyoung Kim
+
+# ---------------------------------------------------------------------------
+# Build
+# ---------------------------------------------------------------------------
+markdown: kramdown
+highlighter: rouge
+permalink: /blog/:year/:title/
+timezone: Asia/Seoul
+
+kramdown:
+  math_engine: katex
+  syntax_highlighter: rouge
+
+sass:
+  style: compressed
+
+# ---------------------------------------------------------------------------
+# Plugins
+# ---------------------------------------------------------------------------
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-scholar
+
+# ---------------------------------------------------------------------------
+# Collections
+# ---------------------------------------------------------------------------
+collections:
+  projects:
+    output: true
+    permalink: /projects/:path/
+
+defaults:
+  - scope: { path: "", type: "posts" }
+    values: { layout: post }
+  - scope: { path: "", type: "projects" }
+    values: { layout: page }
+  - scope: { path: "" }
+    values: { layout: page }
+
+# ---------------------------------------------------------------------------
+# jekyll-scholar
+# ---------------------------------------------------------------------------
+scholar:
+  source: ./_bibliography
+  bibliography: papers.bib
+  bibliography_template: bib
+  style: apa
+  sort_by: year, month
+  order: descending
+  group_by: year
+  details_dir: publications
+
+# ---------------------------------------------------------------------------
+# Excludes
+# ---------------------------------------------------------------------------
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+  - node_modules
+  - .github
