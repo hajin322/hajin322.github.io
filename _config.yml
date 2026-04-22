@@ -2,19 +2,19 @@
 # Site
 # ---------------------------------------------------------------------------
 title: Hajin
-tagline: AI undergraduate researcher · SIAI Lab
+tagline: Student Researcher · SIAI Lab
 description: >
-  Personal website of Hajin, an AI undergraduate researcher at Chung-Ang
+  Personal website of Hajin, an ML student researcher at Chung-Ang
   University working on bandit theory and sequential decision-making.
 url: https://hajin322.github.io
 baseurl: ""
 
 author:
   name: Hajin
-  email: hajin322@cau.ac.kr   # ← change to your real address
+  email: daramg0314@cau.ac.kr
   github: hajin322
-  scholar: ""                  # ← Google Scholar profile id, optional
-  orcid: ""                    # ← optional
+  scholar: ""
+  orcid: https://orcid.org/0009-0006-9005-3342
   affiliation: Chung-Ang University · SIAI Lab
   advisor: Prof. Wonyoung Kim
 

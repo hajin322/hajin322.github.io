@@ -8,7 +8,8 @@ permalink: /
 
 <span class="hero-label"><span class="dot"></span>SIAI Lab · Chung-Ang University</span>
 
-<h1>Sangjin Kim (Hajin) <span class="italic">stduent researcher</span></h1>
+<h1>Sangjin Kim (Hajin)</h1>
+<h1><span class="italic">stduent researcher</span></h1>
 
 <p class="hero-tagline">
   I work on <span class="hl">bandit theory</span> and sequential decision-making,
@@ -19,8 +20,8 @@ permalink: /
 </p>
 
 <p class="hero-tagline">
-  I'm interested in how partial observability connects to hidden
-  structure in <span class="hl">causal graphs</span>, and where representation
+  I'm interested in how <span class="hl">partial observability</span> connects to hidden
+  structure in causal graphs, and where representation
   learning meets sequential decision-making. Planning to apply for PhD in 2027.
 </p>
 
@@ -40,24 +41,6 @@ permalink: /
 </div>
 
 </section>
-
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span class="ticker-item">bandit theory</span>
-    <span class="ticker-item">best arm identification</span>
-    <span class="ticker-item">latent variable models</span>
-    <span class="ticker-item">causal ML</span>
-    <span class="ticker-item">representation learning</span>
-    <span class="ticker-item">sequential decision-making</span>
-    <!-- duplicate for seamless loop -->
-    <span class="ticker-item">bandit theory</span>
-    <span class="ticker-item">best arm identification</span>
-    <span class="ticker-item">latent variable models</span>
-    <span class="ticker-item">causal ML</span>
-    <span class="ticker-item">representation learning</span>
-    <span class="ticker-item">sequential decision-making</span>
-  </div>
-</div>
 
 <section class="section" id="news">
   <h2 class="section-title">
