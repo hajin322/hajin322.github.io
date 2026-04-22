@@ -8,18 +8,18 @@ permalink: /
 
 <span class="hero-label"><span class="dot"></span>SIAI Lab · Chung-Ang University</span>
 
-<h1>Hajin <span class="italic">undergraduate researcher</span></h1>
+<h1>Sangjin Kim (Hajin) <span class="italic">stduent researcher</span></h1>
 
 <p class="hero-tagline">
   I work on <span class="hl">bandit theory</span> and sequential decision-making,
-  advised by <strong>Prof. Wonyoung Kim</strong>. My current project studies
-  <span class="hl">best arm identification with partially observable features</span>
-  in linear bandits — using ViT pooling loss as a bandit reward signal to
-  diagnose embedding quality.
+  under the supervision of <strong>Prof. Wonyoung Kim</strong>. My current project studies
+  <span class="hl">Sequential Decision-making with partially observable features</span>
+  generalizing through ViT pooling loss as a bandit reward signal to
+  diagnose embedding quality, etc.
 </p>
 
 <p class="hero-tagline">
-  I'm interested in how partial observability in bandits connects to hidden
+  I'm interested in how partial observability connects to hidden
   structure in <span class="hl">causal graphs</span>, and where representation
   learning meets sequential decision-making. Planning to apply for PhD in 2027.
 </p>
