@@ -1,76 +1,53 @@
-# v2 redesign — apply notes
+# hajin322.github.io
 
-This zip contains **only the changed files** from the v1 site. Overlay them
-onto your existing `hajin322.github.io` repo — every path matches exactly.
+Personal academic site for Sangjin Kim — a single-page CV built with Jekyll.
 
-## Files changed
+## Structure
 
 ```
-_includes/head.html        ← new font stack (Fraunces + Inter Tight + JBM)
-_includes/nav.html         ← pulsing dot on logo
-_includes/footer.html      ← mono styling
-_layouts/default.html      ← adds .aurora + .cursor-blob layers, loads main.js
-assets/css/main.scss       ← full rewrite
-assets/js/main.js          ← NEW: cursor blob, scroll reveal, view transitions
-index.md                   ← new hero with Fraunces display + italic accent
+index.md                   ← the whole page (header, intro, CV sections)
+_layouts/default.html      ← html shell
+_layouts/page.html         ← article wrapper
+_includes/head.html        ← meta, Source Serif 4, stylesheet
+_includes/footer.html      ← copyright line
+assets/css/main.scss       ← all styling (one serif family, blue accent)
+assets/images/hajin.jpg    ← profile photo
+_config.yml                ← site + author metadata
 ```
 
-Files you should **keep as-is** (not in this zip):
-- `_config.yml`
-- `Gemfile`
-- `.github/workflows/deploy.yml`
-- `_bibliography/papers.bib`
-- `_posts/*`
-- `_projects/*`
-- `publications.md` / `projects.md` / `blog.md`
-- `_layouts/page.html` / `_layouts/post.html`
+## Editing
 
-## Applying
+All content lives in `index.md`. To add a CV section, copy an existing
+`<section class="cv-block">` block and change the heading and entries.
 
-From the zip's root directory (where this README lives):
+Entry markup:
+
+```html
+<div class="entry">
+  <div class="entry-top">
+    <span class="entry-title">Title</span>
+    <span class="entry-date">Date</span>
+  </div>
+  <div class="entry-line">Detail line</div>
+</div>
+```
+
+## Local preview
 
 ```bash
-# From inside your local git repo root:
-cp -R /path/to/redesign-v2/_includes/. _includes/
-cp -R /path/to/redesign-v2/_layouts/. _layouts/
-cp -R /path/to/redesign-v2/assets/. assets/
-cp /path/to/redesign-v2/index.md index.md
-
-git status   # 7 modified, 1 new file (assets/js/main.js)
-git add .
-git commit -m "Redesign v2: Fraunces display, cursor blob, scroll reveals"
-git push
+bundle install
+bundle exec jekyll serve
 ```
 
-## What changed visually
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and
+deploys to GitHub Pages.
 
-- **Fonts**. Fraunces (opsz-variable serif) for all display headings with
-  italic accent in blue. Inter Tight for body. JetBrains Mono for dates,
-  labels, and monospace chrome.
-- **Cursor blob**. A soft blue radial gradient (440px) follows the pointer
-  on hover-capable devices. Respects `prefers-reduced-motion`.
-- **Aurora**. Two slowly drifting blurred blobs in the background (blue +
-  subtle amber) give the page atmosphere without being distracting.
-- **Scroll reveal**. Hero + every section/card/list item fades in as it
-  enters the viewport. Slight stagger.
-- **Page transition**. View Transitions API where supported (Chromium,
-  Safari 18+); on older browsers a quick 220 ms fade before navigation.
-- **Hero**. Display h1 with italic blue accent on role word; hoverable
-  tagline with highlight sweep on key phrases (`.hl`); mono status pill
-  with pulsing dot at top.
-- **Ticker**. Keyword marquee between hero and sections.
-- **News list**. Terminal-log style — left border grows on row hover.
-- **Publication cards**. Left accent border expands on hover, underline
-  grows under the title link.
-- **All transitions** use a single easing curve `cubic-bezier(0.22, 1, 0.36, 1)`
-  for consistency.
+## Notes
 
-## Customizing
+`_to_delete/` holds the old blog / projects / publications pages that were
+removed when the site was consolidated into one page. Delete that folder
+whenever you're ready:
 
-Every color / radius / font token lives at the top of `assets/css/main.scss`
-(the `:root` block). Changing `--accent` recolors the entire site.
-
-If you want a different cursor blob color, change `--accent-glow`. If it
-feels too strong on white, lower the opacity in that rgba value.
-
-If the ticker feels noisy, delete the `.ticker` block in `index.md`.
+```bash
+rm -rf _to_delete && git add -A && git commit -m "remove archived pages"
+```

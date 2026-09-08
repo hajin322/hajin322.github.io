@@ -5,119 +5,136 @@ permalink: /
 ---
 
 <section class="hero">
-
 <div class="hero-grid">
-
 <div class="hero-text">
 
-<span class="hero-label"><span class="dot"></span>MSc · SIAI Lab · Chung-Ang University</span>
+<span class="hero-label"><span class="dot"></span>Student Researcher · SIAI Lab</span>
 
 <h1>Sangjin Kim</h1>
-<h2><span class="italic">stduent researcher</span></h2>
-
+<h2 class="hero-role"><span class="italic">bandit theory &amp; sequential decision-making</span></h2>
 
 <p class="hero-tagline">
-  I work on <span class="hl">bandit theory</span> and sequential decision-making,
-  under the supervision of <strong>Prof. Wonyoung Kim</strong>. My current project studies
-  <span class="hl">Sequential Decision-making with partially observable features</span>
-  generalizing through ViT pooling loss as a bandit reward signal to
-  diagnose embedding quality, etc.
+  I am a student researcher at <strong>SIAI Lab</strong>, Chung-Ang University,
+  advised by <strong>Prof. Wonyoung Kim</strong>. I work on
+  <strong>bandit theory</strong> and sequential decision-making.
 </p>
 
 <p class="hero-tagline">
-  I'm interested in how <span class="hl">partial observability</span> connects to hidden
-  structure in causal graphs, and where representation
-  learning meets sequential decision-making. Planning to apply for PhD in 2027.
+  My work centers on <strong>designing decision-making algorithms</strong> and
+  <strong>establishing their statistical guarantees</strong> — regret and
+  sample-complexity bounds, and the proofs behind them.
 </p>
 
-
-</div>
-<div class="hero-photo">
-  <img src="{{ '/assets/images/hajin.jpg' | relative_url }}" alt="Hajin" loading="eager" fetchpriority="high">
-  <div class="hero-photo-frame" aria-hidden="true"></div>
-</div>
-
-<div class="pill-row">
-  <span class="pill">Contextual Bandits</span>
-  <span class="pill">Best Arm Identification</span>
-  <span class="pill">Representation Learning</span>
-  <span class="pill">Causal ML</span>
-</div>
-
-</div>
+<p class="hero-tagline">
+  I plan to apply for PhD programs in 2027, at the intersection of
+  <strong>computer science</strong> and <strong>statistics</strong>.
+</p>
 
 <div class="hero-links">
   <a href="mailto:{{ site.author.email }}">Email</a>
   <a href="https://github.com/{{ site.author.github }}">GitHub</a>
   <a href="https://www.linkedin.com/in/hajin322/">LinkedIn</a>
-  {% if site.author.scholar != "" %}<a href="https://scholar.google.com/citations?user={{ site.author.scholar }}">Scholar</a>{% endif %}
+  <a href="{{ site.author.orcid }}">ORCID</a>
 </div>
 
-
+</div>
+<div class="hero-photo">
+  <img src="{{ '/assets/images/hajin.jpg' | relative_url }}" alt="Sangjin Kim" loading="eager" fetchpriority="high">
+</div>
+</div>
 </section>
 
-<section class="section" id="news">
+<section class="section" id="education">
   <h2 class="section-title">
     <span class="num">01</span>
-    <span>Recent <em>news</em></span>
+    <span>Education</span>
     <span class="line"></span>
   </h2>
-  <ul class="news-list">
-    <li class="news-item">
-      <span class="news-date">Apr 2026</span>
-      <span class="news-body">
-        Preparing manuscript on <b>BAI with partially observable features</b> for submission to <b>Annals of Statistics</b>.
-      </span>
-    </li>
-    <li class="news-item">
-      <span class="news-date">Mar 2026</span>
-      <span class="news-body">
-        Selected as team lead for the <b>2026 AI Rookie Contest</b> — Korean sovereign AI multi-agent Android automation pipeline.
-      </span>
-    </li>
-    <li class="news-item">
-      <span class="news-date">Feb 2026</span>
-      <span class="news-body">
-        Running CUB-200 experiments on ViT embeddings for the BAI+POF project — targeting a NeurIPS 2026 workshop writeup.
-      </span>
-    </li>
-  </ul>
+
+  <div class="cv-list">
+    <div class="cv-item">
+      <div class="cv-top">
+        <span class="cv-name">Chung-Ang University</span>
+        <span class="cv-when">Expected Feb. 2028</span>
+      </div>
+      <p class="cv-body">
+        Master of Science in Artificial Intelligence<br>
+        Dissertation: “Sequential Decision Making under Partial Observability”<br>
+        <strong>Advisor:</strong> Dr. Wonyoung Kim
+      </p>
+    </div>
+
+    <div class="cv-item">
+      <div class="cv-top">
+        <span class="cv-name">Chung-Ang University</span>
+        <span class="cv-when">Aug. 2026</span>
+      </div>
+      <p class="cv-body">
+        Bachelor of Science in Artificial Intelligence<br>
+        Graduated <strong>Magna Cum Laude</strong>
+      </p>
+    </div>
+  </div>
 </section>
 
-<section class="section" id="selected-work">
+<section class="section" id="teaching">
   <h2 class="section-title">
     <span class="num">02</span>
-    <span>Selected <em>work</em></span>
+    <span>Teaching experience</span>
     <span class="line"></span>
   </h2>
-  <div class="feature-card">
-    <div class="meta">
-      <span class="badge badge-warn">In prep</span>
-      <span>2026 · Annals of Statistics</span>
+
+  <p class="cv-lead">Teaching Assistant</p>
+  <div class="cv-list">
+    <div class="cv-item">
+      <div class="cv-top">
+        <span class="cv-name">Data and AI Literacy</span>
+        <span class="cv-when">Winter 2026</span>
+      </div>
     </div>
-    <p class="title">Best arm identification with partially observable features in linear bandits</p>
-    <p class="authors">Hajin, Wonyoung Kim</p>
+    <div class="cv-item">
+      <div class="cv-top">
+        <span class="cv-name">Reinforcement Learning</span>
+        <span class="cv-when">Fall 2026</span>
+      </div>
+    </div>
+    <div class="cv-item">
+      <div class="cv-top">
+        <span class="cv-name">AI Project 2 &#42;&#42;</span>
+        <span class="cv-when">Fall 2026</span>
+      </div>
+    </div>
   </div>
-  <p style="margin-top: 1rem; font-size: 0.88rem;">
-    <a href="{{ '/publications/' | relative_url }}">All publications →</a>
-  </p>
+  <p class="cv-note">&#42;&#42; given in English</p>
 </section>
 
-<section class="section" id="recent-notes">
+<section class="section" id="awards">
   <h2 class="section-title">
     <span class="num">03</span>
-    <span>Recent <em>notes</em></span>
+    <span>Grants and awards</span>
     <span class="line"></span>
   </h2>
-  <div class="entry-list">
-    {% for post in site.posts limit: 4 %}
-      <div class="row">
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d" }}</time>
+
+  <div class="cv-list">
+    <div class="cv-item">
+      <div class="cv-top">
+        <span class="cv-name">
+          <a href="https://photo.cau.ac.kr/cms/FR_CON/BoardView.do?SITE_NO=6&amp;MENU_ID=20&amp;CONTENTS_NO=1&amp;P_TAB_NO=1&amp;BOARD_SEQ=2&amp;BBS_SEQ=3477">NKL Law Steve Jaeyoun Kim Scholarship</a>
+          <span class="cv-amount">($1,500)</span>
+        </span>
+        <span class="cv-when">2026</span>
       </div>
-    {% endfor %}
+      <p class="cv-body"><em>Funded by Chung-Ang University</em></p>
+    </div>
   </div>
-  <p style="margin-top: 1rem; font-size: 0.88rem;">
-    <a href="{{ '/blog/' | relative_url }}">All notes →</a>
-  </p>
+</section>
+
+<section class="section" id="software">
+  <h2 class="section-title">
+    <span class="num">04</span>
+    <span>Software</span>
+    <span class="line"></span>
+  </h2>
+
+  <p class="cv-plain"><strong>Expert:</strong> Linux, Python, C, Java</p>
 </section>
