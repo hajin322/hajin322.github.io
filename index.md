@@ -14,20 +14,21 @@ permalink: /
 <h2 class="hero-role"><span class="italic">bandit theory &amp; sequential decision-making</span></h2>
 
 <p class="hero-tagline">
-  I am a student researcher at <strong>SIAI Lab</strong>, Chung-Ang University,
-  advised by <strong>Prof. Wonyoung Kim</strong>. I work on
-  <strong>bandit theory</strong> and sequential decision-making.
+  I am a student researcher at SIAI Lab, Chung-Ang University,
+  under the supervison of <strong>Prof. Wonyoung Kim</strong>. I work on
+  bandit theory and sequential decision-making.
 </p>
 
 <p class="hero-tagline">
-  My work centers on <strong>designing decision-making algorithms</strong> and
-  <strong>establishing their statistical guarantees</strong> — regret and
-  sample-complexity bounds, and the proofs behind them.
+  <strong>From uncertainty to guarantees</strong>:
+  I design decision-making algorithms for settings where the features that determine rewards are only partially observed, and prove what they can promise.
+  Concretely, I work on bandits under latent structure where unobserved features bias the reward model in ways more data doesn't fix.
+  The longer aim is to carry these guarantees into settings where the consequences of a decision persist, not just the decision itself.
 </p>
 
 <p class="hero-tagline">
-  I plan to apply for PhD programs in 2027, at the intersection of
-  <strong>computer science</strong> and <strong>statistics</strong>.
+  I plan to apply for PhD programs in 2028, at the intersection of
+  computer science and statistics.
 </p>
 
 <div class="hero-links">
