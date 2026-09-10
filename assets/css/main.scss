@@ -373,6 +373,21 @@ h1 > [data-l="ko"]           { font-size: 0.93em; font-weight: 500; }
 .cv-lead    [data-l="ko"] { letter-spacing: 0.03em; }
 .lang-toggle button[lang="ko"] { letter-spacing: 0.01em; }
 
+/* Korean sets flush to both edges without needing hyphenation, so once the
+   layout drops to one narrow column, justifying tidies the rag that keep-all
+   necessarily leaves. `pretty` comes off here — it optimises the very rag we
+   are removing, and can spend an extra line doing it. Latin is left ragged:
+   without hyphenation, justified English opens rivers instead of closing them.
+   Note this evens the right edge only; the line count is unchanged. */
+@media (max-width: 740px) {
+  .hero-tagline[data-l="ko"],
+  .cv-body[data-l="ko"],
+  .cv-plain[data-l="ko"] {
+    text-align: justify;
+    text-wrap: auto;
+  }
+}
+
 /* ---------- responsive --------------------------------------------------- */
 @media (max-width: 740px) {
   .hero-grid {
