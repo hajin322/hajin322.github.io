@@ -99,10 +99,15 @@ strong, b { font-weight: 700; color: var(--text); }
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 3rem;
-  align-items: center;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "label photo"
+    "text  photo";
+  column-gap: 3rem;
 }
-.hero-text { min-width: 0; }
+.hero-label { grid-area: label; justify-self: start; }
+.hero-photo { grid-area: photo; align-self: center; }
+.hero-text  { grid-area: text; min-width: 0; }
 
 .hero-label {
   display: inline-flex; align-items: center; gap: 9px;
@@ -281,9 +286,19 @@ a.person:hover {
 @media (max-width: 740px) {
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "label"
+      "photo"
+      "text";
+    column-gap: 0;
   }
-  .hero-photo { width: 170px; height: 216px; border-radius: 110px; }
+  .hero-label { justify-self: center; margin-bottom: 1.5rem; }
+  .hero-photo {
+    width: 180px; height: 230px; border-radius: 115px;
+    justify-self: center;
+    margin-bottom: 1.75rem;
+  }
   .site-main { padding: 2.5rem 1.25rem 3rem; }
 }
 

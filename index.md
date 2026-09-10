@@ -6,9 +6,13 @@ permalink: /
 
 <section class="hero">
 <div class="hero-grid">
-<div class="hero-text">
-
 <span class="hero-label"><span class="dot"></span>Student Researcher · SIAI Lab</span>
+
+<div class="hero-photo">
+  <img src="{{ '/assets/images/hajin.jpg' | relative_url }}" alt="Sangjin Kim" loading="eager" fetchpriority="high">
+</div>
+
+<div class="hero-text">
 
 <h1>Sangjin Kim</h1>
 <h2 class="hero-role"><span class="italic">bandit theory &amp; sequential decision-making</span></h2>
@@ -38,9 +42,6 @@ permalink: /
   <a href="{{ site.author.orcid }}">ORCID</a>
 </div>
 
-</div>
-<div class="hero-photo">
-  <img src="{{ '/assets/images/hajin.jpg' | relative_url }}" alt="Sangjin Kim" loading="eager" fetchpriority="high">
 </div>
 </div>
 </section>
