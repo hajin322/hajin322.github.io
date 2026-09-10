@@ -34,13 +34,13 @@ permalink: /
 </span></h2>
 
 <p class="hero-tagline" data-l="en" lang="en">
-  I am a student researcher at SIAI Lab, Chung-Ang University,
+  I am a student researcher at <strong><a class="person" href="https://siai.cau.ac.kr">SIAI Lab</a></strong>, Chung-Ang University,
   under the supervision of <strong><a class="person" href="https://scholar.google.com/citations?user=YRuPBq4AAAAJ&amp;hl=ko">Prof. Wonyoung Kim</a></strong>. I work on
   bandit theory and sequential decision-making.
 </p>
 
 <p class="hero-tagline" data-l="ko" lang="ko">
-  불완전한 데이터 정보가 주어진 상황 속에서도 알고리즘의 성능을 보장하는 의사결정 AI를 연구합니다. 중앙대학교 SIAI 연구실에서 <strong><a class="person" href="https://scholar.google.com/citations?user=YRuPBq4AAAAJ&amp;hl=ko">김원영 교수님</a></strong>의 지도 하에 밴딧 이론과 순차적 의사결정을 연구하는 학생 연구원, 김상진입니다.
+  불완전한 데이터 정보가 주어진 상황 속에서도 알고리즘의 성능을 보장하는 의사결정 AI를 연구합니다. 중앙대학교 <strong><a class="person" href="https://siai.cau.ac.kr">SIAI 연구실</a></strong>에서 <strong><a class="person" href="https://scholar.google.com/citations?user=YRuPBq4AAAAJ&amp;hl=ko">김원영 교수님</a></strong>의 지도 하에 밴딧 이론과 순차적 의사결정을 연구하는 학생 연구원, 김상진입니다.
 </p>
 
 <p class="hero-tagline" data-l="en" lang="en">
