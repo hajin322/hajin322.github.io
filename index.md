@@ -14,7 +14,7 @@ permalink: /
   </span>
   <div class="lang-toggle" role="group" aria-label="Language / 언어">
     <button type="button" data-lang="en">EN</button>
-    <button type="button" data-lang="ko">한국어</button>
+    <button type="button" data-lang="ko" lang="ko">한국어</button>
   </div>
 </div>
 
