@@ -7,5 +7,32 @@
   </main>
 
   {% include footer.html %}
+
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll('.lang-toggle button');
+      if (!buttons.length) return;
+
+      function sync() {
+        var lang = document.documentElement.lang === 'ko' ? 'ko' : 'en';
+        buttons.forEach(function (b) {
+          var on = b.dataset.lang === lang;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var lang = b.dataset.lang;
+          document.documentElement.lang = lang;
+          try { localStorage.setItem('site-lang', lang); } catch (e) {}
+          sync();
+        });
+      });
+
+      sync();
+    })();
+  </script>
 </body>
 </html>
