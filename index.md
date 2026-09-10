@@ -15,7 +15,7 @@ permalink: /
 
 <p class="hero-tagline">
   I am a student researcher at SIAI Lab, Chung-Ang University,
-  under the supervison of <strong>Prof. Wonyoung Kim</strong>. I work on
+  under the supervision of <strong><a class="person" href="https://scholar.google.com/citations?user=YRuPBq4AAAAJ&amp;hl=ko">Prof. Wonyoung Kim</a></strong>. I work on
   bandit theory and sequential decision-making.
 </p>
 
