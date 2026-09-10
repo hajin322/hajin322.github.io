@@ -237,7 +237,15 @@ html[lang="ko"] [data-l="en"] { display: none; }
   font-weight: 600;
   letter-spacing: -0.02em;
   margin-bottom: 1.25rem;
-  display: flex; align-items: baseline; gap: 14px;
+  display: flex;
+  /* Centre, not baseline. Baseline alignment puts the numeral on the text's
+     baseline, but Hangul is drawn to fill the em box and descends ~0.12em
+     below that baseline, so the numeral ended up hanging ~4.5px under the
+     heading's optical centre — the heading read as having slipped out of its
+     row. Centring pins the numeral and the rule to the ink centre instead,
+     which holds for both scripts and does not depend on the font's descent. */
+  align-items: center;
+  gap: 14px;
 }
 .section-title .num {
   font-size: 0.72rem;
