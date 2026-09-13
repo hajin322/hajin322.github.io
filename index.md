@@ -97,7 +97,7 @@ permalink: /
       </p>
       <p class="cv-body" data-l="ko" lang="ko">
         AI학과 석사<br>
-        학위논문: “부분 관측성 하에서의 순차적 의사결정(Sequential Decision Making under Partial Observability)”<br>
+        학위논문: “부분 관측성 하에서의 순차적 의사결정 (Sequential Decision Making under Partial Observability)”<br>
         <strong>지도교수:</strong> 김원영 교수
       </p>
     </div>
