@@ -77,9 +77,36 @@ permalink: /
 </div>
 </section>
 
-<section class="section" id="education">
+<section class="section" id="publications">
   <h2 class="section-title">
     <span class="num">01</span>
+    <span><span data-l="en" lang="en">Publications</span><span data-l="ko" lang="ko">논문</span></span>
+    <span class="line"></span>
+  </h2>
+
+  <p class="cv-lead"><span data-l="en" lang="en">Workshop Papers</span><span data-l="ko" lang="ko">워크샵 논문</span></p>
+  <div class="cv-list">
+    <div class="cv-item">
+      <div class="cv-top">
+        <span class="cv-name">Best Arm Identification in Linear Bandits with Partially Observable Features</span>
+        <span class="cv-when"><span data-l="en" lang="en">2026</span><span data-l="ko" lang="ko">2026년</span></span>
+      </div>
+      <p class="cv-body" data-l="en" lang="en">
+        <strong>Sangjin Kim</strong>, Wonyoung Kim&#42;<br>
+        NeurIPS 2026 MLxOR Workshop
+      </p>
+      <p class="cv-body" data-l="ko" lang="ko">
+        <strong>김상진</strong>, 김원영&#42;<br>
+        NeurIPS 2026 MLxOR 워크샵
+      </p>
+    </div>
+  </div>
+  <p class="cv-note"><span data-l="en" lang="en">&#42;: Advisor</span><span data-l="ko" lang="ko">&#42;: 지도교수</span></p>
+</section>
+
+<section class="section" id="education">
+  <h2 class="section-title">
+    <span class="num">02</span>
     <span><span data-l="en" lang="en">Education</span><span data-l="ko" lang="ko">학력</span></span>
     <span class="line"></span>
   </h2>
@@ -121,7 +148,7 @@ permalink: /
 
 <section class="section" id="teaching">
   <h2 class="section-title">
-    <span class="num">02</span>
+    <span class="num">03</span>
     <span><span data-l="en" lang="en">Teaching experience</span><span data-l="ko" lang="ko">강의 경력</span></span>
     <span class="line"></span>
   </h2>
@@ -152,7 +179,7 @@ permalink: /
 
 <section class="section" id="awards">
   <h2 class="section-title">
-    <span class="num">03</span>
+    <span class="num">04</span>
     <span><span data-l="en" lang="en">Grants and awards</span><span data-l="ko" lang="ko">장학 및 수상</span></span>
     <span class="line"></span>
   </h2>
@@ -180,7 +207,7 @@ permalink: /
 
 <section class="section" id="software">
   <h2 class="section-title">
-    <span class="num">04</span>
+    <span class="num">05</span>
     <span><span data-l="en" lang="en">Software</span><span data-l="ko" lang="ko">소프트웨어</span></span>
     <span class="line"></span>
   </h2>
