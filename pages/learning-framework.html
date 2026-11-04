@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Learning Framework"
-description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by seven factors: data collection, decision structure, learning objective, temporal context, reward model, data generation, and feedback."
+description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by seven factors: data collection, decision structure, learning objective, temporal context, reward model, data generation, and reward feedback."
 permalink: /pages/learning-framework/
 ---
 
@@ -202,8 +202,8 @@ permalink: /pages/learning-framework/
   <p class="lf-frame" data-l="en" lang="en">Every problem reflects this decision-making frame.</p>
   <p class="lf-frame" data-l="ko" lang="ko">모든 문제는 이 의사결정 프레임을 반영한다.</p>
 
-  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by seven factors: on the agent side, data collection, decision structure, and learning objective; on the environment side, temporal context, reward model, data generation, and feedback.</p>
-  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 일곱 개의 요소로 나뉜다. 에이전트 쪽에는 데이터 수집, 결정 구조, 학습 목표가 있고, 환경 쪽에는 시간적 맥락, 보상 모델, 데이터 생성, 피드백이 있다.</p>
+  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by seven factors: on the agent side, data collection, decision structure, and learning objective; on the environment side, temporal context, reward model, data generation, and reward feedback.</p>
+  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 일곱 개의 요소로 나뉜다. 에이전트 쪽에는 데이터 수집, 결정 구조, 학습 목표가 있고, 환경 쪽에는 시간적 맥락, 보상 모델, 데이터 생성, 보상 피드백이 있다.</p>
 
   <p class="cv-lead lf-group"><span data-l="en" lang="en">Agent</span><span data-l="ko" lang="ko">에이전트</span></p>
   <dl class="lf-factors">
@@ -241,7 +241,7 @@ permalink: /pages/learning-framework/
         <span class="lf-where"><span data-l="en" lang="en">The globe M* and the box around xᵗ, rᵗ, oᵗ that it governs</span><span data-l="ko" lang="ko">지구본 M*와 그것이 관할하는 xᵗ, rᵗ, oᵗ의 상자</span></span></dd>
     </div>
     <div>
-      <dt>Feedback</dt>
+      <dt>Reward feedback</dt>
       <dd><span data-l="en" lang="en">What the agent observes after acting.</span><span data-l="ko" lang="ko">행동한 뒤 무엇을 관측하는가.</span>
         <span class="lf-where"><span data-l="en" lang="en">Rows rᵗ and oᵗ: filled cells are observed</span><span data-l="ko" lang="ko">rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸</span></span></dd>
     </div>
@@ -289,7 +289,7 @@ permalink: /pages/learning-framework/
       <ellipse id="elTemp" class="ell" data-ax="temp" cx="460" cy="118" rx="112" ry="24"/>
       <ellipse id="elFb" class="ell" data-ax="fb" cx="460" cy="230" rx="112" ry="46"/>
       <text class="ax" data-ax="temp" x="460" y="74" text-anchor="middle">temporal context</text>
-      <text class="ax" data-ax="fb" x="440" y="306" text-anchor="middle">feedback</text>
+      <text class="ax" data-ax="fb" x="440" y="306" text-anchor="middle">reward feedback</text>
 
       <!-- reward model: one arrow from the context row to the reward row -->
       <path id="rmLine" class="link rmA" data-ax="rm" d="M338 134 L338 196"/>
@@ -395,7 +395,7 @@ const AXES = [
     ['Stochastic', 'M* is a stochastic process that can change over time.', 'M*가 시간에 따라 바뀔 수 있는 확률 과정이다.'],
     ['Arbitrary', 'The sequence is fixed in advance, arbitrarily, with no distribution behind it.', '분포 없이 수열이 미리 임의로 정해져 있다.'],
     ['Adversarial', 'M* reads the history so far and writes the next round against the agent. An arrow appears from the data to the environment.', 'M*가 지금까지의 기록을 보고 다음 라운드를 쓴다. 데이터에서 환경으로 화살표가 생긴다.']]},
-  {id:'fb', name:'Feedback',
+  {id:'fb', name:'Reward feedback',
    q:['What is observed?', '무엇을 관측하나'],
    where:['Rows rᵗ and oᵗ: filled cells are observed', 'rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸'], vals:[
     ['Full information', 'The outcome of every action is revealed.', '모든 행동의 결과가 보인다.'],
