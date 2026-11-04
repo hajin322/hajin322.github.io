@@ -154,6 +154,13 @@ permalink: /pages/learning-framework/
 .lf-factors dd { margin: 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; }
 .lf-factors .lf-where { display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.1rem; }
 @media (max-width: 560px) { .lf-factors > div { grid-template-columns: 1fr; } }
+.lf-refs { margin: 0; padding: 0; list-style: none; counter-reset: ref; border-top: 1px solid var(--border); }
+.lf-refs li { counter-increment: ref; position: relative; padding: 0.75rem 0 0.75rem 2.4rem; border-bottom: 1px solid var(--border); font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); }
+.lf-refs li::before { content: "[" counter(ref) "]"; position: absolute; left: 0.25rem; top: 0.75rem; font-size: 0.82rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+.lf-ref-au { display: block; }
+.lf-ref-ti { display: block; font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 1rem; color: var(--text); }
+.lf-ref-ti:hover { color: var(--accent); }
+.lf-ref-ve { display: block; font-size: 0.85rem; color: var(--text-muted); }
 .lf-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
 .lf-back:hover { color: var(--accent); }
 
@@ -346,6 +353,31 @@ permalink: /pages/learning-framework/
     <p class="cv-lead lf-group"><span data-l="en" lang="en">Environment</span><span data-l="ko" lang="ko">환경</span></p>
     <div class="lf-axes" id="axes-env"></div>
   </div>
+</section>
+
+<section class="section" id="references">
+  <h2 class="section-title">
+    <span class="num">02</span>
+    <span><span data-l="en" lang="en">References</span><span data-l="ko" lang="ko">참고 문헌</span></span>
+    <span class="line"></span>
+  </h2>
+  <ol class="lf-refs">
+    <li>
+      <span class="lf-ref-au">Dylan J. Foster and Alexander Rakhlin.</span>
+      <a class="lf-ref-ti" href="https://arxiv.org/abs/2312.16730">Foundations of Reinforcement Learning and Interactive Decision Making.</a>
+      <span class="lf-ref-ve">arXiv:2312.16730, 2023.</span>
+    </li>
+    <li>
+      <span class="lf-ref-au">Tor Lattimore and Csaba Szepesvári.</span>
+      <a class="lf-ref-ti" href="https://www.cambridge.org/core/books/bandit-algorithms/8E39FD004E6CE036680F90DD0C6F09FC">Bandit Algorithms.</a>
+      <span class="lf-ref-ve">Cambridge University Press, 2020.</span>
+    </li>
+    <li>
+      <span class="lf-ref-au">Shai Shalev-Shwartz and Shai Ben-David.</span>
+      <a class="lf-ref-ti" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/">Understanding Machine Learning: From Theory to Algorithms.</a>
+      <span class="lf-ref-ve">Cambridge University Press, 2014.</span>
+    </li>
+  </ol>
   <a class="lf-back" href="{{ '/pages/' | relative_url }}">← <span data-l="en" lang="en">All pages</span><span data-l="ko" lang="ko">페이지 목록</span></a>
 </section>
 
