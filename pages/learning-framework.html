@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Learning Framework"
-description: "A decision-making problem divided by six factors: data acquisition, decision structure, temporal structure, feedback, learning objective, and environmental model."
+description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by six factors: data acquisition, decision structure, temporal structure, feedback, learning objective, and environmental model."
 permalink: /pages/learning-framework/
 ---
 
@@ -11,6 +11,29 @@ permalink: /pages/learning-framework/
 .lf-head h1 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.08; margin-bottom: 0.9rem; }
 .lf-lede { font-size: 0.97rem; color: var(--text-secondary); max-width: 60ch; line-height: 1.75; margin: 0 0 1.75rem; }
 .lf-lede[data-l="ko"] { line-height: 1.85; }
+.lf-lede strong { font-weight: 600; }
+.lf-m { font-family: var(--font-display); font-style: italic; color: var(--text); white-space: nowrap; }
+.lf-m sup { font-size: 0.68em; line-height: 0; }
+
+.lf-loop { margin: 0 0 1.75rem; padding: 0.75rem 1rem 0.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.lf-loop svg { display: block; width: 100%; max-width: 560px; margin: 0 auto; }
+.lf-loop text { font-family: var(--font-body); }
+.lf-loop .lp-lab { fill: var(--text); font-size: 13.5px; }
+.lf-loop .lp-cap { fill: var(--text-muted); font-size: 11.5px; }
+.lf-loop .lp-m { font-family: var(--font-display); font-style: italic; font-size: 15px; }
+@media (max-width: 560px) {
+  .lf-loop { padding: 0.75rem 0.5rem 0.5rem; }
+  .lf-loop .lp-lab { font-size: 17px; }
+  .lf-loop .lp-cap { font-size: 14px; }
+  .lf-loop .lp-m { font-size: 19px; }
+}
+
+.lf-frame {
+  font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; line-height: 1.5;
+  color: var(--text); border-left: 3px solid var(--accent);
+  padding: 0.15rem 0 0.15rem 1rem; margin: 0 0 1.25rem;
+}
+.lf-frame[data-l="ko"] { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.005em; }
 
 .lf-presets { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 1rem; }
 .lf-presets .cv-lead { margin: 0 6px 0 0; }
@@ -124,6 +147,33 @@ permalink: /pages/learning-framework/
   </div>
 
   <h1>Learning Framework</h1>
+  <p class="lf-lede" data-l="en" lang="en"><strong>Decision making</strong> is the process of making choices. An agent interacts with an unknown environment: at each round <span class="lf-m">t</span> it receives a context <span class="lf-m">x<sup>t</sup></span>, makes a decision <span class="lf-m">π<sup>t</sup></span>, and in return receives a reward <span class="lf-m">r<sup>t</sup></span> and an observation <span class="lf-m">o<sup>t</sup></span>. The crux of the problem is to explore the environment to reduce uncertainty while maximizing overall performance. The learning objective is for the agent to learn a good mapping <span class="lf-m">x<sup>t</sup> ↦ π<sup>t</sup></span>, from contexts to decisions.</p>
+  <p class="lf-lede" data-l="ko" lang="ko"><strong>의사결정</strong>은 선택을 내리는 과정이다. 에이전트는 알려지지 않은 환경과 상호작용한다. 매 라운드 <span class="lf-m">t</span>마다 맥락 <span class="lf-m">x<sup>t</sup></span>를 받고, 결정 <span class="lf-m">π<sup>t</sup></span>를 내리고, 그 대가로 보상 <span class="lf-m">r<sup>t</sup></span>와 관측 <span class="lf-m">o<sup>t</sup></span>를 받는다. 문제의 핵심은 환경을 탐색해 불확실성을 줄이면서 전체 성능을 최대화하는 것이다. 학습 목표는 맥락에서 결정으로 가는 좋은 사상 <span class="lf-m">x<sup>t</sup> ↦ π<sup>t</sup></span>를 배우는 것이다.</p>
+
+  <figure class="lf-loop">
+    <svg viewBox="0 0 520 206" role="img" aria-label="An agent sends a decision to the environment and receives a context, a reward and an observation back">
+      <path d="M112 84 Q260 0 408 84" fill="none" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#arF)"/>
+      <path d="M408 126 Q260 210 112 126" fill="none" stroke="var(--text-secondary)" stroke-width="1.4" marker-end="url(#ar)"/>
+      <text class="lp-lab" x="260" y="30" text-anchor="middle" style="fill:var(--accent)">decision <tspan class="lp-m">π</tspan><tspan dy="-6" style="font-size:10px">t</tspan></text>
+
+      <rect x="52" y="90" width="36" height="32" rx="3" fill="none" stroke="var(--text)" stroke-width="1.3"/>
+      <circle cx="64" cy="106" r="2.2" style="fill:var(--text)"/><circle cx="76" cy="106" r="2.2" style="fill:var(--text)"/>
+      <line x1="58" y1="90" x2="55" y2="82" stroke="var(--text)" stroke-width="1.3"/><line x1="82" y1="90" x2="85" y2="82" stroke="var(--text)" stroke-width="1.3"/>
+      <text class="lp-lab" x="70" y="146" text-anchor="middle">agent</text>
+
+      <g fill="none" stroke="var(--text)" stroke-width="1.3"><circle cx="450" cy="106" r="17"/><ellipse cx="450" cy="106" rx="7" ry="17"/><line x1="434" y1="100" x2="466" y2="100"/><line x1="434" y1="112" x2="466" y2="112"/></g>
+      <text class="lp-lab" x="450" y="146" text-anchor="middle">environment</text>
+      <text class="lp-cap" x="450" y="162" text-anchor="middle">unknown M*</text>
+
+      <text class="lp-lab" x="168" y="196" text-anchor="middle">context <tspan class="lp-m">x</tspan><tspan dy="-6" style="font-size:10px">t</tspan></text>
+      <text class="lp-lab" x="262" y="196" text-anchor="middle">reward <tspan class="lp-m">r</tspan><tspan dy="-6" style="font-size:10px">t</tspan></text>
+      <text class="lp-lab" x="364" y="196" text-anchor="middle">observation <tspan class="lp-m">o</tspan><tspan dy="-6" style="font-size:10px">t</tspan></text>
+    </svg>
+  </figure>
+
+  <p class="lf-frame" data-l="en" lang="en">Every problem on this page reflects this decision-making frame.</p>
+  <p class="lf-frame" data-l="ko" lang="ko">이 페이지의 모든 문제는 이 의사결정 프레임을 반영한다.</p>
+
   <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by six factors: data acquisition, decision structure, temporal structure, feedback, learning objective, and environmental model.</p>
   <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 여섯 개의 요소로 나뉜다: 데이터 획득, 결정 구조, 시간 구조, 피드백, 학습 목표, 환경 모델.</p>
 
