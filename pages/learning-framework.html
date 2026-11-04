@@ -1,0 +1,396 @@
+---
+layout: page
+title: "Agent, Data, Environment"
+description: "의사결정 문제를 여섯 개의 축(data acquisition, feedback, temporal structure, environment model, decision structure, objective)으로 나누어 보는 인터랙티브 그림."
+permalink: /pages/learning-framework/
+---
+
+<style>
+/* ---------- page-scoped styles (Learning Framework) --------------------- */
+.lf-head { padding: 2.5rem 0 0.5rem; }
+.lf-head h1 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.08; margin-bottom: 0.9rem; }
+.lf-lede { font-size: 0.97rem; color: var(--text-secondary); max-width: 60ch; line-height: 1.75; margin: 0 0 1.75rem; }
+.lf-lede[data-l="ko"] { line-height: 1.85; }
+
+.lf-presets { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 1rem; }
+.lf-presets .cv-lead { margin: 0 6px 0 0; }
+
+.lf-chip {
+  font: inherit; font-size: 0.8rem; font-weight: 500; line-height: 1.2;
+  color: var(--text-secondary); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  padding: 7px 13px; cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.lf-chip:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.lf-chip[aria-pressed="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+.lf-chip.sm { font-size: 0.74rem; padding: 5px 10px; }
+.lf-chip:focus-visible, .lf-axis-name:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.lf-stage { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+.lf-fig { overflow-x: auto; padding: 1rem 0.5rem 0.25rem; }
+.lf-fig svg { display: block; width: 100%; min-width: 620px; }
+.lf-summary {
+  display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; align-items: baseline;
+  padding: 0.9rem 1.1rem; border-top: 1px solid var(--border); background: var(--surface-2);
+}
+.lf-summary .name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; letter-spacing: -0.015em; }
+.lf-summary .hint { font-size: 0.9rem; color: var(--text-secondary); }
+.lf-legend {
+  display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem;
+  font-size: 0.78rem; color: var(--text-muted);
+  padding: 0 1.1rem 0.85rem; background: var(--surface-2);
+}
+.lf-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.lf-legend i { display: inline-block; width: 26px; border-top: 1.5px solid var(--text-secondary); }
+.lf-legend i.off { border-top-style: dashed; opacity: 0.5; }
+
+/* svg */
+#fig text { font-family: var(--font-body); }
+#fig .t { fill: var(--text); font-size: 14px; }
+#fig .m { fill: var(--text); font-family: var(--font-display); font-style: italic; }
+#fig .ts { fill: var(--text-muted); font-size: 12px; }
+#fig .ax { fill: var(--accent); font-size: 12.5px; font-weight: 500; cursor: pointer; }
+#fig .cap { fill: var(--text-secondary); font-size: 11.5px; }
+#fig .capA { fill: var(--accent); font-size: 11.5px; }
+#fig .ink { stroke: var(--text); fill: none; stroke-width: 1.3; }
+#fig .ell { stroke: var(--accent); stroke-opacity: 0.45; fill: transparent; stroke-width: 1.2; cursor: pointer; transition: fill 0.2s var(--ease); }
+#fig .link { fill: none; stroke: var(--text-secondary); stroke-width: 1.4; marker-end: url(#ar); transition: opacity 0.25s; }
+#fig .link.off { stroke-dasharray: 5 4; opacity: 0.35; }
+#fig .rc { stroke: var(--text); stroke-width: 1.2; fill: none; }
+#fig .rc.seen { fill: var(--text); }
+#fig .rc.hid { stroke-dasharray: 2 2; opacity: 0.5; }
+#fig .tri.seen { fill: var(--text); }
+#fig .fade { opacity: 0.14; transition: opacity 0.25s; }
+#fig .col, #fig .xsq, #fig #dots { transition: opacity 0.25s; }
+#fig .hide { display: none; }
+#fig .focus.link, #fig .focus.ink { stroke: var(--accent) !important; stroke-width: 2.4; opacity: 1; marker-end: url(#arF); }
+#fig .focus.ell { stroke: var(--accent); stroke-opacity: 1; stroke-width: 2; fill: var(--accent-soft); }
+#fig text.focus { fill: var(--accent-deep); font-weight: 700; }
+
+/* axis cards */
+.lf-axes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.lf-card {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  background: var(--surface); padding: 1rem 1.1rem 1.05rem 1.2rem;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.lf-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--accent); transform: scaleY(0); transform-origin: top;
+  transition: transform 0.25s var(--ease);
+}
+.lf-card:hover { background: var(--surface-2); }
+.lf-card.on { border-color: rgba(37, 99, 235, 0.35); }
+.lf-card.on::before { transform: scaleY(1); }
+.lf-card h3 { font-size: 1.05rem; font-weight: 700; margin: 0 0 0.15rem; }
+.lf-axis-name { all: unset; cursor: pointer; color: var(--text); transition: color 0.2s var(--ease); }
+.lf-axis-name:hover, .lf-card.on .lf-axis-name { color: var(--accent); }
+.lf-q { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.7rem; }
+.lf-opts { display: flex; flex-wrap: wrap; gap: 5px; }
+.lf-desc { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; margin: 0.75rem 0 0; }
+.lf-desc[data-l="ko"] { line-height: 1.8; }
+.lf-where { font-size: 0.8rem; color: var(--text-muted); margin: 0.35rem 0 0; }
+
+.lf-note { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.75; max-width: 70ch; margin: 0; }
+.lf-note[data-l="ko"] { line-height: 1.85; }
+.lf-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
+.lf-back:hover { color: var(--accent); }
+
+@media (max-width: 680px) { .lf-axes { grid-template-columns: 1fr; } .lf-head { padding-top: 1.5rem; } }
+@media (prefers-reduced-motion: reduce) {
+  #fig .link, #fig .fade, #fig .col, #fig .xsq, #fig #dots, #fig .ell, .lf-card, .lf-card::before { transition: none; }
+}
+</style>
+
+<section class="lf-head">
+  <div class="hero-top">
+    <span class="hero-label">
+      <span class="dot"></span>
+      <span data-l="en" lang="en">Note · Sequential decision-making</span>
+      <span data-l="ko" lang="ko">노트 · 순차적 의사결정</span>
+    </span>
+    <div class="lang-toggle" role="group" aria-label="Language / 언어">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ko" lang="ko">한국어</button>
+    </div>
+  </div>
+
+  <h1>Agent, Data, Environment</h1>
+  <p class="lf-lede" data-l="en" lang="en">A decision problem is pinned down by six axes. Change the value of an axis and the figure changes; pick a problem family and all six axes snap into place at once. Click a blue label in the figure to highlight where that axis lives.</p>
+  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 여섯 개의 축으로 정해진다. 축의 값을 바꾸면 그림이 바뀌고, 문제 계열을 고르면 여섯 축이 한꺼번에 맞춰진다. 그림의 파란 글씨를 누르면 그 축이 어디에 사는지 강조된다.</p>
+</section>
+
+<div class="lf-presets" id="presets">
+  <span class="cv-lead"><span data-l="en" lang="en">Problem family</span><span data-l="ko" lang="ko">문제 계열</span></span>
+</div>
+
+<div class="lf-stage">
+  <div class="lf-fig">
+    <svg id="fig" viewBox="0 0 780 320" role="img" aria-labelledby="figTitle">
+      <title id="figTitle">Agent, data and environment of a decision-making system</title>
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+        <marker id="arF" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+      </defs>
+
+      <text class="t" x="18" y="174">agent</text>
+      <rect class="ink" x="84" y="152" width="36" height="32" rx="3"/>
+      <circle cx="96" cy="168" r="2.2" style="fill:var(--text)"/><circle cx="108" cy="168" r="2.2" style="fill:var(--text)"/>
+      <line class="ink" x1="90" y1="152" x2="87" y2="144"/><line class="ink" x1="114" y1="152" x2="117" y2="144"/>
+      <text class="m" x="146" y="174" style="font-size:18px">π<tspan dy="-7" style="font-size:11px">t</tspan></text>
+      <text class="capA" id="decCap" data-ax="dec" x="138" y="210" text-anchor="middle"></text>
+
+      <path id="acqLine" class="link" data-ax="acq" d="M330 108 Q255 62 186 146"/>
+      <path id="decLine" class="link" data-ax="dec" d="M190 166 Q255 140 326 124"/>
+      <path id="retLine" class="link" data-ax="obj" d="M312 206 Q252 240 188 188"/>
+      <text class="ax" data-ax="acq" x="256" y="66" text-anchor="middle">data acquisition</text>
+      <text class="ax" data-ax="dec" x="256" y="174" text-anchor="middle">decision structure</text>
+      <text class="ax" data-ax="obj" x="250" y="256" text-anchor="middle">(learning) objective</text>
+
+      <text class="m" x="332" y="124" style="font-size:16px">x<tspan dy="-6" style="font-size:10px">t</tspan></text>
+      <text class="m" x="332" y="194" style="font-size:16px">r<tspan dy="-6" style="font-size:10px">t</tspan></text>
+      <text class="m" x="332" y="236" style="font-size:16px">o<tspan dy="-6" style="font-size:10px">t</tspan></text>
+      <path d="M328 174 Q320 174 320 183 L320 197 Q320 205 314 206 Q320 207 320 215 L320 230 Q320 240 328 240" fill="none" stroke="var(--text-secondary)" stroke-width="1.2"/>
+
+      <g id="cols"></g>
+      <g id="dots"><text class="ts" x="512" y="122" text-anchor="middle">…</text><text class="ts" x="512" y="192" text-anchor="middle">…</text><text class="ts" x="512" y="234" text-anchor="middle">…</text></g>
+      <g id="endo" data-ax="temp"></g>
+
+      <ellipse id="elTemp" class="ell" data-ax="temp" cx="460" cy="118" rx="112" ry="24"/>
+      <text class="ax" data-ax="temp" x="460" y="82" text-anchor="middle">temporal structure</text>
+      <ellipse id="elFb" class="ell" data-ax="fb" cx="460" cy="208" rx="112" ry="46"/>
+      <text class="ax" data-ax="fb" x="460" y="272" text-anchor="middle">feedback</text>
+
+      <g><circle class="ink" cx="695" cy="152" r="16"/><ellipse class="ink" cx="695" cy="152" rx="6.5" ry="16"/><line class="ink" x1="680" y1="146" x2="710" y2="146"/><line class="ink" x1="680" y1="158" x2="710" y2="158"/></g>
+      <text class="t" x="695" y="190" text-anchor="middle" style="font-size:13px">environment</text>
+      <text class="capA" id="envCap" data-ax="env" x="695" y="206" text-anchor="middle"></text>
+      <ellipse id="elEnv" class="ell" data-ax="env" cx="695" cy="172" rx="56" ry="48"/>
+      <text class="ax" data-ax="env" x="695" y="238" text-anchor="middle">environment model</text>
+      <path id="advLine" class="link" data-ax="env" d="M548 102 Q620 38 680 132"/>
+
+      <g id="objRisk" data-ax="obj" class="hide">
+        <rect x="589" y="107" width="22" height="22" rx="2" fill="none" stroke="var(--accent)" stroke-dasharray="3 3"/>
+        <circle cx="600" cy="190" r="6" fill="none" stroke="var(--accent)" stroke-dasharray="3 3"/>
+        <text class="capA" x="600" y="296" text-anchor="middle"><tspan data-l="en">evaluated on new data</tspan><tspan data-l="ko">새 데이터에서 평가</tspan></text>
+      </g>
+      <g id="objRegret" data-ax="obj" class="hide">
+        <path d="M360 282 L360 290 L560 290 L560 282" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
+        <text class="capA" x="460" y="308" text-anchor="middle"><tspan data-l="en">Σ (best reward − my reward)</tspan><tspan data-l="ko">Σ (최선의 보상 − 내 보상)</tspan></text>
+      </g>
+      <g id="objId" data-ax="obj" class="hide">
+        <line x1="498" y1="98" x2="498" y2="256" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text class="capA" x="498" y="296" text-anchor="middle"><tspan data-l="en">stop at τ and answer</tspan><tspan data-l="ko">τ에서 멈추고 답을 낸다</tspan></text>
+      </g>
+      <g id="objInf" data-ax="obj" class="hide">
+        <text class="capA" x="695" y="296" text-anchor="middle"><tspan data-l="en">conclusions about M* and their validity</tspan><tspan data-l="ko">M*에 대한 결론과 그 타당성</tspan></text>
+      </g>
+    </svg>
+  </div>
+  <div class="lf-summary" aria-live="polite"><span class="name" id="famName"></span><span class="hint" id="famHint"></span></div>
+  <div class="lf-legend">
+    <span><i></i><span data-l="en" lang="en">active in this setting</span><span data-l="ko" lang="ko">이 설정에서 작동하는 연결</span></span>
+    <span><i class="off"></i><span data-l="en" lang="en">absent in this setting</span><span data-l="ko" lang="ko">이 설정에서는 없는 연결</span></span>
+  </div>
+</div>
+
+<section class="section" id="axes-section">
+  <h2 class="section-title">
+    <span class="num">01</span>
+    <span><span data-l="en" lang="en">The six axes</span><span data-l="ko" lang="ko">여섯 축</span></span>
+    <span class="line"></span>
+  </h2>
+  <div class="lf-axes" id="axes" aria-label="Six axes / 여섯 축"></div>
+</section>
+
+<section class="section" id="reading">
+  <h2 class="section-title">
+    <span class="num">02</span>
+    <span><span data-l="en" lang="en">Reading the figure</span><span data-l="ko" lang="ko">그림 읽는 법</span></span>
+    <span class="line"></span>
+  </h2>
+  <p class="lf-note" data-l="en" lang="en">A solid line is a connection that actually operates in the current setting; a faint dashed line is one that could appear under a different setting. With <strong>Prediction</strong>, decisions do not interact with the environment, so both dashed lines fade out, and what remains is the picture of Statistical Learning.</p>
+  <p class="lf-note" data-l="ko" lang="ko">점선의 규칙: 실선은 이 설정에서 실제로 작동하는 연결이고, 흐린 점선은 다른 설정에서라면 생길 수 있는 연결이다. <strong>Prediction</strong>에서는 결정이 환경과 상호작용하지 않으므로 두 점선이 모두 흐려지고, 그것이 Statistical Learning의 그림이다.</p>
+  <a class="lf-back" href="{{ '/' | relative_url }}">← {{ site.author.name }}</a>
+</section>
+
+<script>
+(function () {
+const AXES = [
+  {id:'acq', name:'Data acquisition',
+   q:['Who chooses the data?', '데이터를 누가 고르나'],
+   where:['The arrow between xᵗ and the agent', '점선: xᵗ와 에이전트 사이의 연결'], vals:[
+    ['Fixed dataset', 'The whole table is given up front. Decisions play no part in the data.', '표 전체가 처음부터 주어진다. 결정이 데이터에 관여하지 않는다.'],
+    ['Sequential arrival', 'Data arrive one at a time, but I cannot choose them.', '데이터가 하나씩 도착하지만 내가 고를 수 없다.'],
+    ['Active query', 'I choose which points to get labels for.', '어떤 점의 라벨을 받을지 내가 고른다.'],
+    ['Action-generated', 'My action itself produces the data that gets recorded.', '내 행동이 곧 기록될 데이터를 만든다.']]},
+  {id:'fb', name:'Feedback',
+   q:['What is observed?', '무엇을 관측하나'],
+   where:['Rows rᵗ and oᵗ: filled cells are observed', 'rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸'], vals:[
+    ['Full information', 'The outcome of every action is revealed.', '모든 행동의 결과가 보인다.'],
+    ['Semi-bandit', 'The outcomes of the chosen components are revealed.', '고른 구성 요소들의 결과가 보인다.'],
+    ['Bandit', 'Only the outcome of the chosen action is revealed.', '고른 행동의 결과 하나만 보인다.'],
+    ['Partial monitoring', 'Rewards stay hidden; only an observation signal is seen.', '보상은 보이지 않고 관측 신호만 보인다.']]},
+  {id:'temp', name:'Temporal structure',
+   q:['How does time enter?', '시간이 어떻게 들어오나'],
+   where:['Row xᵗ and the arrows between columns', 'xᵗ의 행과 칸 사이의 화살표'], vals:[
+    ['None', 'Learn once, with no notion of time.', '시간 개념 없이 한 번에 학습한다.'],
+    ['Independent rounds', 'Rounds follow one another, but each is the same situation with no context.', '라운드가 이어지지만 매번 같은 상황이고 맥락이 없다.'],
+    ['Exogenous context', 'The situation changes, but independently of my actions.', '상황이 바뀌지만 내 행동과는 무관하다.'],
+    ['Endogenous state', 'My action changes the next situation. Arrows appear between columns.', '내 행동이 다음 상황을 바꾼다. 칸 사이에 화살표가 생긴다.']]},
+  {id:'env', name:'Environment model',
+   q:['How is the data generated?', '데이터가 어떻게 생성되나'],
+   where:['The globe: M*, who writes the table', '지구본: 표를 쓰는 주체 M*'], vals:[
+    ['i.i.d.', 'A fixed M* generates every round independently.', '고정된 M*가 매 라운드를 독립적으로 생성한다.'],
+    ['Non-stationary', 'M* changes over time.', 'M*가 시간에 따라 바뀐다.'],
+    ['Adversarial', 'The table is written in advance, arbitrarily.', '표가 미리 임의로 쓰여 있다.'],
+    ['Adaptive adversary', 'M* reads the history so far and writes the next round. An arrow appears from the data to the environment.', 'M*가 지금까지의 기록을 보고 다음 라운드를 쓴다. 데이터에서 환경으로 화살표가 생긴다.']]},
+  {id:'dec', name:'Decision structure',
+   q:['What is decided?', '무엇을 결정하나'],
+   where:['The arrow from πᵗ to xᵗ', '점선: πᵗ에서 xᵗ로 가는 연결'], vals:[
+    ['Prediction', 'Output a label or a predictor. No interaction with the environment.', '라벨이나 예측기를 낸다. 환경과 상호작용하지 않는다.'],
+    ['Finite actions', 'Pick one of K actions.', 'K개의 행동 중 하나를 고른다.'],
+    ['Structured actions', 'Pick from a linear, combinatorial, or continuous action space.', '선형, 조합, 연속 행동 공간에서 고른다.'],
+    ['Policy', 'Pick a rule that assigns an action to every state.', '상태마다 행동을 정하는 규칙을 고른다.']]},
+  {id:'obj', name:'Objective',
+   q:['How is success measured?', '무엇으로 성공을 재나'],
+   where:['The returning arrow and the evaluation mark below', '돌아오는 화살표와 아래의 평가 표시'], vals:[
+    ['Risk', 'Expected loss on new data outside the table.', '표 밖의 새 데이터에서의 기대 손실로 잰다.'],
+    ['Regret', 'Cumulative shortfall of the whole reward row against the best benchmark.', '보상의 행 전체를 최선의 기준과 비교해 누적 손해를 잰다.'],
+    ['Identification', 'Whether the answer given at stopping time τ is correct, and how many samples it took.', '멈춘 시점 τ에 내놓은 답이 맞는지, 표본이 얼마나 들었는지로 잰다.'],
+    ['Inference', 'Whether the conclusions about the environment M* are statistically valid.', '환경 M*에 대한 결론이 통계적으로 타당한지로 잰다.']]}
+];
+const FAM = [
+  ['Statistical Learning', {acq:0, fb:0, temp:0, env:0, dec:0, obj:0}],
+  ['Active Learning', {acq:2, fb:0, temp:1, env:0, dec:0, obj:0}],
+  ['Online Learning', {acq:1, fb:0, temp:1, env:2, dec:1, obj:1}],
+  ['Multi-armed Bandit', {acq:3, fb:2, temp:1, env:0, dec:1, obj:1}],
+  ['Best Arm Identification', {acq:3, fb:2, temp:1, env:0, dec:1, obj:2}],
+  ['Linear Bandit', {acq:3, fb:2, temp:1, env:0, dec:2, obj:1}],
+  ['Combinatorial Semi-bandit', {acq:3, fb:1, temp:1, env:0, dec:2, obj:1}],
+  ['Contextual Bandit', {acq:3, fb:2, temp:2, env:0, dec:1, obj:1}],
+  ['Partial Monitoring', {acq:3, fb:3, temp:1, env:2, dec:1, obj:1}],
+  ['Reinforcement Learning', {acq:3, fb:2, temp:3, env:0, dec:3, obj:1}]
+];
+const state = Object.assign({}, FAM[7][1]);
+let focus = null;
+
+function bi(en, ko) { return '<span data-l="en" lang="en">' + en + '</span><span data-l="ko" lang="ko">' + ko + '</span>'; }
+
+const NS = 'http://www.w3.org/2000/svg';
+const COLX = [372, 424, 476, 548];
+const CHOSEN = [1, 0, 2, 1];
+const cols = document.getElementById('cols');
+function mk(parent, tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+COLX.forEach((cx, i) => {
+  const g = mk(cols, 'g', {class: 'col', id: 'col' + i});
+  mk(g, 'rect', {class: 'ink xsq', x: cx - 11, y: 107, width: 22, height: 22, rx: 2});
+  [0, 1, 2].forEach(k => mk(g, 'circle', {class: 'rc', cx: cx, cy: 178 + k * 12, r: 5, 'data-k': k}));
+  mk(g, 'polygon', {class: 'ink tri', points: cx + ',220 ' + (cx - 10) + ',237 ' + (cx + 10) + ',237'});
+});
+const endo = document.getElementById('endo');
+[[0, 1], [1, 2], [2, 3]].forEach(([a, b]) => {
+  const x1 = COLX[a] + 11, x2 = COLX[b] - 11, mid = (x1 + x2) / 2;
+  mk(endo, 'path', {class: 'link', 'data-ax': 'temp', d: 'M' + x1 + ' 112 Q' + mid + ' 92 ' + x2 + ' 112'});
+});
+
+const DEC_CAP = ['ŷ', 'a ∈ {1, …, K}', 'a ∈ 𝒜 ⊂ ℝᵈ', 'π : 𝒳 → 𝒜'];
+const ENV_CAP = [['fixed M*', 'M* 고정'], ['drifting M*ₜ', 'M*ₜ 변화'], ['pre-written table', '미리 쓰인 표'], ['reacts to history', '기록에 반응']];
+
+function setLink(id, on) { document.getElementById(id).classList.toggle('off', !on); }
+function setCap(el, en, ko) {
+  el.textContent = '';
+  if (ko === undefined) { el.textContent = en; return; }
+  mk(el, 'tspan', {'data-l': 'en'}).textContent = en;
+  mk(el, 'tspan', {'data-l': 'ko'}).textContent = ko;
+}
+function renderFig() {
+  setLink('acqLine', state.acq >= 2);
+  setLink('decLine', state.dec >= 1);
+  setLink('advLine', state.env === 3);
+  setCap(document.getElementById('decCap'), DEC_CAP[state.dec]);
+  setCap(document.getElementById('envCap'), ENV_CAP[state.env][0], ENV_CAP[state.env][1]);
+
+  COLX.forEach((cx, i) => {
+    const g = document.getElementById('col' + i);
+    g.classList.toggle('fade', state.temp === 0 && i > 0);
+    g.querySelector('.xsq').classList.toggle('fade', state.temp === 1);
+    const ch = CHOSEN[i];
+    g.querySelectorAll('.rc').forEach(c => {
+      const k = +c.dataset.k;
+      let seen;
+      if (state.fb === 0) seen = true;
+      else if (state.fb === 1) seen = (k === ch || k === (ch + 1) % 3);
+      else if (state.fb === 2) seen = (k === ch);
+      else seen = false;
+      c.classList.toggle('seen', seen);
+      c.classList.toggle('hid', !seen);
+    });
+    g.querySelector('.tri').classList.toggle('seen', state.fb === 3);
+  });
+  document.getElementById('dots').classList.toggle('fade', state.temp === 0);
+  document.getElementById('endo').classList.toggle('hide', state.temp !== 3);
+  ['objRisk', 'objRegret', 'objId', 'objInf'].forEach((id, k) => document.getElementById(id).classList.toggle('hide', state.obj !== k));
+
+  document.querySelectorAll('#fig [data-ax]').forEach(e => e.classList.toggle('focus', focus === e.dataset.ax));
+}
+
+function renderSummary() {
+  const hit = FAM.find(([, v]) => AXES.every(a => v[a.id] === state[a.id]));
+  const nameEl = document.getElementById('famName'), hintEl = document.getElementById('famHint');
+  if (hit) {
+    nameEl.textContent = hit[0];
+    hintEl.innerHTML = bi('All six axes match this problem family.', '여섯 축의 값이 이 문제 계열과 일치해요.');
+  } else {
+    nameEl.innerHTML = bi('Not a preset combination', '프리셋에 없는 조합');
+    const near = FAM.map(([n, v]) => [n, AXES.filter(a => v[a.id] !== state[a.id]).map(a => a.name)]).sort((x, y) => x[1].length - y[1].length)[0];
+    hintEl.innerHTML = bi(
+      near[0] + ' with the ' + near[1].join(', ') + ' axis changed. Worth checking what the literature calls it.',
+      near[0] + '에서 ' + near[1].join(', ') + ' 축을 바꾼 설정이에요. 문헌에 어떤 이름으로 있는지 찾아볼 만해요.');
+  }
+  document.querySelectorAll('#presets button').forEach((b, i) => b.setAttribute('aria-pressed', String(!!hit && hit[0] === FAM[i][0])));
+}
+
+const axesEl = document.getElementById('axes');
+AXES.forEach(a => {
+  const c = document.createElement('div'); c.className = 'lf-card'; c.id = 'card-' + a.id;
+  c.innerHTML = '<h3><button type="button" class="lf-axis-name" data-focus="' + a.id + '">' + a.name + '</button></h3>' +
+    '<p class="lf-q">' + bi(a.q[0], a.q[1]) + '</p>' +
+    '<div class="lf-opts" role="group" aria-label="' + a.name + '">' +
+    a.vals.map((v, k) => '<button type="button" class="lf-chip sm" data-ax="' + a.id + '" data-k="' + k + '">' + v[0] + '</button>').join('') + '</div>' +
+    '<p class="lf-desc" data-l="en" lang="en"></p><p class="lf-desc" data-l="ko" lang="ko"></p>' +
+    '<p class="lf-where">' + bi(a.where[0], a.where[1]) + '</p>';
+  axesEl.appendChild(c);
+});
+function renderCards() {
+  AXES.forEach(a => {
+    const c = document.getElementById('card-' + a.id);
+    c.classList.toggle('on', focus === a.id);
+    c.querySelectorAll('.lf-opts button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.k === state[a.id])));
+    const d = c.querySelectorAll('.lf-desc');
+    d[0].textContent = a.vals[state[a.id]][1];
+    d[1].textContent = a.vals[state[a.id]][2];
+  });
+}
+function render() { renderFig(); renderSummary(); renderCards(); }
+
+axesEl.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.focus) { focus = focus === b.dataset.focus ? null : b.dataset.focus; render(); return; }
+  state[b.dataset.ax] = +b.dataset.k; focus = b.dataset.ax; render();
+});
+document.getElementById('fig').addEventListener('click', e => {
+  const t = e.target.closest('[data-ax]'); if (!t) return;
+  focus = focus === t.dataset.ax ? null : t.dataset.ax; render();
+  if (focus) { const c = document.getElementById('card-' + focus); if (c && c.getBoundingClientRect().top > window.innerHeight) c.scrollIntoView({block: 'nearest', behavior: 'smooth'}); }
+});
+const pre = document.getElementById('presets');
+FAM.forEach(([n, v]) => {
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'lf-chip'; b.textContent = n;
+  b.addEventListener('click', () => { Object.assign(state, v); render(); });
+  pre.appendChild(b);
+});
+render();
+})();
+</script>
