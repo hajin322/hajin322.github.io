@@ -264,20 +264,20 @@ permalink: /pages/learning-framework/
       </defs>
 
       <!-- agent -->
-      <text class="t" x="18" y="174">agent</text>
-      <rect class="ink" x="84" y="152" width="36" height="32" rx="3"/>
-      <circle cx="96" cy="168" r="2.2" style="fill:var(--text)"/><circle cx="108" cy="168" r="2.2" style="fill:var(--text)"/>
-      <line class="ink" x1="90" y1="152" x2="87" y2="144"/><line class="ink" x1="114" y1="152" x2="117" y2="144"/>
-      <text class="m" x="146" y="174" style="font-size:18px">π<tspan dy="-7" style="font-size:11px">t</tspan></text>
+      <rect class="ink" x="34" y="152" width="36" height="32" rx="3"/>
+      <circle cx="46" cy="168" r="2.2" style="fill:var(--text)"/><circle cx="58" cy="168" r="2.2" style="fill:var(--text)"/>
+      <line class="ink" x1="40" y1="152" x2="37" y2="144"/><line class="ink" x1="64" y1="152" x2="67" y2="144"/>
+      <text class="t" x="52" y="204" text-anchor="middle">agent</text>
+      <text class="m" x="82" y="174" style="font-size:18px">π<tspan dy="-7" style="font-size:11px">t</tspan></text>
 
-      <!-- agent ↔ data -->
-      <path id="acqLine" class="link" data-ax="acq" d="M330 108 Q255 62 186 146"/>
-      <path id="decLine" class="link" data-ax="dec" d="M190 166 Q255 140 326 124"/>
-      <path id="retLine" class="link" data-ax="obj" d="M312 228 Q250 272 188 190"/>
-      <text class="ax" data-ax="acq" x="244" y="64" text-anchor="middle">data collection</text>
-      <text class="ax" data-ax="dec" x="232" y="176" text-anchor="middle">decision structure</text>
-      <text class="capA" id="decCap" data-ax="dec" x="232" y="193" text-anchor="middle"></text>
-      <text class="ax" data-ax="obj" x="214" y="290" text-anchor="middle">learning objective</text>
+      <!-- agent ↔ data: each label sits on its own arrow -->
+      <path id="acqLine" class="link" data-ax="acq" d="M330 108 Q222 46 116 146"/>
+      <path id="decLine" class="link" data-ax="dec" d="M118 166 Q222 140 326 124"/>
+      <path id="retLine" class="link" data-ax="obj" d="M312 228 Q216 282 116 190"/>
+      <text class="ax" data-ax="acq" x="222" y="68" text-anchor="middle">data collection</text>
+      <text class="ax" data-ax="dec" x="214" y="182" text-anchor="middle">decision structure</text>
+      <text class="capA" id="decCap" data-ax="dec" x="214" y="199" text-anchor="middle"></text>
+      <text class="ax" data-ax="obj" x="214" y="276" text-anchor="middle">learning objective</text>
 
       <!-- the data, inside the environment's box -->
       <rect id="envBox" class="rgn" data-ax="env" x="306" y="88" width="278" height="196" rx="10"/>
