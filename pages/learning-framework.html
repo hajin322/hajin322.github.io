@@ -230,7 +230,7 @@ permalink: /pages/learning-framework/
     <div>
       <dt>Data generation</dt>
       <dd><span data-l="en" lang="en">How the data are generated.</span><span data-l="ko" lang="ko">데이터가 어떻게 생성되는가.</span>
-        <span class="lf-where"><span data-l="en" lang="en">The globe M* and the box around xᵗ, rᵗ, oᵗ that it governs</span><span data-l="ko" lang="ko">지구본 M*와 그것이 관할하는 xᵗ, rᵗ, oᵗ의 상자</span></span></dd>
+        <span class="lf-where"><span data-l="en" lang="en">The box around xᵗ, rᵗ, oᵗ that M* writes</span><span data-l="ko" lang="ko">M*가 쓰는 xᵗ, rᵗ, oᵗ를 둘러싼 상자</span></span></dd>
     </div>
     <div>
       <dt>Temporal context</dt>
@@ -300,12 +300,10 @@ permalink: /pages/learning-framework/
 
       <!-- the environment, right next to its box -->
 
-      <ellipse id="elEnv" class="ell" data-ax="env" cx="652" cy="186" rx="54" ry="46"/>
       <g><circle class="ink" cx="652" cy="168" r="15"/><ellipse class="ink" cx="652" cy="168" rx="6" ry="15"/><line class="ink" x1="638" y1="162" x2="666" y2="162"/><line class="ink" x1="638" y1="174" x2="666" y2="174"/></g>
       <text class="t" x="652" y="202" text-anchor="middle" style="font-size:13px">environment</text>
       <g id="envCap" data-ax="env"><text class="capA" data-l="en" x="652" y="218" text-anchor="middle"></text><text class="capA" data-l="ko" x="652" y="218" text-anchor="middle"></text></g>
       <text class="ax" data-ax="env" x="652" y="252" text-anchor="middle">data generation</text>
-      <path id="advLine" class="link" data-ax="env" d="M564 116 Q592 116 606 158"/>
 
       <!-- objective marks -->
       <g id="objRisk" data-ax="obj" class="hide">
@@ -378,11 +376,11 @@ const AXES = [
     ['Inference', 'Whether the conclusions about the environment M* are statistically valid.', '환경 M*에 대한 결론이 통계적으로 타당한지로 잰다.']]},
   {id:'env', name:'Data generation',
    q:['How is the data generated?', '데이터가 어떻게 생성되나'],
-   where:['The globe M* and the box around xᵗ, rᵗ, oᵗ that it governs', '지구본 M*와 그것이 관할하는 xᵗ, rᵗ, oᵗ의 상자'], vals:[
+   where:['The box around xᵗ, rᵗ, oᵗ that M* writes', 'M*가 쓰는 xᵗ, rᵗ, oᵗ를 둘러싼 상자'], vals:[
     ['i.i.d.', 'A fixed M* generates every round independently.', '고정된 M*가 매 라운드를 독립적으로 생성한다.'],
     ['Stochastic', 'M* is a stochastic process that can change over time.', 'M*가 시간에 따라 바뀔 수 있는 확률 과정이다.'],
     ['Arbitrary', 'The sequence is fixed in advance, arbitrarily, with no distribution behind it.', '분포 없이 수열이 미리 임의로 정해져 있다.'],
-    ['Adversarial', 'M* reads the history so far and writes the next round against the agent. An arrow appears from the data to the environment.', 'M*가 지금까지의 기록을 보고 다음 라운드를 쓴다. 데이터에서 환경으로 화살표가 생긴다.']]},
+    ['Adversarial', 'M* reads the history so far and writes the next round against the agent.', 'M*가 지금까지의 기록을 보고 다음 라운드를 쓴다.']]},
   {id:'temp', name:'Temporal context',
    q:['How does time enter?', '시간이 어떻게 들어오나'],
    where:['Row xᵗ and the arrows between columns', 'xᵗ의 행과 칸 사이의 화살표'], vals:[
@@ -496,7 +494,6 @@ const TILT = [-14, 12, -24, 20];
 function renderFig() {
   setStyle('acqLine', ACQ_STYLE[state.acq]);
   setStyle('decLine', state.dec >= 1 ? 'solid' : 'off');
-  setStyle('advLine', state.env === 3 ? 'solid' : 'off');
   setStyle('envBox', ENV_STYLE[state.env]);
   rich(document.getElementById('decCap'), DEC_CAP[state.dec]);
   const envT = document.querySelectorAll('#envCap text');
