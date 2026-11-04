@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Learning Framework"
-description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by seven factors: data collection, decision structure, temporal structure, reward model, feedback, learning objective, and data generation."
+description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by seven factors: data collection, decision structure, learning objective, temporal context, reward model, data generation, and feedback."
 permalink: /pages/learning-framework/
 ---
 
@@ -140,7 +140,10 @@ permalink: /pages/learning-framework/
 .lf-desc { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; margin: 0.75rem 0 0; }
 .lf-desc[data-l="ko"] { line-height: 1.8; }
 
-.lf-factors { margin: -0.75rem 0 2rem; border-top: 1px solid var(--border); }
+.lf-factors { margin: 0 0 1.5rem; border-top: 1px solid var(--border); }
+.lf-group { margin: 0 0 0.5rem; }
+#axes .lf-group { margin: 1.25rem 0 0.6rem; }
+#axes .lf-group:first-child { margin-top: 0; }
 .lf-factors > div {
   display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: 0.25rem 1.25rem;
   padding: 0.7rem 0 0.7rem 0.25rem; border-bottom: 1px solid var(--border);
@@ -199,9 +202,10 @@ permalink: /pages/learning-framework/
   <p class="lf-frame" data-l="en" lang="en">Every problem reflects this decision-making frame.</p>
   <p class="lf-frame" data-l="ko" lang="ko">모든 문제는 이 의사결정 프레임을 반영한다.</p>
 
-  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by seven factors: data collection, decision structure, temporal structure, reward model, feedback, learning objective, and data generation.</p>
-  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 일곱 개의 요소로 나뉜다: 데이터 수집, 결정 구조, 시간 구조, 보상 모델, 피드백, 학습 목표, 데이터 생성.</p>
+  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by seven factors: on the agent side, data collection, decision structure, and learning objective; on the environment side, temporal context, reward model, data generation, and feedback.</p>
+  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 일곱 개의 요소로 나뉜다. 에이전트 쪽에는 데이터 수집, 결정 구조, 학습 목표가 있고, 환경 쪽에는 시간적 맥락, 보상 모델, 데이터 생성, 피드백이 있다.</p>
 
+  <p class="cv-lead lf-group"><span data-l="en" lang="en">Agent</span><span data-l="ko" lang="ko">에이전트</span></p>
   <dl class="lf-factors">
     <div>
       <dt>Data collection</dt>
@@ -214,7 +218,15 @@ permalink: /pages/learning-framework/
         <span class="lf-where"><span data-l="en" lang="en">The arrow from πᵗ to xᵗ</span><span data-l="ko" lang="ko">πᵗ에서 xᵗ로 가는 화살표</span></span></dd>
     </div>
     <div>
-      <dt>Temporal structure</dt>
+      <dt>Learning objective</dt>
+      <dd><span data-l="en" lang="en">How success is measured.</span><span data-l="ko" lang="ko">무엇으로 성공을 재는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">The returning arrow, the last column, and the mark below</span><span data-l="ko" lang="ko">돌아오는 화살표, 마지막 칸, 아래의 평가 표시</span></span></dd>
+    </div>
+  </dl>
+  <p class="cv-lead lf-group"><span data-l="en" lang="en">Environment</span><span data-l="ko" lang="ko">환경</span></p>
+  <dl class="lf-factors">
+    <div>
+      <dt>Temporal context</dt>
       <dd><span data-l="en" lang="en">How time enters the problem.</span><span data-l="ko" lang="ko">시간이 문제에 어떻게 들어오는가.</span>
         <span class="lf-where"><span data-l="en" lang="en">Row xᵗ and the arrows between columns</span><span data-l="ko" lang="ko">xᵗ의 행과 칸 사이의 화살표</span></span></dd>
     </div>
@@ -224,19 +236,14 @@ permalink: /pages/learning-framework/
         <span class="lf-where"><span data-l="en" lang="en">The vertical arrow between xᵗ and rᵗ</span><span data-l="ko" lang="ko">xᵗ와 rᵗ 사이의 세로 화살표</span></span></dd>
     </div>
     <div>
-      <dt>Feedback</dt>
-      <dd><span data-l="en" lang="en">What the agent observes after acting.</span><span data-l="ko" lang="ko">행동한 뒤 무엇을 관측하는가.</span>
-        <span class="lf-where"><span data-l="en" lang="en">Rows rᵗ and oᵗ: filled cells are observed</span><span data-l="ko" lang="ko">rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸</span></span></dd>
-    </div>
-    <div>
-      <dt>Learning objective</dt>
-      <dd><span data-l="en" lang="en">How success is measured.</span><span data-l="ko" lang="ko">무엇으로 성공을 재는가.</span>
-        <span class="lf-where"><span data-l="en" lang="en">The returning arrow, the last column, and the mark below</span><span data-l="ko" lang="ko">돌아오는 화살표, 마지막 칸, 아래의 평가 표시</span></span></dd>
-    </div>
-    <div>
       <dt>Data generation</dt>
       <dd><span data-l="en" lang="en">How the data are generated.</span><span data-l="ko" lang="ko">데이터가 어떻게 생성되는가.</span>
         <span class="lf-where"><span data-l="en" lang="en">The globe M* and the box around xᵗ, rᵗ, oᵗ that it governs</span><span data-l="ko" lang="ko">지구본 M*와 그것이 관할하는 xᵗ, rᵗ, oᵗ의 상자</span></span></dd>
+    </div>
+    <div>
+      <dt>Feedback</dt>
+      <dd><span data-l="en" lang="en">What the agent observes after acting.</span><span data-l="ko" lang="ko">행동한 뒤 무엇을 관측하는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">Rows rᵗ and oᵗ: filled cells are observed</span><span data-l="ko" lang="ko">rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸</span></span></dd>
     </div>
   </dl>
 </section>
@@ -281,7 +288,7 @@ permalink: /pages/learning-framework/
       <g id="endo" data-ax="temp"></g>
       <ellipse id="elTemp" class="ell" data-ax="temp" cx="460" cy="118" rx="112" ry="24"/>
       <ellipse id="elFb" class="ell" data-ax="fb" cx="460" cy="230" rx="112" ry="46"/>
-      <text class="ax" data-ax="temp" x="460" y="74" text-anchor="middle">temporal structure</text>
+      <text class="ax" data-ax="temp" x="460" y="74" text-anchor="middle">temporal context</text>
       <text class="ax" data-ax="fb" x="440" y="306" text-anchor="middle">feedback</text>
 
       <!-- reward model: one arrow from the context row to the reward row -->
@@ -334,7 +341,12 @@ permalink: /pages/learning-framework/
     <span><span data-l="en" lang="en">The seven axes</span><span data-l="ko" lang="ko">일곱 축</span></span>
     <span class="line"></span>
   </h2>
-  <div class="lf-axes" id="axes" aria-label="Seven axes / 일곱 축"></div>
+  <div id="axes" aria-label="Seven axes / 일곱 축">
+    <p class="cv-lead lf-group"><span data-l="en" lang="en">Agent</span><span data-l="ko" lang="ko">에이전트</span></p>
+    <div class="lf-axes" id="axes-agent"></div>
+    <p class="cv-lead lf-group"><span data-l="en" lang="en">Environment</span><span data-l="ko" lang="ko">환경</span></p>
+    <div class="lf-axes" id="axes-env"></div>
+  </div>
   <a class="lf-back" href="{{ '/pages/' | relative_url }}">← <span data-l="en" lang="en">All pages</span><span data-l="ko" lang="ko">페이지 목록</span></a>
 </section>
 
@@ -344,18 +356,25 @@ const AXES = [
   {id:'acq', name:'Data collection',
    q:['Who chooses the data?', '데이터를 누가 고르나'],
    where:['The arrow between xᵗ and the agent', '점선: xᵗ와 에이전트 사이의 연결'], vals:[
-    ['Fixed dataset', 'The whole table is given up front. Decisions play no part in the data.', '표 전체가 처음부터 주어진다. 결정이 데이터에 관여하지 않는다.'],
-    ['Sequential arrival', 'Data arrive one at a time, but I cannot choose them.', '데이터가 하나씩 도착하지만 내가 고를 수 없다.'],
-    ['Active query', 'I choose which points to get labels for.', '어떤 점의 라벨을 받을지 내가 고른다.'],
+    ['Fixed', 'The whole table is given up front. Decisions play no part in the data.', '표 전체가 처음부터 주어진다. 결정이 데이터에 관여하지 않는다.'],
+    ['Sequential', 'Data arrive one at a time, but I cannot choose them.', '데이터가 하나씩 도착하지만 내가 고를 수 없다.'],
+    ['Active', 'I choose which points to get labels for.', '어떤 점의 라벨을 받을지 내가 고른다.'],
     ['Action-generated', 'My action itself produces the data that gets recorded.', '내 행동이 곧 기록될 데이터를 만든다.']]},
-  {id:'fb', name:'Feedback',
-   q:['What is observed?', '무엇을 관측하나'],
-   where:['Rows rᵗ and oᵗ: filled cells are observed', 'rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸'], vals:[
-    ['Full information', 'The outcome of every action is revealed.', '모든 행동의 결과가 보인다.'],
-    ['Semi-bandit', 'The outcomes of the chosen components are revealed.', '고른 구성 요소들의 결과가 보인다.'],
-    ['Bandit', 'Only the outcome of the chosen action is revealed.', '고른 행동의 결과 하나만 보인다.'],
-    ['Partial monitoring', 'Rewards stay hidden; only an observation signal is seen.', '보상은 보이지 않고 관측 신호만 보인다.']]},
-  {id:'temp', name:'Temporal structure',
+  {id:'dec', name:'Decision structure',
+   q:['What is decided?', '무엇을 결정하나'],
+   where:['The arrow from πᵗ to xᵗ', '점선: πᵗ에서 xᵗ로 가는 연결'], vals:[
+    ['Prediction', 'Output a label or a predictor. No interaction with the environment.', '라벨이나 예측기를 낸다. 환경과 상호작용하지 않는다.'],
+    ['Finite actions', 'Pick one of K actions.', 'K개의 행동 중 하나를 고른다.'],
+    ['Structured actions', 'Pick from a linear, combinatorial, or continuous action space.', '선형, 조합, 연속 행동 공간에서 고른다.'],
+    ['Policy', 'Pick a rule that assigns an action to every state.', '상태마다 행동을 정하는 규칙을 고른다.']]},
+  {id:'obj', name:'Learning objective',
+   q:['How is success measured?', '무엇으로 성공을 재나'],
+   where:['The returning arrow, the last column, and the mark below', '돌아오는 화살표, 마지막 칸, 아래의 평가 표시'], vals:[
+    ['Risk', 'Expected loss on new data outside the table.', '표 밖의 새 데이터에서의 기대 손실로 잰다.'],
+    ['Regret', 'Cumulative shortfall of the whole reward row against the best benchmark.', '보상의 행 전체를 최선의 기준과 비교해 누적 손해를 잰다.'],
+    ['Identification', 'Whether the answer given at stopping time τ is correct, and how many samples it took.', '멈춘 시점 τ에 내놓은 답이 맞는지, 표본이 얼마나 들었는지로 잰다.'],
+    ['Inference', 'Whether the conclusions about the environment M* are statistically valid.', '환경 M*에 대한 결론이 통계적으로 타당한지로 잰다.']]},
+  {id:'temp', name:'Temporal context',
    q:['How does time enter?', '시간이 어떻게 들어오나'],
    where:['Row xᵗ and the arrows between columns', 'xᵗ의 행과 칸 사이의 화살표'], vals:[
     ['None', 'Learn once, with no notion of time.', '시간 개념 없이 한 번에 학습한다.'],
@@ -376,20 +395,13 @@ const AXES = [
     ['Stochastic', 'M* is a stochastic process that can change over time.', 'M*가 시간에 따라 바뀔 수 있는 확률 과정이다.'],
     ['Arbitrary', 'The sequence is fixed in advance, arbitrarily, with no distribution behind it.', '분포 없이 수열이 미리 임의로 정해져 있다.'],
     ['Adversarial', 'M* reads the history so far and writes the next round against the agent. An arrow appears from the data to the environment.', 'M*가 지금까지의 기록을 보고 다음 라운드를 쓴다. 데이터에서 환경으로 화살표가 생긴다.']]},
-  {id:'dec', name:'Decision structure',
-   q:['What is decided?', '무엇을 결정하나'],
-   where:['The arrow from πᵗ to xᵗ', '점선: πᵗ에서 xᵗ로 가는 연결'], vals:[
-    ['Prediction', 'Output a label or a predictor. No interaction with the environment.', '라벨이나 예측기를 낸다. 환경과 상호작용하지 않는다.'],
-    ['Finite actions', 'Pick one of K actions.', 'K개의 행동 중 하나를 고른다.'],
-    ['Structured actions', 'Pick from a linear, combinatorial, or continuous action space.', '선형, 조합, 연속 행동 공간에서 고른다.'],
-    ['Policy', 'Pick a rule that assigns an action to every state.', '상태마다 행동을 정하는 규칙을 고른다.']]},
-  {id:'obj', name:'Learning objective',
-   q:['How is success measured?', '무엇으로 성공을 재나'],
-   where:['The returning arrow, the last column, and the mark below', '돌아오는 화살표, 마지막 칸, 아래의 평가 표시'], vals:[
-    ['Risk', 'Expected loss on new data outside the table.', '표 밖의 새 데이터에서의 기대 손실로 잰다.'],
-    ['Regret', 'Cumulative shortfall of the whole reward row against the best benchmark.', '보상의 행 전체를 최선의 기준과 비교해 누적 손해를 잰다.'],
-    ['Identification', 'Whether the answer given at stopping time τ is correct, and how many samples it took.', '멈춘 시점 τ에 내놓은 답이 맞는지, 표본이 얼마나 들었는지로 잰다.'],
-    ['Inference', 'Whether the conclusions about the environment M* are statistically valid.', '환경 M*에 대한 결론이 통계적으로 타당한지로 잰다.']]}
+  {id:'fb', name:'Feedback',
+   q:['What is observed?', '무엇을 관측하나'],
+   where:['Rows rᵗ and oᵗ: filled cells are observed', 'rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸'], vals:[
+    ['Full information', 'The outcome of every action is revealed.', '모든 행동의 결과가 보인다.'],
+    ['Semi-bandit', 'The outcomes of the chosen components are revealed.', '고른 구성 요소들의 결과가 보인다.'],
+    ['Bandit', 'Only the outcome of the chosen action is revealed.', '고른 행동의 결과 하나만 보인다.'],
+    ['Partial monitoring', 'Rewards stay hidden; only an observation signal is seen.', '보상은 보이지 않고 관측 신호만 보인다.']]}
 ];
 const FAM = [
   ['Statistical Learning', {acq:0, fb:0, temp:0, rm:3, env:0, dec:0, obj:0}],
@@ -475,7 +487,7 @@ function rich(el, toks) {
 // line styles, from no interaction to full interaction
 const STYLES = ['off', 'dash', 'dashdot', 'solid'];
 function setStyle(id, s) { const e = document.getElementById(id); STYLES.forEach(k => e.classList.toggle(k, k === s)); }
-const ACQ_STYLE = ['off', 'dash', 'dashdot', 'solid'];   // fixed · sequential · active query · action-generated
+const ACQ_STYLE = ['off', 'dash', 'dashdot', 'solid'];   // fixed · sequential · active · action-generated
 const ENV_STYLE = ['dash', 'dashdot', 'solid', 'solid']; // i.i.d. · stochastic · adversarial · adaptive
 // a different tilt per round shows a context that changes from round to round
 const TILT = [-14, 12, -24, 20];
@@ -541,7 +553,7 @@ AXES.forEach(a => {
     '<div class="lf-opts" role="group" aria-label="' + a.name + '">' +
     a.vals.map((v, k) => '<button type="button" class="lf-chip sm" data-ax="' + a.id + '" data-k="' + k + '">' + v[0] + '</button>').join('') + '</div>' +
     '<p class="lf-desc" data-l="en" lang="en"></p><p class="lf-desc" data-l="ko" lang="ko"></p>';
-  axesEl.appendChild(c);
+  document.getElementById(['acq', 'dec', 'obj'].includes(a.id) ? 'axes-agent' : 'axes-env').appendChild(c);
 });
 function renderCards() {
   AXES.forEach(a => {
