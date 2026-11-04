@@ -374,8 +374,8 @@ const AXES = [
    where:['The globe M* and the box around xᵗ, rᵗ, oᵗ that it governs', '지구본 M*와 그것이 관할하는 xᵗ, rᵗ, oᵗ의 상자'], vals:[
     ['i.i.d.', 'A fixed M* generates every round independently.', '고정된 M*가 매 라운드를 독립적으로 생성한다.'],
     ['Stochastic', 'M* is a stochastic process that can change over time.', 'M*가 시간에 따라 바뀔 수 있는 확률 과정이다.'],
-    ['Adversarial', 'The table is written in advance, arbitrarily.', '표가 미리 임의로 쓰여 있다.'],
-    ['Adaptive adversary', 'M* reads the history so far and writes the next round. An arrow appears from the data to the environment.', 'M*가 지금까지의 기록을 보고 다음 라운드를 쓴다. 데이터에서 환경으로 화살표가 생긴다.']]},
+    ['Arbitrary', 'The sequence is fixed in advance, arbitrarily, with no distribution behind it.', '분포 없이 수열이 미리 임의로 정해져 있다.'],
+    ['Adversarial', 'M* reads the history so far and writes the next round against the agent. An arrow appears from the data to the environment.', 'M*가 지금까지의 기록을 보고 다음 라운드를 쓴다. 데이터에서 환경으로 화살표가 생긴다.']]},
   {id:'dec', name:'Decision structure',
    q:['What is decided?', '무엇을 결정하나'],
    where:['The arrow from πᵗ to xᵗ', '점선: πᵗ에서 xᵗ로 가는 연결'], vals:[
@@ -451,7 +451,7 @@ const RM_CAP = [
 const ENV_CAP = [
   [[['rm', 'fixed ']].concat(MSTAR), MSTAR.concat([['rm', ' 고정']])],
   [[['rm', 'drifting ']].concat(MSTAR, [['mi', 't', 'sub']]), MSTAR.concat([['mi', 't', 'sub'], ['rm', ' 변화']])],
-  [[['rm', 'oblivious']], [['rm', '미리 쓰인 표']]],
+  [[['rm', 'arbitrary']], [['rm', '미리 쓰인 표']]],
   [[['rm', 'adaptive']], [['rm', '기록에 반응']]]
 ];
 const SHIFT = {sup: -5, sub: 3};
