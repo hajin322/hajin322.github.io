@@ -212,17 +212,17 @@ permalink: /pages/learning-framework/
     <div>
       <dt>Data collection</dt>
       <dd><span data-l="en" lang="en">Who chooses the data.</span><span data-l="ko" lang="ko">데이터를 누가 고르는가.</span>
-        <span class="lf-where"><span data-l="en" lang="en">The line style of the arrow from the agent to xᵗ</span><span data-l="ko" lang="ko">에이전트에서 xᵗ로 가는 화살표의 선 모양</span></span></dd>
+        <span class="lf-where"><span data-l="en" lang="en">The arrow from the data back to the agent</span><span data-l="ko" lang="ko">데이터에서 에이전트로 돌아오는 화살표</span></span></dd>
     </div>
     <div>
       <dt>Decision structure</dt>
       <dd><span data-l="en" lang="en">What the agent decides.</span><span data-l="ko" lang="ko">무엇을 결정하는가.</span>
-        <span class="lf-where"><span data-l="en" lang="en">The label under the arrow from πᵗ to xᵗ</span><span data-l="ko" lang="ko">πᵗ에서 xᵗ로 가는 화살표 아래의 표기</span></span></dd>
+        <span class="lf-where"><span data-l="en" lang="en">The arrow from πᵗ to xᵗ</span><span data-l="ko" lang="ko">πᵗ에서 xᵗ로 가는 화살표</span></span></dd>
     </div>
     <div>
       <dt>Learning objective</dt>
       <dd><span data-l="en" lang="en">How success is measured.</span><span data-l="ko" lang="ko">무엇으로 성공을 재는가.</span>
-        <span class="lf-where"><span data-l="en" lang="en">The returning arrow, the last column, and the mark below</span><span data-l="ko" lang="ko">돌아오는 화살표, 마지막 칸, 아래의 평가 표시</span></span></dd>
+        <span class="lf-where"><span data-l="en" lang="en">The last column and the mark at the bottom</span><span data-l="ko" lang="ko">마지막 칸과 아래쪽 평가 표시</span></span></dd>
     </div>
   </dl>
   <p class="cv-lead lf-group"><span data-l="en" lang="en">Environment</span><span data-l="ko" lang="ko">환경</span></p>
@@ -271,13 +271,13 @@ permalink: /pages/learning-framework/
       <text class="m" x="82" y="174" style="font-size:18px">π<tspan dy="-7" style="font-size:11px">t</tspan></text>
 
       <!-- agent ↔ data: each label sits on its own arrow -->
-      <!-- two arrows: out (decision, styled by how far it reaches into the data) and back (learning) -->
-      <path id="decLine" class="link" data-ax="acq" d="M118 158 Q222 72 326 118"/>
-      <path id="retLine" class="link" data-ax="obj" d="M312 228 Q216 282 116 190"/>
-      <text class="ax" data-ax="acq" x="222" y="92" text-anchor="middle">data collection</text>
-      <text class="ax" data-ax="dec" x="228" y="150" text-anchor="middle">decision structure</text>
-      <text class="capA" id="decCap" data-ax="dec" x="228" y="167" text-anchor="middle"></text>
-      <text class="ax" data-ax="obj" x="214" y="276" text-anchor="middle">learning objective</text>
+      <!-- two arrows: agent → environment carries the decision, environment → agent carries the data -->
+      <path id="decLine" class="link" data-ax="dec" d="M118 158 Q222 80 326 118"/>
+      <path id="retLine" class="link" data-ax="acq" d="M312 228 Q216 282 116 190"/>
+      <text class="ax" data-ax="dec" x="222" y="76" text-anchor="middle">decision structure</text>
+      <text class="capA" id="decCap" data-ax="dec" x="222" y="93" text-anchor="middle"></text>
+      <text class="ax" data-ax="acq" x="214" y="276" text-anchor="middle">data collection</text>
+      <text class="ax" data-ax="obj" x="214" y="342" text-anchor="middle">learning objective</text>
 
       <!-- the data, inside the environment's box -->
       <rect id="envBox" class="rgn" data-ax="env" x="306" y="88" width="278" height="196" rx="10"/>
@@ -355,21 +355,21 @@ permalink: /pages/learning-framework/
 const AXES = [
   {id:'acq', name:'Data collection',
    q:['Who chooses the data?', '데이터를 누가 고르나'],
-   where:['The line style of the arrow from the agent to xᵗ', '에이전트에서 xᵗ로 가는 화살표의 선 모양'], vals:[
+   where:['The arrow from the data back to the agent', '데이터에서 에이전트로 돌아오는 화살표'], vals:[
     ['Fixed', 'The whole table is given up front. Decisions play no part in the data.', '표 전체가 처음부터 주어진다. 결정이 데이터에 관여하지 않는다.'],
     ['Sequential', 'Data arrive one at a time, but I cannot choose them.', '데이터가 하나씩 도착하지만 내가 고를 수 없다.'],
     ['Active', 'I choose which points to get labels for.', '어떤 점의 라벨을 받을지 내가 고른다.'],
     ['Action-generated', 'My action itself produces the data that gets recorded.', '내 행동이 곧 기록될 데이터를 만든다.']]},
   {id:'dec', name:'Decision structure',
    q:['What is decided?', '무엇을 결정하나'],
-   where:['The label under the arrow from πᵗ to xᵗ', 'πᵗ에서 xᵗ로 가는 화살표 아래의 표기'], vals:[
+   where:['The arrow from πᵗ to xᵗ', 'πᵗ에서 xᵗ로 가는 화살표'], vals:[
     ['Prediction', 'Output a label or a predictor. No interaction with the environment.', '라벨이나 예측기를 낸다. 환경과 상호작용하지 않는다.'],
     ['Finite actions', 'Pick one of K actions.', 'K개의 행동 중 하나를 고른다.'],
     ['Structured actions', 'Pick from a linear, combinatorial, or continuous action space.', '선형, 조합, 연속 행동 공간에서 고른다.'],
     ['Policy', 'Pick a rule that assigns an action to every state.', '상태마다 행동을 정하는 규칙을 고른다.']]},
   {id:'obj', name:'Learning objective',
    q:['How is success measured?', '무엇으로 성공을 재나'],
-   where:['The returning arrow, the last column, and the mark below', '돌아오는 화살표, 마지막 칸, 아래의 평가 표시'], vals:[
+   where:['The last column and the mark at the bottom', '마지막 칸과 아래쪽 평가 표시'], vals:[
     ['Risk', 'Expected loss on new data outside the table.', '표 밖의 새 데이터에서의 기대 손실로 잰다.'],
     ['Regret', 'Cumulative shortfall of the whole reward row against the best benchmark.', '보상의 행 전체를 최선의 기준과 비교해 누적 손해를 잰다.'],
     ['Identification', 'Whether the answer given at stopping time τ is correct, and how many samples it took.', '멈춘 시점 τ에 내놓은 답이 맞는지, 표본이 얼마나 들었는지로 잰다.'],
@@ -492,8 +492,8 @@ const ENV_STYLE = ['off', 'dash', 'dashdot', 'solid'];   // i.i.d. · stochastic
 // a different tilt per round shows a context that changes from round to round
 const TILT = [-14, 12, -24, 20];
 function renderFig() {
-  // the outgoing arrow's line shows how far the decision reaches into the data
-  setStyle('decLine', ACQ_STYLE[state.acq]);
+  setStyle('decLine', state.dec >= 1 ? 'solid' : 'off');
+  setStyle('retLine', ACQ_STYLE[state.acq]);
   setStyle('envBox', ENV_STYLE[state.env]);
   rich(document.getElementById('decCap'), DEC_CAP[state.dec]);
   const envT = document.querySelectorAll('#envCap text');
