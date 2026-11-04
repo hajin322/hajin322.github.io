@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Learning Framework"
-description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by seven factors: data collection, decision structure, temporal structure, reward model, feedback, learning objective, and environmental model."
+description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by seven factors: data collection, decision structure, temporal structure, reward model, feedback, learning objective, and data generation."
 permalink: /pages/learning-framework/
 ---
 
@@ -199,8 +199,8 @@ permalink: /pages/learning-framework/
   <p class="lf-frame" data-l="en" lang="en">Every problem reflects this decision-making frame.</p>
   <p class="lf-frame" data-l="ko" lang="ko">모든 문제는 이 의사결정 프레임을 반영한다.</p>
 
-  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by seven factors: data collection, decision structure, temporal structure, reward model, feedback, learning objective, and environmental model.</p>
-  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 일곱 개의 요소로 나뉜다: 데이터 수집, 결정 구조, 시간 구조, 보상 모델, 피드백, 학습 목표, 환경 모델.</p>
+  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by seven factors: data collection, decision structure, temporal structure, reward model, feedback, learning objective, and data generation.</p>
+  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 일곱 개의 요소로 나뉜다: 데이터 수집, 결정 구조, 시간 구조, 보상 모델, 피드백, 학습 목표, 데이터 생성.</p>
 
   <dl class="lf-factors">
     <div>
@@ -234,7 +234,7 @@ permalink: /pages/learning-framework/
         <span class="lf-where"><span data-l="en" lang="en">The returning arrow, the last column, and the mark below</span><span data-l="ko" lang="ko">돌아오는 화살표, 마지막 칸, 아래의 평가 표시</span></span></dd>
     </div>
     <div>
-      <dt>Environmental model</dt>
+      <dt>Data generation</dt>
       <dd><span data-l="en" lang="en">How the data are generated.</span><span data-l="ko" lang="ko">데이터가 어떻게 생성되는가.</span>
         <span class="lf-where"><span data-l="en" lang="en">The globe M* and the box around xᵗ, rᵗ, oᵗ that it governs</span><span data-l="ko" lang="ko">지구본 M*와 그것이 관할하는 xᵗ, rᵗ, oᵗ의 상자</span></span></dd>
     </div>
@@ -295,7 +295,7 @@ permalink: /pages/learning-framework/
       <g><circle class="ink" cx="652" cy="168" r="15"/><ellipse class="ink" cx="652" cy="168" rx="6" ry="15"/><line class="ink" x1="638" y1="162" x2="666" y2="162"/><line class="ink" x1="638" y1="174" x2="666" y2="174"/></g>
       <text class="t" x="652" y="202" text-anchor="middle" style="font-size:13px">environment</text>
       <g id="envCap" data-ax="env"><text class="capA" data-l="en" x="652" y="218" text-anchor="middle"></text><text class="capA" data-l="ko" x="652" y="218" text-anchor="middle"></text></g>
-      <text class="ax" data-ax="env" x="652" y="252" text-anchor="middle">environment model</text>
+      <text class="ax" data-ax="env" x="652" y="252" text-anchor="middle">data generation</text>
       <path id="advLine" class="link" data-ax="env" d="M564 116 Q592 116 606 158"/>
 
       <!-- objective marks -->
@@ -369,7 +369,7 @@ const AXES = [
     ['Linear', 'The mean reward is linear in the features: ⟨x, θ⋆⟩.', '평균 보상이 특징에 대해 선형이다: ⟨x, θ⋆⟩.'],
     ['Generalized linear', 'A known link function of a linear score: σ(⟨x, θ⋆⟩).', '선형 점수에 알려진 연결 함수를 씌운 값이다: σ(⟨x, θ⋆⟩).'],
     ['General function', 'A general function class, e.g. kernels or neural networks: f⋆(x).', '커널, 신경망 같은 일반 함수 클래스다: f⋆(x).']]},
-  {id:'env', name:'Environment model',
+  {id:'env', name:'Data generation',
    q:['How is the data generated?', '데이터가 어떻게 생성되나'],
    where:['The globe M* and the box around xᵗ, rᵗ, oᵗ that it governs', '지구본 M*와 그것이 관할하는 xᵗ, rᵗ, oᵗ의 상자'], vals:[
     ['i.i.d.', 'A fixed M* generates every round independently.', '고정된 M*가 매 라운드를 독립적으로 생성한다.'],
