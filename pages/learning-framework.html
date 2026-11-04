@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Learning Framework"
-description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by six factors: data acquisition, decision structure, temporal structure, feedback, learning objective, and environmental model."
+description: "An agent interacts with an unknown environment, learning a mapping from contexts to decisions. Every such problem is divided by seven factors: data acquisition, decision structure, temporal structure, reward model, feedback, learning objective, and environmental model."
 permalink: /pages/learning-framework/
 ---
 
@@ -111,6 +111,8 @@ permalink: /pages/learning-framework/
 #fig .col, #fig .xsq, #fig #dots { transition: opacity 0.25s; }
 #fig .hide { display: none; }
 #fig .focus.link, #fig .focus.ink { stroke: var(--accent) !important; stroke-width: 2.4; opacity: 1; marker-end: url(#arF); }
+#fig .rmA { marker-start: url(#ar); }
+#fig .focus.rmA { marker-start: url(#arF); }
 #fig .focus.ell { stroke: var(--accent); stroke-opacity: 1; stroke-width: 2; fill: var(--accent-soft); }
 #fig text.focus, #fig g.focus text { fill: var(--accent-deep); font-weight: 700; }
 
@@ -197,8 +199,8 @@ permalink: /pages/learning-framework/
   <p class="lf-frame" data-l="en" lang="en">Every problem reflects this decision-making frame.</p>
   <p class="lf-frame" data-l="ko" lang="ko">모든 문제는 이 의사결정 프레임을 반영한다.</p>
 
-  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by six factors: data acquisition, decision structure, temporal structure, feedback, learning objective, and environmental model.</p>
-  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 여섯 개의 요소로 나뉜다: 데이터 획득, 결정 구조, 시간 구조, 피드백, 학습 목표, 환경 모델.</p>
+  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by seven factors: data acquisition, decision structure, temporal structure, reward model, feedback, learning objective, and environmental model.</p>
+  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 일곱 개의 요소로 나뉜다: 데이터 획득, 결정 구조, 시간 구조, 보상 모델, 피드백, 학습 목표, 환경 모델.</p>
 
   <dl class="lf-factors">
     <div>
@@ -215,6 +217,11 @@ permalink: /pages/learning-framework/
       <dt>Temporal structure</dt>
       <dd><span data-l="en" lang="en">How time enters the problem.</span><span data-l="ko" lang="ko">시간이 문제에 어떻게 들어오는가.</span>
         <span class="lf-where"><span data-l="en" lang="en">Row xᵗ and the arrows between columns</span><span data-l="ko" lang="ko">xᵗ의 행과 칸 사이의 화살표</span></span></dd>
+    </div>
+    <div>
+      <dt>Reward model</dt>
+      <dd><span data-l="en" lang="en">How the reward depends on the context and the action.</span><span data-l="ko" lang="ko">보상이 맥락과 행동에 어떻게 의존하는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">The vertical arrows between xᵗ and rᵗ</span><span data-l="ko" lang="ko">xᵗ와 rᵗ 사이의 세로 화살표</span></span></dd>
     </div>
     <div>
       <dt>Feedback</dt>
@@ -240,7 +247,7 @@ permalink: /pages/learning-framework/
 
 <div class="lf-stage">
   <div class="lf-fig">
-    <svg id="fig" viewBox="0 0 780 330" role="img" aria-labelledby="figTitle">
+    <svg id="fig" viewBox="0 0 820 350" role="img" aria-labelledby="figTitle">
       <title id="figTitle">Agent, data and environment of a decision-making system</title>
       <defs>
         <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
@@ -256,53 +263,57 @@ permalink: /pages/learning-framework/
 
       <path id="acqLine" class="link" data-ax="acq" d="M330 108 Q255 62 186 146"/>
       <path id="decLine" class="link" data-ax="dec" d="M190 166 Q255 140 326 124"/>
-      <path id="retLine" class="link" data-ax="obj" d="M312 206 Q252 240 188 188"/>
+      <path id="retLine" class="link" data-ax="obj" d="M312 228 Q250 272 188 190"/>
       <text class="ax" data-ax="acq" x="256" y="66" text-anchor="middle">data acquisition</text>
       <text class="ax" data-ax="dec" x="246" y="174" text-anchor="middle">decision structure</text>
-      <text class="ax" data-ax="obj" x="232" y="256" text-anchor="middle">(learning) objective</text>
+      <text class="ax" data-ax="obj" x="226" y="282" text-anchor="middle">(learning) objective</text>
 
       <text class="m" x="332" y="124" style="font-size:16px">x<tspan class="lp-m" dy="-6" style="font-size:11px">t</tspan></text>
-      <text class="m" x="332" y="194" style="font-size:16px">r<tspan class="lp-m" dy="-6" style="font-size:11px">t</tspan></text>
-      <text class="m" x="332" y="236" style="font-size:16px">o<tspan class="lp-m" dy="-6" style="font-size:11px">t</tspan></text>
-      <path d="M328 174 Q320 174 320 183 L320 197 Q320 205 314 206 Q320 207 320 215 L320 230 Q320 240 328 240" fill="none" stroke="var(--text-secondary)" stroke-width="1.2"/>
+      <text class="m" x="332" y="216" style="font-size:16px">r<tspan class="lp-m" dy="-6" style="font-size:11px">t</tspan></text>
+      <text class="m" x="332" y="258" style="font-size:16px">o<tspan class="lp-m" dy="-6" style="font-size:11px">t</tspan></text>
+      <path d="M328 196 Q320 196 320 205 L320 219 Q320 227 314 228 Q320 229 320 237 L320 252 Q320 262 328 262" fill="none" stroke="var(--text-secondary)" stroke-width="1.2"/>
 
-      <rect id="envBox" class="rgn" data-ax="env" x="306" y="88" width="278" height="174" rx="10"/>
-      <line id="envLink" class="rgn" data-ax="env" x1="584" y1="160" x2="640" y2="160"/>
+      <rect id="envBox" class="rgn" data-ax="env" x="306" y="88" width="278" height="196" rx="10"/>
+      <line id="envLink" class="rgn" data-ax="env" x1="584" y1="262" x2="692" y2="206"/>
       <g id="cols"></g>
-      <g id="dots"><text class="ts" x="512" y="122" text-anchor="middle">⋯</text><text class="ts" x="512" y="192" text-anchor="middle">⋯</text><text class="ts" x="512" y="234" text-anchor="middle">⋯</text></g>
+      <g id="dots"><text class="ts" x="512" y="122" text-anchor="middle">⋯</text><text class="ts" x="512" y="214" text-anchor="middle">⋯</text><text class="ts" x="512" y="256" text-anchor="middle">⋯</text></g>
       <g id="endo" data-ax="temp"></g>
+      <g id="rmArrows" data-ax="rm"></g>
 
       <ellipse id="elTemp" class="ell" data-ax="temp" cx="460" cy="118" rx="112" ry="24"/>
       <text class="ax" data-ax="temp" x="460" y="82" text-anchor="middle">temporal structure</text>
-      <ellipse id="elFb" class="ell" data-ax="fb" cx="460" cy="208" rx="112" ry="46"/>
-      <text class="ax" data-ax="fb" x="460" y="279" text-anchor="middle">feedback</text>
+      <ellipse id="elFb" class="ell" data-ax="fb" cx="460" cy="230" rx="112" ry="46"/>
+      <text class="ax" data-ax="fb" x="460" y="301" text-anchor="middle">feedback</text>
 
-      <g><circle class="ink" cx="695" cy="152" r="16"/><ellipse class="ink" cx="695" cy="152" rx="6.5" ry="16"/><line class="ink" x1="680" y1="146" x2="710" y2="146"/><line class="ink" x1="680" y1="158" x2="710" y2="158"/></g>
-      <text class="t" x="695" y="190" text-anchor="middle" style="font-size:13px">environment</text>
-      <g id="envCap" data-ax="env"><text class="capA" data-l="en" x="695" y="207" text-anchor="middle"></text><text class="capA" data-l="ko" x="695" y="207" text-anchor="middle"></text></g>
-      <ellipse id="elEnv" class="ell" data-ax="env" cx="695" cy="172" rx="56" ry="48"/>
-      <text class="ax" data-ax="env" x="695" y="238" text-anchor="middle">environment model</text>
-      <path id="advLine" class="link" data-ax="env" d="M548 102 Q620 38 680 132"/>
+      <text class="ax" data-ax="rm" x="634" y="160" text-anchor="middle">reward model</text>
+      <g id="rmCap" data-ax="rm"><text class="capA" data-l="en" x="634" y="179" text-anchor="middle"></text><text class="capA" data-l="ko" x="634" y="179" text-anchor="middle"></text></g>
+
+      <g><circle class="ink" cx="735" cy="152" r="16"/><ellipse class="ink" cx="735" cy="152" rx="6.5" ry="16"/><line class="ink" x1="720" y1="146" x2="750" y2="146"/><line class="ink" x1="720" y1="158" x2="750" y2="158"/></g>
+      <text class="t" x="735" y="190" text-anchor="middle" style="font-size:13px">environment</text>
+      <g id="envCap" data-ax="env"><text class="capA" data-l="en" x="735" y="207" text-anchor="middle"></text><text class="capA" data-l="ko" x="735" y="207" text-anchor="middle"></text></g>
+      <ellipse id="elEnv" class="ell" data-ax="env" cx="735" cy="172" rx="56" ry="48"/>
+      <text class="ax" data-ax="env" x="735" y="238" text-anchor="middle">environment model</text>
+      <path id="advLine" class="link" data-ax="env" d="M548 102 Q640 38 720 132"/>
 
       <g id="objRisk" data-ax="obj" class="hide">
         <rect x="601" y="107" width="22" height="22" rx="2" fill="none" stroke="var(--accent)" stroke-dasharray="3 3"/>
-        <text class="capA" x="612" y="196" text-anchor="middle" style="font-size:18px">?</text>
-        <text class="capA" data-l="en" x="612" y="310" text-anchor="middle">evaluated on new data</text>
-        <text class="capA" data-l="ko" x="612" y="310" text-anchor="middle">새 데이터에서 평가</text>
+        <text class="capA" x="612" y="218" text-anchor="middle" style="font-size:18px">?</text>
+        <text class="capA" data-l="en" x="612" y="332" text-anchor="middle">evaluated on new data</text>
+        <text class="capA" data-l="ko" x="612" y="332" text-anchor="middle">새 데이터에서 평가</text>
       </g>
       <g id="objRegret" data-ax="obj" class="hide">
-        <path d="M360 290 L360 298 L560 298 L560 290" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
-        <text class="capA" data-l="en" x="460" y="318" text-anchor="middle">Σ (best reward − my reward)</text>
-        <text class="capA" data-l="ko" x="460" y="318" text-anchor="middle">Σ (최선의 보상 − 내 보상)</text>
+        <path d="M360 312 L360 320 L560 320 L560 312" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
+        <text class="capA" data-l="en" x="460" y="340" text-anchor="middle">Σ (best reward − my reward)</text>
+        <text class="capA" data-l="ko" x="460" y="340" text-anchor="middle">Σ (최선의 보상 − 내 보상)</text>
       </g>
       <g id="objId" data-ax="obj" class="hide">
-        <line x1="498" y1="92" x2="498" y2="292" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 3"/>
-        <text class="capA" data-l="en" x="498" y="310" text-anchor="middle">stop at <tspan class="mi">τ</tspan> and answer</text>
-        <text class="capA" data-l="ko" x="498" y="310" text-anchor="middle"><tspan class="mi">τ</tspan>에서 멈추고 답을 낸다</text>
+        <line x1="498" y1="92" x2="498" y2="314" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text class="capA" data-l="en" x="498" y="332" text-anchor="middle">stop at <tspan class="mi">τ</tspan> and answer</text>
+        <text class="capA" data-l="ko" x="498" y="332" text-anchor="middle"><tspan class="mi">τ</tspan>에서 멈추고 답을 낸다</text>
       </g>
       <g id="objInf" data-ax="obj" class="hide">
-        <text class="capA" data-l="en" x="766" y="310" text-anchor="end">conclusions about <tspan class="mi">M</tspan><tspan dy="-5" style="font-size:70%">∗</tspan><tspan dy="5"> and their validity</tspan></text>
-        <text class="capA" data-l="ko" x="695" y="310" text-anchor="middle"><tspan class="mi">M</tspan><tspan dy="-5" style="font-size:70%">∗</tspan><tspan dy="5">에 대한 결론과 그 타당성</tspan></text>
+        <text class="capA" data-l="en" x="806" y="332" text-anchor="end">conclusions about <tspan class="mi">M</tspan><tspan dy="-5" style="font-size:70%">∗</tspan><tspan dy="5"> and their validity</tspan></text>
+        <text class="capA" data-l="ko" x="735" y="332" text-anchor="middle"><tspan class="mi">M</tspan><tspan dy="-5" style="font-size:70%">∗</tspan><tspan dy="5">에 대한 결론과 그 타당성</tspan></text>
       </g>
     </svg>
   </div>
@@ -318,10 +329,10 @@ permalink: /pages/learning-framework/
 <section class="section" id="axes-section">
   <h2 class="section-title">
     <span class="num">01</span>
-    <span><span data-l="en" lang="en">The six axes</span><span data-l="ko" lang="ko">여섯 축</span></span>
+    <span><span data-l="en" lang="en">The seven axes</span><span data-l="ko" lang="ko">일곱 축</span></span>
     <span class="line"></span>
   </h2>
-  <div class="lf-axes" id="axes" aria-label="Six axes / 여섯 축"></div>
+  <div class="lf-axes" id="axes" aria-label="Seven axes / 일곱 축"></div>
   <a class="lf-back" href="{{ '/pages/' | relative_url }}">← <span data-l="en" lang="en">All pages</span><span data-l="ko" lang="ko">페이지 목록</span></a>
 </section>
 
@@ -349,6 +360,13 @@ const AXES = [
     ['Independent rounds', 'Rounds follow one another, but each is the same situation with no context.', '라운드가 이어지지만 매번 같은 상황이고 맥락이 없다.'],
     ['Exogenous context', 'The situation changes, but independently of my actions.', '상황이 바뀌지만 내 행동과는 무관하다.'],
     ['Endogenous state', 'My action changes the next situation. Arrows appear between columns.', '내 행동이 다음 상황을 바꾼다. 칸 사이에 화살표가 생긴다.']]},
+  {id:'rm', name:'Reward model',
+   q:['How does the reward depend on context and action?', '보상이 맥락과 행동에 어떻게 의존하나'],
+   where:['The vertical arrows between xᵗ and rᵗ', 'xᵗ와 rᵗ 사이의 세로 화살표'], vals:[
+    ['None', 'No structure shared across actions; each arm has its own mean.', '행동 사이에 공유되는 구조가 없다. 팔마다 평균이 따로 있다.'],
+    ['Linear', 'The mean reward is linear in the features: ⟨θ*, x⟩.', '평균 보상이 특징에 대해 선형이다: ⟨θ*, x⟩.'],
+    ['Generalized linear', 'A known link function of a linear score: μ(⟨θ*, x⟩).', '선형 점수에 알려진 연결 함수를 씌운 값이다: μ(⟨θ*, x⟩).'],
+    ['General function', 'A general function class, e.g. kernels or neural networks: f*(x).', '커널, 신경망 같은 일반 함수 클래스다: f*(x).']]},
   {id:'env', name:'Environment model',
    q:['How is the data generated?', '데이터가 어떻게 생성되나'],
    where:['The globe M* and the box around xᵗ, rᵗ, oᵗ that it governs', '지구본 M*와 그것이 관할하는 xᵗ, rᵗ, oᵗ의 상자'], vals:[
@@ -372,17 +390,17 @@ const AXES = [
     ['Inference', 'Whether the conclusions about the environment M* are statistically valid.', '환경 M*에 대한 결론이 통계적으로 타당한지로 잰다.']]}
 ];
 const FAM = [
-  ['Statistical Learning', {acq:0, fb:0, temp:0, env:0, dec:0, obj:0}],
-  ['Imitation Learning', {acq:0, fb:0, temp:3, env:0, dec:3, obj:0}],
-  ['Active Learning', {acq:2, fb:0, temp:1, env:0, dec:0, obj:0}],
-  ['Online Learning', {acq:1, fb:0, temp:1, env:2, dec:1, obj:1}],
-  ['Multi-armed Bandit', {acq:3, fb:2, temp:1, env:0, dec:1, obj:1}],
-  ['Best Arm Identification', {acq:3, fb:2, temp:1, env:0, dec:1, obj:2}],
-  ['Linear Bandit', {acq:3, fb:2, temp:1, env:0, dec:2, obj:1}],
-  ['Combinatorial Semi-bandit', {acq:3, fb:1, temp:1, env:0, dec:2, obj:1}],
-  ['Contextual Bandit', {acq:3, fb:2, temp:2, env:0, dec:1, obj:1}],
-  ['Partial Monitoring', {acq:3, fb:3, temp:1, env:2, dec:1, obj:1}],
-  ['Reinforcement Learning', {acq:3, fb:2, temp:3, env:0, dec:3, obj:1}]
+  ['Statistical Learning', {acq:0, fb:0, temp:0, rm:3, env:0, dec:0, obj:0}],
+  ['Imitation Learning', {acq:0, fb:0, temp:3, rm:3, env:0, dec:3, obj:0}],
+  ['Active Learning', {acq:2, fb:0, temp:1, rm:3, env:0, dec:0, obj:0}],
+  ['Online Learning', {acq:1, fb:0, temp:1, rm:0, env:2, dec:1, obj:1}],
+  ['Multi-armed Bandit', {acq:3, fb:2, temp:1, rm:0, env:0, dec:1, obj:1}],
+  ['Contextual Bandit', {acq:3, fb:2, temp:2, rm:3, env:0, dec:1, obj:1}],
+  ['Linear Bandit', {acq:3, fb:2, temp:1, rm:1, env:0, dec:2, obj:1}],
+  ['GLM Bandit', {acq:3, fb:2, temp:1, rm:2, env:0, dec:2, obj:1}],
+  ['Combinatorial Semi-bandit', {acq:3, fb:1, temp:1, rm:1, env:0, dec:2, obj:1}],
+  ['Partial Monitoring', {acq:3, fb:3, temp:1, rm:0, env:2, dec:1, obj:1}],
+  ['Reinforcement Learning', {acq:3, fb:2, temp:3, rm:0, env:0, dec:3, obj:1}]
 ];
 const state = Object.assign({}, FAM.find(f => f[0] === 'Contextual Bandit')[1]);
 let focus = null;
@@ -397,9 +415,11 @@ function mk(parent, tag, attrs) { const e = document.createElementNS(NS, tag); f
 COLX.forEach((cx, i) => {
   const g = mk(cols, 'g', {class: 'col', id: 'col' + i});
   mk(g, 'rect', {class: 'ink xsq', x: cx - 11, y: 107, width: 22, height: 22, rx: 2});
-  [0, 1, 2].forEach(k => mk(g, 'circle', {class: 'rc', cx: cx, cy: 178 + k * 12, r: 5, 'data-k': k}));
-  mk(g, 'polygon', {class: 'ink tri', points: cx + ',220 ' + (cx - 10) + ',237 ' + (cx + 10) + ',237'});
+  [0, 1, 2].forEach(k => mk(g, 'circle', {class: 'rc', cx: cx, cy: 200 + k * 12, r: 5, 'data-k': k}));
+  mk(g, 'polygon', {class: 'ink tri', points: cx + ',242 ' + (cx - 10) + ',259 ' + (cx + 10) + ',259'});
 });
+const rmArrows = document.getElementById('rmArrows');
+COLX.forEach(cx => mk(rmArrows, 'path', {class: 'link rmA', 'data-ax': 'rm', d: 'M' + cx + ' 148 L' + cx + ' 180'}));
 const endo = document.getElementById('endo');
 [[0, 1], [1, 2], [2, 3]].forEach(([a, b]) => {
   const x1 = COLX[a] + 15, x2 = COLX[b] - 15, mid = (x1 + x2) / 2;
@@ -414,6 +434,12 @@ const DEC_CAP = [
   [['mi', 'a'], ['rm', ' ∈ ['], ['mi', 'K'], ['rm', ']']],                              // a \in [K]
   [['mi', 'a'], ['rm', ' ∈ '], ['cal', 'A'], ['rm', ' ⊂ '], ['bb', 'R'], ['mi', 'd', 'sup']], // a \in \mathcal{A} \subset \mathbb{R}^d
   [['mi', 'π'], ['rm', ' : '], ['cal', 'X'], ['rm', ' → '], ['cal', 'A']]                // \pi : \mathcal{X} \to \mathcal{A}
+];
+const RM_CAP = [
+  [[['rm', 'none']], [['rm', '구조 없음']]],
+  [[['rm', '⟨'], ['mi', 'θ'], ['rm', '∗', 'sup'], ['rm', ', '], ['mi', 'x'], ['rm', '⟩']]],
+  [[['mi', 'μ'], ['rm', '(⟨'], ['mi', 'θ'], ['rm', '∗', 'sup'], ['rm', ', '], ['mi', 'x'], ['rm', '⟩)']]],
+  [[['mi', 'f'], ['rm', '∗', 'sup'], ['rm', '('], ['mi', 'x'], ['rm', ')']]]
 ];
 const ENV_CAP = [
   [[['rm', 'fixed ']].concat(MSTAR), MSTAR.concat([['rm', ' 고정']])],
@@ -456,6 +482,10 @@ function renderFig() {
   const envT = document.querySelectorAll('#envCap text');
   rich(envT[0], ENV_CAP[state.env][0]);
   rich(envT[1], ENV_CAP[state.env][1]);
+  const rmT = document.querySelectorAll('#rmCap text'), rc = RM_CAP[state.rm];
+  rich(rmT[0], rc[0]);
+  rich(rmT[1], rc[1] || rc[0]);
+  document.querySelectorAll('#rmArrows path').forEach(e => STYLES.forEach(k => e.classList.toggle(k, k === (state.rm ? 'solid' : 'off'))));
 
   COLX.forEach((cx, i) => {
     const g = document.getElementById('col' + i);
