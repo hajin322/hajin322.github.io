@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "Agent, Data, Environment"
-description: "의사결정 문제를 여섯 개의 축(data acquisition, feedback, temporal structure, environment model, decision structure, objective)으로 나누어 보는 인터랙티브 그림."
+title: "Learning Framework"
+description: "A decision-making problem divided by six factors: data acquisition, decision structure, temporal structure, feedback, learning objective, and environmental model."
 permalink: /pages/learning-framework/
 ---
 
@@ -91,10 +91,16 @@ permalink: /pages/learning-framework/
 .lf-opts { display: flex; flex-wrap: wrap; gap: 5px; }
 .lf-desc { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; margin: 0.75rem 0 0; }
 .lf-desc[data-l="ko"] { line-height: 1.8; }
-.lf-where { font-size: 0.8rem; color: var(--text-muted); margin: 0.35rem 0 0; }
 
-.lf-note { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.75; max-width: 70ch; margin: 0; }
-.lf-note[data-l="ko"] { line-height: 1.85; }
+.lf-factors { margin: -0.75rem 0 2rem; border-top: 1px solid var(--border); }
+.lf-factors > div {
+  display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: 0.25rem 1.25rem;
+  padding: 0.7rem 0 0.7rem 0.25rem; border-bottom: 1px solid var(--border);
+}
+.lf-factors dt { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text); }
+.lf-factors dd { margin: 0; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; }
+.lf-factors .lf-where { display: block; font-size: 0.8rem; color: var(--text-muted); margin-top: 0.1rem; }
+@media (max-width: 560px) { .lf-factors > div { grid-template-columns: 1fr; } }
 .lf-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
 .lf-back:hover { color: var(--accent); }
 
@@ -108,8 +114,8 @@ permalink: /pages/learning-framework/
   <div class="hero-top">
     <span class="hero-label">
       <span class="dot"></span>
-      <span data-l="en" lang="en">Note · Sequential decision-making</span>
-      <span data-l="ko" lang="ko">노트 · 순차적 의사결정</span>
+      <span data-l="en" lang="en">Machine learning and interactive decision making</span>
+      <span data-l="ko" lang="ko">기계학습과 상호작용적 의사결정</span>
     </span>
     <div class="lang-toggle" role="group" aria-label="Language / 언어">
       <button type="button" data-lang="en">EN</button>
@@ -117,9 +123,42 @@ permalink: /pages/learning-framework/
     </div>
   </div>
 
-  <h1>Agent, Data, Environment</h1>
-  <p class="lf-lede" data-l="en" lang="en">A decision problem is pinned down by six axes. Change the value of an axis and the figure changes; pick a problem family and all six axes snap into place at once. Click a blue label in the figure to highlight where that axis lives.</p>
-  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 여섯 개의 축으로 정해진다. 축의 값을 바꾸면 그림이 바뀌고, 문제 계열을 고르면 여섯 축이 한꺼번에 맞춰진다. 그림의 파란 글씨를 누르면 그 축이 어디에 사는지 강조된다.</p>
+  <h1>Learning Framework</h1>
+  <p class="lf-lede" data-l="en" lang="en">A decision-making problem is divided by six factors: data acquisition, decision structure, temporal structure, feedback, learning objective, and environmental model.</p>
+  <p class="lf-lede" data-l="ko" lang="ko">의사결정 문제는 여섯 개의 요소로 나뉜다: 데이터 획득, 결정 구조, 시간 구조, 피드백, 학습 목표, 환경 모델.</p>
+
+  <dl class="lf-factors">
+    <div>
+      <dt>Data acquisition</dt>
+      <dd><span data-l="en" lang="en">Who chooses the data.</span><span data-l="ko" lang="ko">데이터를 누가 고르는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">The arrow between xᵗ and the agent</span><span data-l="ko" lang="ko">xᵗ와 에이전트 사이의 화살표</span></span></dd>
+    </div>
+    <div>
+      <dt>Decision structure</dt>
+      <dd><span data-l="en" lang="en">What the agent decides.</span><span data-l="ko" lang="ko">무엇을 결정하는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">The arrow from πᵗ to xᵗ</span><span data-l="ko" lang="ko">πᵗ에서 xᵗ로 가는 화살표</span></span></dd>
+    </div>
+    <div>
+      <dt>Temporal structure</dt>
+      <dd><span data-l="en" lang="en">How time enters the problem.</span><span data-l="ko" lang="ko">시간이 문제에 어떻게 들어오는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">Row xᵗ and the arrows between columns</span><span data-l="ko" lang="ko">xᵗ의 행과 칸 사이의 화살표</span></span></dd>
+    </div>
+    <div>
+      <dt>Feedback</dt>
+      <dd><span data-l="en" lang="en">What the agent observes after acting.</span><span data-l="ko" lang="ko">행동한 뒤 무엇을 관측하는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">Rows rᵗ and oᵗ: filled cells are observed</span><span data-l="ko" lang="ko">rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸</span></span></dd>
+    </div>
+    <div>
+      <dt>Learning objective</dt>
+      <dd><span data-l="en" lang="en">How success is measured.</span><span data-l="ko" lang="ko">무엇으로 성공을 재는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">The returning arrow and the evaluation mark below</span><span data-l="ko" lang="ko">돌아오는 화살표와 아래의 평가 표시</span></span></dd>
+    </div>
+    <div>
+      <dt>Environmental model</dt>
+      <dd><span data-l="en" lang="en">How the data are generated.</span><span data-l="ko" lang="ko">데이터가 어떻게 생성되는가.</span>
+        <span class="lf-where"><span data-l="en" lang="en">The globe: M*, who writes the table</span><span data-l="ko" lang="ko">지구본: 표를 쓰는 주체 M*</span></span></dd>
+    </div>
+  </dl>
 </section>
 
 <div class="lf-presets" id="presets">
@@ -188,7 +227,7 @@ permalink: /pages/learning-framework/
       </g>
     </svg>
   </div>
-  <div class="lf-summary" aria-live="polite"><span class="name" id="famName"></span><span class="hint" id="famHint"></span></div>
+  <div class="lf-summary" aria-live="polite"><span class="name" id="famName"></span></div>
   <div class="lf-legend">
     <span><i></i><span data-l="en" lang="en">active in this setting</span><span data-l="ko" lang="ko">이 설정에서 작동하는 연결</span></span>
     <span><i class="off"></i><span data-l="en" lang="en">absent in this setting</span><span data-l="ko" lang="ko">이 설정에서는 없는 연결</span></span>
@@ -202,16 +241,6 @@ permalink: /pages/learning-framework/
     <span class="line"></span>
   </h2>
   <div class="lf-axes" id="axes" aria-label="Six axes / 여섯 축"></div>
-</section>
-
-<section class="section" id="reading">
-  <h2 class="section-title">
-    <span class="num">02</span>
-    <span><span data-l="en" lang="en">Reading the figure</span><span data-l="ko" lang="ko">그림 읽는 법</span></span>
-    <span class="line"></span>
-  </h2>
-  <p class="lf-note" data-l="en" lang="en">A solid line is a connection that actually operates in the current setting; a faint dashed line is one that could appear under a different setting. With <strong>Prediction</strong>, decisions do not interact with the environment, so both dashed lines fade out, and what remains is the picture of Statistical Learning.</p>
-  <p class="lf-note" data-l="ko" lang="ko">점선의 규칙: 실선은 이 설정에서 실제로 작동하는 연결이고, 흐린 점선은 다른 설정에서라면 생길 수 있는 연결이다. <strong>Prediction</strong>에서는 결정이 환경과 상호작용하지 않으므로 두 점선이 모두 흐려지고, 그것이 Statistical Learning의 그림이다.</p>
   <a class="lf-back" href="{{ '/' | relative_url }}">← {{ site.author.name }}</a>
 </section>
 
@@ -338,17 +367,9 @@ function renderFig() {
 
 function renderSummary() {
   const hit = FAM.find(([, v]) => AXES.every(a => v[a.id] === state[a.id]));
-  const nameEl = document.getElementById('famName'), hintEl = document.getElementById('famHint');
-  if (hit) {
-    nameEl.textContent = hit[0];
-    hintEl.innerHTML = bi('All six axes match this problem family.', '여섯 축의 값이 이 문제 계열과 일치해요.');
-  } else {
-    nameEl.innerHTML = bi('Not a preset combination', '프리셋에 없는 조합');
-    const near = FAM.map(([n, v]) => [n, AXES.filter(a => v[a.id] !== state[a.id]).map(a => a.name)]).sort((x, y) => x[1].length - y[1].length)[0];
-    hintEl.innerHTML = bi(
-      near[0] + ' with the ' + near[1].join(', ') + ' axis changed. Worth checking what the literature calls it.',
-      near[0] + '에서 ' + near[1].join(', ') + ' 축을 바꾼 설정이에요. 문헌에 어떤 이름으로 있는지 찾아볼 만해요.');
-  }
+  const nameEl = document.getElementById('famName');
+  if (hit) nameEl.textContent = hit[0];
+  else nameEl.innerHTML = bi('Not a preset combination', '프리셋에 없는 조합');
   document.querySelectorAll('#presets button').forEach((b, i) => b.setAttribute('aria-pressed', String(!!hit && hit[0] === FAM[i][0])));
 }
 
@@ -359,8 +380,7 @@ AXES.forEach(a => {
     '<p class="lf-q">' + bi(a.q[0], a.q[1]) + '</p>' +
     '<div class="lf-opts" role="group" aria-label="' + a.name + '">' +
     a.vals.map((v, k) => '<button type="button" class="lf-chip sm" data-ax="' + a.id + '" data-k="' + k + '">' + v[0] + '</button>').join('') + '</div>' +
-    '<p class="lf-desc" data-l="en" lang="en"></p><p class="lf-desc" data-l="ko" lang="ko"></p>' +
-    '<p class="lf-where">' + bi(a.where[0], a.where[1]) + '</p>';
+    '<p class="lf-desc" data-l="en" lang="en"></p><p class="lf-desc" data-l="ko" lang="ko"></p>';
   axesEl.appendChild(c);
 });
 function renderCards() {
