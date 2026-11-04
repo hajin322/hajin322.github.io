@@ -24,10 +24,11 @@ permalink: /pages/learning-framework/
 .bb  { font-family: "CM BB", var(--cm); }
 .lf-head { padding: 2.5rem 0 0.5rem; }
 .lf-head h1 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.08; margin-bottom: 0.9rem; }
-.lf-lede { font-size: 0.97rem; color: var(--text-secondary); max-width: 60ch; line-height: 1.75; margin: 0 0 1.75rem; }
+.lf-lede { font-size: 0.97rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 1.75rem; }
 .lf-lede[data-l="ko"] { line-height: 1.85; }
 .lf-lede strong { font-weight: 600; }
-.lf-m { font-family: var(--cm-math); font-style: normal; font-size: 1.1em; color: var(--text); white-space: nowrap; }
+/* line-height 0: CM's tall ascent/descent must not push the line box open */
+.lf-m { font-family: var(--cm-math); font-style: normal; font-size: 1.1em; line-height: 0; color: var(--text); white-space: nowrap; }
 .lf-m sup { font-size: 0.7em; vertical-align: baseline; position: relative; top: -0.55em; }
 
 .lf-loop { margin: 0 0 1.75rem; padding: 0.75rem 1rem 0.5rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
@@ -308,7 +309,7 @@ permalink: /pages/learning-framework/
     <span class="line"></span>
   </h2>
   <div class="lf-axes" id="axes" aria-label="Six axes / 여섯 축"></div>
-  <a class="lf-back" href="{{ '/' | relative_url }}">← {{ site.author.name }}</a>
+  <a class="lf-back" href="{{ '/pages/' | relative_url }}">← <span data-l="en" lang="en">All pages</span><span data-l="ko" lang="ko">페이지 목록</span></a>
 </section>
 
 <script>

@@ -71,6 +71,7 @@ permalink: /
   <a href="https://github.com/{{ site.author.github }}">GitHub</a>
   <a href="https://www.linkedin.com/in/hajin322/">LinkedIn</a>
   <a href="{{ site.author.orcid }}">ORCID</a>
+  <a href="{{ '/pages/' | relative_url }}">Pages</a>
 </div>
 
 </div>
