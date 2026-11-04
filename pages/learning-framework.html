@@ -418,8 +418,8 @@ const AXES = [
   {id:'env', name:'Data generation',
    q:['How is the data generated?', '데이터가 어떻게 생성되나'],
    where:['The box around xᵗ, rᵗ, oᵗ that M* writes', 'M*가 쓰는 xᵗ, rᵗ, oᵗ를 둘러싼 상자'], vals:[
-    ['i.i.d.', 'A fixed M* generates every round independently.', '고정된 M*가 매 라운드를 독립적으로 생성한다.'],
-    ['Stochastic', 'M* is a stochastic process that can change over time.', 'M*가 시간에 따라 바뀔 수 있는 확률 과정이다.'],
+    ['i.i.d.', 'Every data point is an independent draw from a fixed M*, whatever the agent does.', '모든 데이터가 에이전트와 상관없이 고정된 M*에서 독립적으로 뽑힌다.'],
+    ['Stochastic', 'Each reward is drawn from a fixed distribution given the context and action, r ~ M*(· | x, a). The agent\'s choices shape which samples it sees, so the data as a whole are not i.i.d.', '보상이 맥락과 행동이 주어지면 고정된 분포에서 뽑힌다, r ~ M*(· | x, a). 어떤 표본을 보게 될지는 에이전트의 선택이 정하므로 데이터 전체는 i.i.d.가 아니다.'],
     ['Arbitrary', 'The sequence is fixed in advance, arbitrarily, with no distribution behind it.', '분포 없이 수열이 미리 임의로 정해져 있다.'],
     ['Adversarial', 'M* reads the history so far and writes the next round against the agent.', 'M*가 지금까지의 기록을 보고 다음 라운드를 쓴다.']]},
   {id:'temp', name:'Temporal context',
@@ -449,11 +449,11 @@ const FAM = [
   ['Imitation Learning', {acq:0, fb:0, temp:3, rm:3, env:0, dec:3, obj:0}],
   ['Active Learning', {acq:2, fb:0, temp:1, rm:3, env:0, dec:0, obj:0}],
   ['Online Learning', {acq:1, fb:0, temp:1, rm:0, env:2, dec:0, obj:1}],
-  ['Multi-armed Bandit', {acq:3, fb:2, temp:1, rm:0, env:0, dec:1, obj:1}],
-  ['Contextual Bandit', {acq:3, fb:2, temp:1, rm:3, env:0, dec:1, obj:1}],
-  ['Linear Bandit', {acq:3, fb:2, temp:1, rm:1, env:0, dec:1, obj:1}],
-  ['GLM Bandit', {acq:3, fb:2, temp:1, rm:2, env:0, dec:1, obj:1}],
-  ['Combinatorial Semi-bandit', {acq:3, fb:1, temp:1, rm:1, env:0, dec:2, obj:1}],
+  ['Multi-armed Bandit', {acq:3, fb:2, temp:1, rm:0, env:1, dec:1, obj:1}],
+  ['Contextual Bandit', {acq:3, fb:2, temp:1, rm:3, env:1, dec:1, obj:1}],
+  ['Linear Bandit', {acq:3, fb:2, temp:1, rm:1, env:1, dec:1, obj:1}],
+  ['GLM Bandit', {acq:3, fb:2, temp:1, rm:2, env:1, dec:1, obj:1}],
+  ['Combinatorial Semi-bandit', {acq:3, fb:1, temp:1, rm:1, env:1, dec:2, obj:1}],
   ['Partial Monitoring', {acq:3, fb:3, temp:1, rm:0, env:2, dec:1, obj:1}],
   ['Reinforcement Learning', {acq:3, fb:2, temp:3, rm:0, env:0, dec:3, obj:1}]
 ];
@@ -503,7 +503,7 @@ const RM_CAP = [
 ];
 const ENV_CAP = [
   [[['rm', 'fixed ']].concat(MSTAR), MSTAR.concat([['rm', ' 고정']])],
-  [[['rm', 'drifting ']].concat(MSTAR, [['mi', 't', 'sub']]), MSTAR.concat([['mi', 't', 'sub'], ['rm', ' 변화']])],
+  [[['mi', 'r'], ['rm', ' ∼ '], ['mi', 'M'], ['rm', '∗', 'sup'], ['rm', '(· | '], ['mi', 'x'], ['rm', ', '], ['mi', 'a'], ['rm', ')']]].concat([[['mi', 'r'], ['rm', ' ∼ '], ['mi', 'M'], ['rm', '∗', 'sup'], ['rm', '(· | '], ['mi', 'x'], ['rm', ', '], ['mi', 'a'], ['rm', ')']]]),
   [[['rm', 'arbitrary']], [['rm', '미리 쓰인 표']]],
   [[['rm', 'adaptive']], [['rm', '기록에 반응']]]
 ];
