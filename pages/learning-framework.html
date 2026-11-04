@@ -179,7 +179,7 @@ permalink: /pages/learning-framework/
       <circle cx="96" cy="168" r="2.2" style="fill:var(--text)"/><circle cx="108" cy="168" r="2.2" style="fill:var(--text)"/>
       <line class="ink" x1="90" y1="152" x2="87" y2="144"/><line class="ink" x1="114" y1="152" x2="117" y2="144"/>
       <text class="m" x="146" y="174" style="font-size:18px">π<tspan dy="-7" style="font-size:11px">t</tspan></text>
-      <text class="capA" id="decCap" data-ax="dec" x="138" y="210" text-anchor="middle"></text>
+      <text class="capA" id="decCap" data-ax="dec" x="256" y="191" text-anchor="middle"></text>
 
       <path id="acqLine" class="link" data-ax="acq" d="M330 108 Q255 62 186 146"/>
       <path id="decLine" class="link" data-ax="dec" d="M190 166 Q255 140 326 124"/>
@@ -300,7 +300,8 @@ const FAM = [
   ['Combinatorial Semi-bandit', {acq:3, fb:1, temp:1, env:0, dec:2, obj:1}],
   ['Contextual Bandit', {acq:3, fb:2, temp:2, env:0, dec:1, obj:1}],
   ['Partial Monitoring', {acq:3, fb:3, temp:1, env:2, dec:1, obj:1}],
-  ['Reinforcement Learning', {acq:3, fb:2, temp:3, env:0, dec:3, obj:1}]
+  ['Reinforcement Learning', {acq:3, fb:2, temp:3, env:0, dec:3, obj:1}],
+  ['Imitation Learning', {acq:0, fb:0, temp:3, env:0, dec:3, obj:0}]
 ];
 const state = Object.assign({}, FAM[7][1]);
 let focus = null;
