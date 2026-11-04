@@ -74,6 +74,10 @@ permalink: /pages/learning-framework/
   padding: 0.9rem 1.1rem; border-top: 1px solid var(--border); background: var(--surface-2);
 }
 .lf-summary .name { font-family: var(--cm); font-size: 1.3rem; font-weight: 700; }
+#fig.lf-export, #fig.lf-export * { transition: none !important; }
+.lf-dl { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; }
+.lf-dl::before { content: "Download"; font-size: 0.74rem; color: var(--text-muted); margin-right: 3px; }
+html[lang="ko"] .lf-dl::before { content: "다운로드"; }
 .lf-legend {
   display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem;
   font-family: var(--cm); font-size: 0.88rem; color: var(--text-muted);
@@ -332,7 +336,13 @@ permalink: /pages/learning-framework/
       </g>
     </svg>
   </div>
-  <div class="lf-summary" aria-live="polite"><span class="name" id="famName"></span></div>
+  <div class="lf-summary">
+    <span class="name" id="famName" aria-live="polite"></span>
+    <span class="lf-dl">
+      <button type="button" class="lf-chip sm" id="dlSvg" title="Vector figure for papers">SVG</button>
+      <button type="button" class="lf-chip sm" id="dlPng" title="High-resolution image (4×)">PNG</button>
+    </span>
+  </div>
   <div class="lf-legend">
     <span><svg viewBox="0 0 28 6" aria-hidden="true"><line x1="0" y1="3" x2="28" y2="3"/></svg><span data-l="en" lang="en">interactive</span><span data-l="ko" lang="ko">상호작용</span></span>
     <span><svg viewBox="0 0 28 6" aria-hidden="true"><line x1="0" y1="3" x2="28" y2="3" stroke-dasharray="9 3 2 3"/></svg><span data-l="en" lang="en">partly interactive</span><span data-l="ko" lang="ko">부분적 상호작용</span></span>
@@ -614,5 +624,91 @@ FAM.forEach(([n, v]) => {
   pre.appendChild(b);
 });
 render();
+
+/* ---------- figure export (SVG / PNG) ------------------------------------
+   The figure is styled by page CSS and web fonts, neither of which travel
+   with a bare <svg>. So: copy the computed style of every element onto the
+   clone, bake the tilted contexts into SVG transforms, drop hidden parts and
+   the focus highlight, crop to the drawing, and embed the Computer Modern
+   fonts as data URIs so the exported file looks exactly like the page. */
+const FONT_FILES = [
+  ['CM Roman', 400, '{{ "/assets/fonts/cm/KaTeX_Main-Regular.woff2" | relative_url }}'],
+  ['CM Roman', 700, '{{ "/assets/fonts/cm/KaTeX_Main-Bold.woff2" | relative_url }}'],
+  ['CM Math', 400, '{{ "/assets/fonts/cm/KaTeX_Math-Italic.woff2" | relative_url }}'],
+  ['CM Cal', 400, '{{ "/assets/fonts/cm/KaTeX_Caligraphic-Regular.woff2" | relative_url }}'],
+  ['CM BB', 400, '{{ "/assets/fonts/cm/KaTeX_AMS-Regular.woff2" | relative_url }}']
+];
+let fontCss = null;
+async function embeddedFonts() {
+  if (fontCss) return fontCss;
+  const parts = await Promise.all(FONT_FILES.map(async ([fam, w, url]) => {
+    const buf = await (await fetch(url)).arrayBuffer();
+    let bin = ''; const b = new Uint8Array(buf);
+    for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+    return '@font-face{font-family:"' + fam + '";font-weight:' + w + ';src:url(data:font/woff2;base64,' + btoa(bin) + ') format("woff2");}';
+  }));
+  return (fontCss = parts.join(''));
+}
+const PROPS = ['fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-opacity', 'stroke-linecap', 'stroke-linejoin',
+  'opacity', 'font-family', 'font-size', 'font-weight', 'font-style', 'text-anchor', 'marker-start', 'marker-end'];
+async function buildSvg() {
+  const src = document.getElementById('fig');
+  // read final styles, not mid-transition ones
+  src.classList.add('lf-export');
+  const keep = focus; focus = null; render();
+  void src.getBoundingClientRect();
+  const out = src.cloneNode(true);
+  const a = src.querySelectorAll('*'), b = out.querySelectorAll('*');
+  for (let i = a.length - 1; i >= 0; i--) {
+    const el = a[i], cl = b[i], cs = getComputedStyle(el);
+    if (cs.display === 'none') { cl.remove(); continue; }
+    if (el.closest('defs') || el.tagName === 'title') continue;
+    let st = '';
+    PROPS.forEach(p => { const v = cs.getPropertyValue(p); if (v) st += p + ':' + v + ';'; });
+    cl.setAttribute('style', st);
+    cl.removeAttribute('class');
+    const m = /rotate\((-?[\d.]+)deg\)/.exec(el.style.transform || '');
+    if (m && el.tagName === 'rect') {
+      const x = +el.getAttribute('x'), y = +el.getAttribute('y'), w = +el.getAttribute('width'), h = +el.getAttribute('height');
+      cl.setAttribute('transform', 'rotate(' + m[1] + ' ' + (x + w / 2) + ' ' + (y + h / 2) + ')');
+    }
+  }
+  const bb = src.getBBox(), pad = 10;
+  const vb = [Math.floor(bb.x - pad), Math.floor(bb.y - pad), Math.ceil(bb.width + 2 * pad), Math.ceil(bb.height + 2 * pad)];
+  src.classList.remove('lf-export');
+  focus = keep; render();
+  out.setAttribute('viewBox', vb.join(' '));
+  out.setAttribute('width', vb[2]); out.setAttribute('height', vb[3]);
+  out.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  out.removeAttribute('id'); out.removeAttribute('class'); out.removeAttribute('style');
+  const style = document.createElementNS(NS, 'style');
+  style.textContent = await embeddedFonts();
+  out.insertBefore(style, out.firstChild);
+  return {text: new XMLSerializer().serializeToString(out), w: vb[2], h: vb[3]};
+}
+function fileStem() {
+  const n = document.getElementById('famName').textContent.trim();
+  return 'learning-framework' + (n && !/preset|프리셋/.test(n) ? '-' + n.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '') : '');
+}
+function save(blob, name) {
+  const u = URL.createObjectURL(blob), l = document.createElement('a');
+  l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove();
+  setTimeout(() => URL.revokeObjectURL(u), 1000);
+}
+document.getElementById('dlSvg').addEventListener('click', async () => {
+  const {text} = await buildSvg();
+  save(new Blob([text], {type: 'image/svg+xml'}), fileStem() + '.svg');
+});
+document.getElementById('dlPng').addEventListener('click', async () => {
+  const {text, w, h} = await buildSvg(), k = 4;
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas'); c.width = w * k; c.height = h * k;
+    const g = c.getContext('2d'); g.fillStyle = '#ffffff'; g.fillRect(0, 0, c.width, c.height);
+    g.drawImage(img, 0, 0, c.width, c.height);
+    c.toBlob(bl => save(bl, fileStem() + '.png'), 'image/png');
+  };
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(text);
+});
 })();
 </script>
