@@ -85,6 +85,47 @@ permalink: /pages/mlxidm-maps/
 .mx-lens-item.on h5 { color: var(--accent); }
 .mx-lens-item.on p { color: var(--text-secondary); }
 
+/* environment → algorithm, side by side */
+.mx-pick { display: grid; grid-template-columns: minmax(0, 1fr) 1.6rem minmax(0, 1fr); align-items: stretch; margin-bottom: 14px; }
+.mx-pick-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1.1rem; }
+
+/* bound gauge + backbone cycle */
+.mx-analysis { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: 14px; margin-bottom: 14px; align-items: stretch; }
+#gauge { display: block; width: 100%; max-width: 330px; margin: 0 auto; }
+#gauge text { font-family: var(--font-body); }
+#gauge .g-axis { stroke: var(--border-strong); stroke-width: 1; }
+#gauge .g-tick { font-family: "CM Roman", serif; font-size: 11px; fill: var(--text-muted); }
+#gauge .g-gap { fill: var(--accent-soft); }
+#gauge .g-ratio { font-size: 12px; font-weight: 600; fill: var(--accent); }
+#gauge .g-up { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+#gauge .g-lo { stroke: var(--text); stroke-width: 3; stroke-linecap: round; }
+#gauge .g-push { fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+#gauge .g-push.up { stroke: var(--accent); }
+#gauge .g-push.lo { stroke: var(--text); }
+#gauge .g-mate { stroke: var(--text-muted); stroke-width: 1.2; stroke-dasharray: 3 3; }
+#gauge .g-mlab { font-size: 10.5px; fill: var(--text-muted); }
+#gauge .g-ulab { font-size: 12px; font-weight: 600; fill: var(--accent); }
+#gauge .g-llab { font-size: 11px; font-weight: 500; fill: var(--text); }
+.mx-gnote { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin: 0.4rem 0 0.6rem; }
+.mx-gnote .g-ln { font-size: 0.8rem; color: var(--text-muted); }
+.g-k { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
+.g-k.up { background: var(--accent); } .g-k.lo { background: var(--text); }
+.mx-sliders { display: grid; gap: 6px; }
+.mx-slider { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr) 4.4rem; align-items: center; gap: 8px; font-size: 0.85rem; }
+.mx-slider input { width: 100%; accent-color: var(--accent); }
+.mx-slider output { font-family: "CM Roman", serif; font-size: 0.9rem; color: var(--text); text-align: right; }
+.mx-slider output sup { font-size: 0.7em; }
+.mx-slab { text-align: right; }
+.mx-gfine { font-size: 0.74rem; color: var(--text-muted); margin: 0.6rem 0 0; }
+
+.mx-cycle { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "exp est" "dec dec"; column-gap: 3.2rem; row-gap: 3.4rem; padding: 0.4rem 0 0.2rem; }
+.mx-cycle-wires { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.mx-cstep { position: relative; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.7rem 0.8rem; background: var(--surface-2); min-width: 0; }
+.mx-cstep h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; margin: 0 0 0.3rem; }
+.mx-cstep p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; margin: 0; overflow-wrap: anywhere; }
+#cExp { grid-area: exp; } #cEst { grid-area: est; }
+#cDec { grid-area: dec; justify-self: center; width: 42%; }
+
 /* data graph */
 .mx-graph-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 0.75rem 0.5rem; }
 #dataGraph { display: block; width: 100%; min-width: 640px; }
@@ -130,6 +171,10 @@ permalink: /pages/mlxidm-maps/
 .mx-back:hover { color: var(--accent); }
 
 @media (max-width: 760px) {
+  .mx-pick { grid-template-columns: 1fr; } .mx-pick-arrow { transform: rotate(90deg); height: 1.6rem; }
+  .mx-analysis { grid-template-columns: 1fr; }
+  .mx-cycle { column-gap: 2.2rem; row-gap: 2.6rem; }
+  #cDec { width: 46%; }
   .mx-lens { grid-template-columns: 1fr; }
   .mx-steps { grid-template-columns: 1fr; gap: 0; }
   .mx-steps .mx-arrow { transform: rotate(90deg); height: 1.6rem; }
@@ -154,85 +199,85 @@ permalink: /pages/mlxidm-maps/
   </div>
 
   <h1>Maps of MLxIDM</h1>
-  <p class="mx-lede" data-l="en" lang="en">An algorithm lives inside a framework, so each problem class comes with its own algorithms. Pick a problem class, then an algorithm, and follow how it explores, estimates and decides (its backbone) and what can be proved about it. The lens on the side is how both are analysed.</p>
-  <p class="mx-lede" data-l="ko" lang="ko">알고리즘은 프레임워크 안에 있으므로, 문제 계열마다 알고리즘이 다르다. 문제 계열을 고르고 알고리즘을 고르면, 그 알고리즘이 어떻게 탐색하고 추정하고 결정하는지(backbone)와 무엇을 증명할 수 있는지(proof)를 따라갈 수 있다. 옆의 lens는 그 둘을 분석하는 관점이다.</p>
+  <p class="mx-lede" data-l="en" lang="en">An algorithm lives inside an environment (a framework), so each environment comes with its own algorithms. Pick an environment, then an algorithm: the bound on the left puts the algorithm's upper bound against the environment's lower bound on one scale, and the cycle on the right shows how one round of the algorithm runs.</p>
+  <p class="mx-lede" data-l="ko" lang="ko">알고리즘은 환경(프레임워크) 안에 있으므로, 환경마다 알고리즘이 다르다. 환경과 알고리즘을 고르면, 왼쪽의 bound가 알고리즘의 상한과 환경의 하한을 한 척도 위에 놓고, 오른쪽 고리가 알고리즘의 한 라운드가 어떻게 도는지 보여준다.</p>
 </section>
 
 <section class="section" id="map">
   <h2 class="section-title">
     <span class="num">01</span>
-    <span><span data-l="en" lang="en">From framework to proof</span><span data-l="ko" lang="ko">프레임워크에서 증명까지</span></span>
+    <span><span data-l="en" lang="en">From environment to bound</span><span data-l="ko" lang="ko">환경에서 bound까지</span></span>
     <span class="line"></span>
   </h2>
 
-  <div class="mx-flow">
+  <div class="mx-pick">
     <div class="mx-node" id="nodeFw">
       <div class="mx-node-head">
         <svg viewBox="0 0 26 26" aria-hidden="true"><g fill="none" stroke="var(--text)" stroke-width="1.3"><circle cx="13" cy="13" r="10"/><ellipse cx="13" cy="13" rx="4" ry="10"/><line x1="3.6" y1="9.5" x2="22.4" y2="9.5"/><line x1="3.6" y1="16.5" x2="22.4" y2="16.5"/></g></svg>
-        <h3>Framework</h3>
-        <span class="mx-sub"><span data-l="en" lang="en">problem class</span><span data-l="ko" lang="ko">문제 계열</span></span>
+        <h3>Environment</h3>
+        <span class="mx-sub"><span data-l="en" lang="en">framework</span><span data-l="ko" lang="ko">프레임워크</span></span>
       </div>
-      <div class="mx-chips" id="fwChips" role="group" aria-label="Problem class"></div>
+      <div class="mx-chips" id="fwChips" role="group" aria-label="Environment"></div>
       <p class="mx-note" id="fwNote"></p>
     </div>
-
-    <div class="mx-wire"><span data-l="en" lang="en">contains</span><span data-l="ko" lang="ko">안에 든</span></div>
-
+    <div class="mx-pick-arrow" aria-hidden="true">→</div>
     <div class="mx-node" id="nodeAlg">
       <div class="mx-node-head">
         <svg viewBox="0 0 26 26" aria-hidden="true"><g fill="none" stroke="var(--text)" stroke-width="1.3"><rect x="4" y="8" width="18" height="14" rx="2"/><line x1="8" y1="8" x2="6.5" y2="4"/><line x1="18" y1="8" x2="19.5" y2="4"/></g><circle cx="10" cy="15" r="1.4" fill="var(--text)"/><circle cx="16" cy="15" r="1.4" fill="var(--text)"/></svg>
         <h3>Algorithm</h3>
-        <span class="mx-sub"><span data-l="en" lang="en">for this framework</span><span data-l="ko" lang="ko">이 프레임워크의 알고리즘</span></span>
+        <span class="mx-sub"><span data-l="en" lang="en">for this environment</span><span data-l="ko" lang="ko">이 환경의 알고리즘</span></span>
       </div>
       <div class="mx-chips" id="algChips" role="group" aria-label="Algorithm"></div>
       <p class="mx-note" id="algNote"></p>
     </div>
+  </div>
 
-    <div class="mx-wire"><span data-l="en" lang="en">runs on</span><span data-l="ko" lang="ko">작동 방식</span></div>
-
-    <div class="mx-lower">
-      <div class="mx-lower-main">
-        <div class="mx-node" id="nodeBackbone">
-          <div class="mx-node-head">
-            <h3>Backbone</h3>
-            <span class="mx-sub"><span data-l="en" lang="en">the loop one round runs through</span><span data-l="ko" lang="ko">한 라운드가 도는 고리</span></span>
-          </div>
-          <div class="mx-steps">
-            <div class="mx-step"><h4>Exploration</h4><p id="bbExp"></p></div>
-            <div class="mx-arrow" aria-hidden="true">→</div>
-            <div class="mx-step"><h4>Estimation</h4><p id="bbEst"></p></div>
-            <div class="mx-arrow" aria-hidden="true">→</div>
-            <div class="mx-step"><h4>Decision</h4><p id="bbDec"></p></div>
-          </div>
-          <p class="mx-loop"><span data-l="en" lang="en">↻ the decision produces the next data, and the loop starts again</span><span data-l="ko" lang="ko">↻ 결정이 다음 데이터를 만들고, 고리가 다시 돈다</span></p>
-        </div>
-
-        <div class="mx-wire"><span data-l="en" lang="en">guarantees</span><span data-l="ko" lang="ko">보장</span></div>
-
-        <div class="mx-node" id="nodeProof">
-          <div class="mx-node-head">
-            <h3>Proof</h3>
-            <span class="mx-sub"><span data-l="en" lang="en">what is guaranteed</span><span data-l="ko" lang="ko">무엇이 보장되나</span></span>
-          </div>
-          <div class="mx-steps mx-three-even">
-            <div class="mx-step"><h4>Upper bound</h4><p id="prUp"></p></div>
-            <div class="mx-step"><h4>Lower bound</h4><p id="prLo"></p></div>
-            <div class="mx-step"><h4>Complexity measure</h4><p id="prCx"></p></div>
-          </div>
-          <p class="mx-tools" id="prTools"></p>
-        </div>
+  <div class="mx-analysis">
+    <div class="mx-node mx-gauge-node">
+      <div class="mx-node-head">
+        <h3>Bound</h3>
+        <span class="mx-sub" id="gMetric"></span>
       </div>
-
-      <div class="mx-wire up"><span data-l="en" lang="en">analysed through</span><span data-l="ko" lang="ko">분석 관점</span></div>
-      <aside class="mx-lens" aria-label="Lens">
-        <div class="mx-node-head"><h3>Lens</h3><span class="mx-sub"><span data-l="en" lang="en">cuts across the backbone and the proof</span><span data-l="ko" lang="ko">backbone과 proof를 가로지른다</span></span></div>
-        <p class="mx-lens-feed"><span data-l="en" lang="en">Highlighted where it matters for the chosen algorithm.</span><span data-l="ko" lang="ko">고른 알고리즘에서 중요한 관점이 강조된다.</span></p>
-        <div class="mx-lens-item" data-lens="g"><h5>Geometry</h5><p><span data-l="en" lang="en">Confidence ellipsoids, decision regions and cones, gaps</span><span data-l="ko" lang="ko">신뢰 타원, 결정 영역과 cone, 격차</span></p></div>
-        <div class="mx-lens-item" data-lens="r"><h5>Representation</h5><p><span data-l="en" lang="en">Features and dimension, sparsity, misspecification</span><span data-l="ko" lang="ko">특징과 차원, 희소성, 모형 오설정</span></p></div>
-        <div class="mx-lens-item" data-lens="o"><h5>Optimization</h5><p><span data-l="en" lang="en">Computing estimators, optimal allocations, minimax problems over exploration distributions</span><span data-l="ko" lang="ko">추정량 계산, 최적 배분, 탐색 분포의 minimax 문제</span></p></div>
-        <div class="mx-lens-item" data-lens="v"><h5>Observation</h5><p><span data-l="en" lang="en">What of the data is seen: partial or missing features, bandit and partial feedback, delay and censoring</span><span data-l="ko" lang="ko">데이터 중 무엇이 보이나: 일부만 관측되거나 빠진 특징, 밴딧·부분 피드백, 지연과 검열</span></p></div>
-      </aside>
+      <svg id="gauge" viewBox="0 0 300 330" role="img" aria-label="Upper bound of the algorithm against the lower bound of the environment"></svg>
+      <p class="mx-gnote" id="gNote"></p>
+      <div class="mx-sliders" id="gSliders"></div>
+      <p class="mx-gfine"><span data-l="en" lang="en">Constants are dropped; log factors are kept where the bound states them.</span><span data-l="ko" lang="ko">상수는 생략하고, bound에 적힌 로그 인자는 남겼다.</span></p>
     </div>
+
+    <div class="mx-node mx-cycle-node">
+      <div class="mx-node-head">
+        <h3>Backbone</h3>
+        <span class="mx-sub"><span data-l="en" lang="en">one round of the algorithm</span><span data-l="ko" lang="ko">알고리즘의 한 라운드</span></span>
+      </div>
+      <div class="mx-cycle" id="cycle">
+        <svg class="mx-cycle-wires" id="cycleWires" aria-hidden="true">
+          <defs>
+            <marker id="mkGray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+            <marker id="mkBlack" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#0f172a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+            <marker id="mkBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+          </defs>
+          <path id="wExpEst" fill="none" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#mkGray)"/>
+          <path id="wEstDec" fill="none" stroke="#0f172a" stroke-width="1.8" marker-end="url(#mkBlack)"/>
+          <path id="wDecExp" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#mkBlue)"/>
+        </svg>
+        <div class="mx-cstep" id="cExp"><h4>Exploration</h4><p id="bbExp"></p></div>
+        <div class="mx-cstep" id="cEst"><h4>Estimation</h4><p id="bbEst"></p></div>
+        <div class="mx-cstep" id="cDec"><h4>Decision</h4><p id="bbDec"></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-node mx-proof" id="nodeProof">
+    <div class="mx-node-head">
+      <h3>Proof</h3>
+      <span class="mx-sub"><span data-l="en" lang="en">what is guaranteed</span><span data-l="ko" lang="ko">무엇이 보장되나</span></span>
+    </div>
+    <div class="mx-steps mx-three-even">
+      <div class="mx-step"><h4>Upper bound</h4><p id="prUp"></p></div>
+      <div class="mx-step"><h4>Lower bound</h4><p id="prLo"></p></div>
+      <div class="mx-step"><h4>Complexity measure</h4><p id="prCx"></p></div>
+    </div>
+    <p class="mx-tools" id="prTools"></p>
   </div>
 </section>
 
@@ -490,7 +535,7 @@ function tex(t) {
       if (m) { out += '<span class="mx-' + m[1] + '">' + esc(m[2]) + '</span>'; i += m[0].length; continue; }
       if (t[i + 1] === '{' || t[i + 1] === '}') { out += t[i + 1]; i += 2; continue; }
     }
-    const w = /^[A-Za-z]{2,}/.exec(t.slice(i));
+    const w = /^(argmax|argmin|limsup|log|exp|kl|KL|max|min|sup|inf|Reg|DEC|Est|NN|VC|Sq|dim|Bern)(?![a-z])/.exec(t.slice(i));
     if (w) { out += w[0]; i += w[0].length; continue; }
     if (/[A-Za-zα-ωΑ-Ω]/.test(c) && !UP_GREEK.test(c)) { out += '<i>' + c + '</i>'; i++; continue; }
     out += esc(c); i++;
@@ -502,8 +547,161 @@ function rich(s) {
 }
 function bi(pair) { return '<span data-l="en" lang="en">' + rich(pair[0]) + '</span><span data-l="ko" lang="ko">' + rich(pair[1]) + '</span>'; }
 
+/* ---------- bounds on a common scale ----------
+   Each algorithm belongs to a group: algorithms in one group are measured in the same quantity
+   under the same environment class, so their upper bounds can be compared with each other and
+   with the environment's lower bound. Constants are dropped. */
+const L = Math.log, S = Math.sqrt;
+const P = {   // [label, min, max, default, integer?]
+  n: ['$n$', 1e2, 1e7, 1e4, 1], d: ['$d$', 1, 1e3, 10, 1], G: ['$G$', 0.1, 100, 1, 0], B: ['$B$', 0.1, 100, 1, 0],
+  H: ['$H$', 1, 1e3, 50, 1], eps: ['$ε$', 1e-4, 1e-1, 1e-2, 0], u: ['$u$', 1, 1e3, 2, 1],
+  T: ['$T$', 1e2, 1e8, 1e5, 1], K: ['$K$', 2, 1e3, 10, 1], D: ['$D$', 0.1, 100, 1, 0],
+  gap: ['$Δ$', 1e-3, 1, 0.1, 0], del: ['$δ$', 1e-6, 0.2, 0.05, 0], rho: ['$ρ^∗$', 1, 1e6, 1e3, 0],
+  N: ['$N$', 2, 1e9, 1e3, 1], S: ['$S$', 1, 1e4, 20, 1], A: ['$A$', 1, 1e3, 5, 1]
+};
+const kl = (a, b) => a * L(a / b) + (1 - a) * L((1 - a) / (1 - b));
+const GROUPS = {
+  vc:     {m: ['excess risk', '초과 위험'], p: ['n', 'd'], lo: v => S(v.d / v.n), lf: '$√(d / n)$'},
+  cvx:    {m: ['excess risk', '초과 위험'], p: ['n', 'G', 'B'], lo: v => v.G * v.B / S(v.n), lf: '$GB / √n$'},
+  il:     {m: ['$J(π_E) − J(π)$', '$J(π_E) − J(π)$'], p: ['H', 'eps', 'u'], lo: v => v.H * v.eps, lf: '$H ε$',
+           ln: ['No guarantee stated through the per-step error $ε$ can beat $Hε$: each step can cost $ε$.', '단계별 오차 $ε$로 쓰는 어떤 보장도 $Hε$보다 좋을 수 없다: 매 단계 $ε$씩 잃을 수 있다.']},
+  exp:    {m: ['regret', 'regret'], p: ['T', 'K'], lo: v => S(v.T * L(v.K)), lf: '$√(T log K)$'},
+  oco:    {m: ['regret', 'regret'], p: ['T', 'G', 'D'], lo: v => v.G * v.D * S(v.T), lf: '$GD √T$'},
+  mab:    {m: ['regret', 'regret'], p: ['T', 'K'], lo: v => S(v.K * v.T), lf: '$√(KT)$'},
+  bai:    {m: ['$\\bb{E}[τ]$ (samples)', '$\\bb{E}[τ]$ (표본 수)'], p: ['K', 'gap', 'del'], lo: v => v.K / (v.gap * v.gap) * kl(v.del, 1 - v.del), lf: '$(K / Δ^2) kl(δ, 1 − δ)$',
+           ln: ['All gaps set to $Δ$, so $T^∗(μ) ≈ K / Δ^2$.', '모든 격차를 $Δ$로 두어 $T^∗(μ) ≈ K / Δ^2$.']},
+  lin:    {m: ['regret', 'regret'], p: ['T', 'd', 'K'], lo: v => S(v.d * v.T), lf: '$√(dT)$',
+           ln: ['Lower bound for $K ≥ d$ arms; continuous action sets give $d √T$.', '팔이 $K ≥ d$개일 때의 하한이다. 연속 행동 집합이면 $d √T$.']},
+  linbai: {m: ['$\\bb{E}[τ]$ (samples)', '$\\bb{E}[τ]$ (표본 수)'], p: ['rho', 'del'], lo: v => v.rho * L(1 / v.del), lf: '$ρ^∗ log(1/δ)$'},
+  cbadv:  {m: ['regret', 'regret'], p: ['T', 'K', 'N'], lo: v => S(v.K * v.T * L(v.N) / L(v.K)), lf: '$√(KT log N / log K)$',
+           ln: ['$N = |Π|$ policies, adversarial; valid for $N ≥ K$ (Seldin & Lugosi, 2016).', '정책 $N = |Π|$개, 적대적 환경. $N ≥ K$에서 성립(Seldin & Lugosi, 2016).']},
+  cbreal: {m: ['regret', 'regret'], p: ['T', 'K', 'N'], lo: v => S(v.K * v.T * L(v.N)), lf: '$√(KT log N)$',
+           ln: ['$N = |\\cal{F}|$ regressors, realizable; the optimal finite-class rate (Agarwal et al., 2012).', '회귀 함수 $N = |\\cal{F}|$개, 실현 가능. 유한 클래스의 최적 속도(Agarwal et al., 2012).']},
+  pmg:    {m: ['regret', 'regret'], p: ['T'], lo: v => Math.pow(v.T, 2 / 3), lf: '$T^{2/3}$',
+           ln: ['Globally but not locally observable games.', '전역적으로만 관측 가능한 게임.']},
+  pml:    {m: ['regret', 'regret'], p: ['T'], lo: v => S(v.T), lf: '$√T$', ln: ['Locally observable games.', '국소 관측 가능한 게임.']},
+  rl:     {m: ['regret', 'regret'], p: ['T', 'H', 'S', 'A'], lo: v => S(v.H * v.S * v.A * v.T), lf: '$√(HSAT)$',
+           ln: ['Tabular, time-homogeneous episodic MDPs.', '표 형태, 시간 동질 에피소드 MDP.']}
+};
+const BOUND = {   // algorithm → [group, upper bound, formula]
+  'ERM': ['vc', v => S(v.d / v.n), '$√(d / n)$'],
+  'SGD': ['cvx', v => v.G * v.B / S(v.n), '$GB / √n$'],
+  'Behavior cloning': ['il', v => v.H * v.H * v.eps, '$H^2 ε$'],
+  'DAgger': ['il', v => Math.min(v.u, v.H) * v.H * v.eps, '$u H ε$'],
+  'Hedge': ['exp', v => S(v.T * L(v.K)), '$√(T log K)$'],
+  'OGD / FTRL': ['oco', v => v.G * v.D * S(v.T), '$GD √T$'],
+  'ETC / ε-greedy': ['mab', v => Math.cbrt(v.K) * Math.pow(v.T, 2 / 3), '$K^{1/3} T^{2/3}$'],
+  'UCB': ['mab', v => S(v.K * v.T * L(v.T)), '$√(KT log T)$'],
+  'Thompson sampling': ['mab', v => S(v.K * v.T * L(v.T)), '$√(KT log T)$'],
+  'EXP3': ['mab', v => S(v.K * v.T * L(v.K)), '$√(KT log K)$'],
+  'Track-and-Stop': ['bai', v => v.K / (v.gap * v.gap) * L(1 / v.del), '$(K / Δ^2) log(1/δ)$'],
+  'LinUCB / OFUL': ['lin', v => v.d * S(v.T) * L(v.T), '$d √T log T$'],
+  'Phased elimination': ['lin', v => S(v.d * v.T * L(v.K * v.T)), '$√(dT log(KT))$'],
+  'Linear TS': ['lin', v => Math.pow(v.d, 1.5) * S(v.T), '$d^{3/2} √T$'],
+  'XY-allocation': ['linbai', v => v.rho * L(1 / v.del), '$ρ^∗ log(1/δ)$'],
+  'EXP4': ['cbadv', v => S(v.K * v.T * L(v.N)), '$√(KT log N)$'],
+  'SquareCB': ['cbreal', v => S(v.K * v.T * L(v.N)), '$√(KT log N)$'],
+  'Exp3-type (global)': ['pmg', v => Math.pow(v.T, 2 / 3), '$T^{2/3}$'],
+  'IDS': ['pml', v => S(v.T), '$√T$'],
+  'UCBVI': ['rl', v => S(v.H * v.S * v.A * v.T), '$√(HSAT)$'],
+  'PSRL': ['rl', v => v.H * v.S * S(v.A * v.T), '$HS √(AT)$']
+};
+const vals = {}; Object.keys(P).forEach(k => vals[k] = P[k][3]);
+
+function svg(parent, tag, attrs) { const e = document.createElementNS('http://www.w3.org/2000/svg', tag); for (const k in attrs || {}) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+function fmt(x) {
+  if (!isFinite(x)) return '—';
+  if (x >= 1e4 || x < 1e-2) { const e = Math.floor(Math.log10(x)); return (x / Math.pow(10, e)).toFixed(1) + '×10' + '<sup>' + e + '</sup>'; }
+  return x >= 100 ? Math.round(x).toString() : x.toPrecision(3);
+}
+function fmtP(k, x) { return P[k][4] && x < 1e4 ? String(Math.round(x)) : fmt(x); }
+function sliderPos(k, x) { const [, lo, hi] = P[k]; return Math.round(1000 * Math.log(x / lo) / Math.log(hi / lo)); }
+function sliderVal(k, pos) { const [, lo, hi, , int] = P[k]; const x = lo * Math.pow(hi / lo, pos / 1000); return int ? Math.max(lo, Math.round(x)) : +x.toPrecision(2); }
+
+function renderSliders(g) {
+  const box = document.getElementById('gSliders');
+  box.innerHTML = GROUPS[g].p.map(k =>
+    '<label class="mx-slider"><span class="mx-slab">' + rich(P[k][0]) + '</span>' +
+    '<input type="range" min="0" max="1000" step="1" value="' + sliderPos(k, vals[k]) + '" data-p="' + k + '">' +
+    '<output>' + fmtP(k, vals[k]) + '</output></label>').join('');
+}
+document.getElementById('gSliders').addEventListener('input', e => {
+  const k = e.target.dataset.p; if (!k) return;
+  vals[k] = sliderVal(k, +e.target.value);
+  e.target.nextElementSibling.innerHTML = fmtP(k, vals[k]);
+  renderGauge();
+});
+
+function renderGauge() {
+  const A = FW[fw].algs[alg], b = BOUND[A.name], G = document.getElementById('gauge');
+  G.innerHTML = '';
+  G.style.display = b ? '' : 'none';
+  if (!b) {
+    document.getElementById('gMetric').innerHTML = '';
+    document.getElementById('gNote').innerHTML = bi(['This bound is stated through a complexity measure ($DEC$) with no closed form, so it is not drawn on a common scale.', '이 bound는 닫힌 형태가 없는 복잡도($DEC$)로 표현되어 공통 척도에 그리지 않는다.']);
+    document.getElementById('gSliders').innerHTML = '';
+    return;
+  }
+  const grp = GROUPS[b[0]];
+  const mates = FW[fw].algs.filter(a => BOUND[a.name] && BOUND[a.name][0] === b[0]);
+  const up = b[1](vals), lo = grp.lo(vals);
+  const all = mates.map(a => BOUND[a.name][1](vals)).concat([lo]);
+  let lmin = Math.log10(Math.min.apply(null, all)), lmax = Math.log10(Math.max.apply(null, all));
+  const span = Math.max(1.2, lmax - lmin); const mid = (lmin + lmax) / 2;
+  lmin = mid - span / 2 - 0.35; lmax = mid + span / 2 + 0.35;
+  const Y0 = 300, Y1 = 26, y = v => Y0 - (Math.log10(v) - lmin) / (lmax - lmin) * (Y0 - Y1);
+  // axis + decade ticks
+  svg(G, 'line', {x1: 46, y1: Y1 - 6, x2: 46, y2: Y0 + 6, class: 'g-axis'});
+  for (let e = Math.ceil(lmin); e <= Math.floor(lmax); e++) {
+    svg(G, 'line', {x1: 42, y1: y(Math.pow(10, e)), x2: 50, y2: y(Math.pow(10, e)), class: 'g-axis'});
+    const t = svg(G, 'text', {x: 36, y: y(Math.pow(10, e)) + 4, 'text-anchor': 'end', class: 'g-tick'}); t.innerHTML = '10<tspan dy="-5" font-size="8">' + e + '</tspan>';
+  }
+  const yu = y(up), yl = y(lo);
+  // gap between the algorithm and the environment
+  svg(G, 'rect', {x: 58, y: Math.min(yu, yl), width: 56, height: Math.abs(yl - yu), class: 'g-gap'});
+  const ratio = up / lo;
+  const rt = svg(G, 'text', {x: 86, y: (yu + yl) / 2 + 4, 'text-anchor': 'middle', class: 'g-ratio'});
+  rt.textContent = ratio < 1.05 ? '≈ 1' : '×' + (ratio < 10 ? ratio.toFixed(1) : Math.round(ratio));
+  // other algorithms in the same environment class
+  const yu0 = y(up), yl0 = y(lo), placed = [yu0 - 2, yl0 + 14];
+  mates.forEach(a => {
+    if (a.name === A.name) return;
+    const v = BOUND[a.name][1](vals), yy = y(v);
+    svg(G, 'line', {x1: 58, y1: yy, x2: 114, y2: yy, class: 'g-mate'});
+    let ly = yy + 4;
+    for (let k = 0; k < 6 && placed.some(p => Math.abs(p - ly) < 13); k++) ly += (ly < yu0 ? -13 : 13);
+    placed.push(ly);
+    const t = svg(G, 'text', {x: 128, y: ly, class: 'g-mlab'}); t.textContent = a.name + (Math.abs(v / up - 1) < 1e-9 ? ' (same)' : '');
+  });
+  // the environment pushes the lower bound up; the algorithm pushes the upper bound down
+  svg(G, 'line', {x1: 52, y1: yl, x2: 120, y2: yl, class: 'g-lo'});
+  [0, 9].forEach(dy => svg(G, 'path', {d: 'M80 ' + (yl + 16 + dy) + ' l6 -6 l6 6', class: 'g-push lo'}));
+  svg(G, 'line', {x1: 52, y1: yu, x2: 120, y2: yu, class: 'g-up'});
+  [0, 9].forEach(dy => svg(G, 'path', {d: 'M80 ' + (yu - 16 - dy) + ' l6 6 l6 -6', class: 'g-push up'}));
+  const tu = svg(G, 'text', {x: 128, y: yu - 2, class: 'g-ulab'}); tu.textContent = A.name;
+  const tl = svg(G, 'text', {x: 128, y: yl + 14, class: 'g-llab'}); tl.textContent = 'environment (lower bound)';
+  document.getElementById('gMetric').innerHTML = bi(grp.m);
+  document.getElementById('gNote').innerHTML =
+    '<span class="g-k up"></span>' + rich(b[2]) + ' = ' + fmt(up) + ' &nbsp; <span class="g-k lo"></span>' + rich(grp.lf) + ' = ' + fmt(lo) +
+    (grp.ln ? '<br><span class="g-ln">' + bi(grp.ln) + '</span>' : '');
+}
+
+/* ---------- backbone as a cycle: Exploration → Estimation → Decision → … ---------- */
+function drawCycle() {
+  const box = document.getElementById('cycle').getBoundingClientRect();
+  const r = id => { const q = document.getElementById(id).getBoundingClientRect(); return {l: q.left - box.left, r: q.right - box.left, t: q.top - box.top, b: q.bottom - box.top, cx: (q.left + q.right) / 2 - box.left, cy: (q.top + q.bottom) / 2 - box.top}; };
+  const e = r('cExp'), s = r('cEst'), d = r('cDec'), W = document.getElementById('cycleWires');
+  W.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
+  W.setAttribute('width', box.width); W.setAttribute('height', box.height);
+  document.getElementById('wExpEst').setAttribute('d', 'M' + (e.r + 4) + ' ' + e.cy + ' L' + (s.l - 4) + ' ' + s.cy);
+  document.getElementById('wEstDec').setAttribute('d', 'M' + s.cx + ' ' + (s.b + 4) + ' Q' + s.cx + ' ' + d.cy + ' ' + (d.r + 4) + ' ' + d.cy);
+  document.getElementById('wDecExp').setAttribute('d', 'M' + (d.l - 4) + ' ' + d.cy + ' Q' + e.cx + ' ' + d.cy + ' ' + e.cx + ' ' + (e.b + 4));
+}
+window.addEventListener('resize', drawCycle);
+document.querySelectorAll('.lang-toggle button').forEach(b => b.addEventListener('click', () => setTimeout(drawCycle, 0)));
+
 /* ---------- state + render ---------- */
-let fw = FW.findIndex(f => f.name === 'Linear Bandit'), alg = 0;
+let fw = FW.findIndex(f => f.name === 'Linear Bandit'), alg = 0, lastGroup = null;
 const fwChips = document.getElementById('fwChips'), algChips = document.getElementById('algChips');
 FW.forEach((f, k) => {
   const b = document.createElement('button'); b.type = 'button'; b.className = 'mx-chip'; b.textContent = f.name; b.dataset.k = k;
@@ -522,11 +720,15 @@ function render() {
   document.getElementById('prLo').innerHTML = bi(A.lo);
   document.getElementById('prCx').innerHTML = bi(A.cx);
   document.getElementById('prTools').innerHTML = '<b><span data-l="en" lang="en">Tools</span><span data-l="ko" lang="ko">도구</span></b> · ' + bi(A.tools);
-  document.querySelectorAll('.mx-lens-item').forEach(e => e.classList.toggle('on', A.lens.includes(e.dataset.lens)));
+  const g = BOUND[A.name] ? BOUND[A.name][0] : null;
+  if (g !== lastGroup) { if (g) renderSliders(g); lastGroup = g; }
+  renderGauge();
+  drawCycle();
 }
 fwChips.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; fw = +b.dataset.k; alg = 0; render(); });
 algChips.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; alg = +b.dataset.k; render(); });
 render();
+if (document.fonts) document.fonts.ready.then(drawCycle);
 
 /* ---------- data graph ---------- */
 const NODES = {
