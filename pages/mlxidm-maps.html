@@ -118,13 +118,25 @@ permalink: /pages/mlxidm-maps/
 .mx-slab { text-align: right; }
 .mx-gfine { font-size: 0.74rem; color: var(--text-muted); margin: 0.6rem 0 0; }
 
-.mx-cycle { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "exp est" "dec dec"; column-gap: 3.2rem; row-gap: 3.4rem; padding: 0.4rem 0 0.2rem; }
+/* backbone: vertical, Exploration → Estimation → Decision, return arrow in the left gutter */
+.mx-cycle { position: relative; padding: 0.3rem 0 0.2rem 1.7rem; }
 .mx-cycle-wires { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
-.mx-cstep { position: relative; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.7rem 0.8rem; background: var(--surface-2); min-width: 0; }
-.mx-cstep h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; margin: 0 0 0.3rem; }
+.mx-cstep { position: relative; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.65rem 0.8rem; background: var(--surface-2); min-width: 0; }
+.mx-cstep h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; margin: 0 0 0.25rem; }
 .mx-cstep p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; margin: 0; overflow-wrap: anywhere; }
-#cExp { grid-area: exp; } #cEst { grid-area: est; }
-#cDec { grid-area: dec; justify-self: center; width: 42%; }
+.mx-blink { --c: #94a3b8; display: grid; grid-template-columns: 2.2rem auto minmax(0, 1fr); align-items: center; column-gap: 0.7rem; min-height: 3rem; }
+.mx-blink.k { --c: #0f172a; } .mx-blink.b { --c: #2563eb; }
+.mx-barrow { position: relative; justify-self: center; align-self: stretch; width: 1.8px; background: var(--c); }
+.mx-barrow::after { content: ""; position: absolute; left: 50%; bottom: 1px; width: 7px; height: 7px; border-right: 1.8px solid var(--c); border-bottom: 1.8px solid var(--c); transform: translateX(-50%) rotate(45deg); }
+.mx-blink.b .mx-barrow { background: none; } .mx-blink.b .mx-barrow::after { display: none; }
+.mx-sq { display: inline-flex; gap: 4px; }
+.mx-sq i { display: grid; place-items: center; width: 17px; height: 17px; border: 1.3px solid var(--border-strong); border-radius: 3px; background: var(--surface);
+  font-family: "CM Roman", serif; font-style: normal; font-size: 12px; font-weight: 700; line-height: 1; color: var(--c); }
+.mx-sq i.m { border-color: var(--c); }
+.mx-sq i.f { background: #0f172a; border-color: #0f172a; }
+.mx-analysis + .mx-lens { margin-bottom: 14px; }
+.mx-bkey { margin: -0.2rem 0 0.3rem; padding: 0; }
+.mx-bcap { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; padding: 0.35rem 0; }
 
 /* data graph */
 .mx-graph-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 0.75rem 0.5rem; }
@@ -173,8 +185,6 @@ permalink: /pages/mlxidm-maps/
 @media (max-width: 760px) {
   .mx-pick { grid-template-columns: 1fr; } .mx-pick-arrow { transform: rotate(90deg); height: 1.6rem; }
   .mx-analysis { grid-template-columns: 1fr; }
-  .mx-cycle { column-gap: 2.2rem; row-gap: 2.6rem; }
-  #cDec { width: 46%; }
   .mx-lens { grid-template-columns: 1fr; }
   .mx-steps { grid-template-columns: 1fr; gap: 0; }
   .mx-steps .mx-arrow { transform: rotate(90deg); height: 1.6rem; }
@@ -249,23 +259,44 @@ permalink: /pages/mlxidm-maps/
         <h3>Backbone</h3>
         <span class="mx-sub"><span data-l="en" lang="en">one round of the algorithm</span><span data-l="ko" lang="ko">알고리즘의 한 라운드</span></span>
       </div>
+      <p class="mx-bcap mx-bkey"><span data-l="en" lang="en">Each small square is one action.</span><span data-l="ko" lang="ko">작은 네모 하나가 행동 하나다.</span></p>
       <div class="mx-cycle" id="cycle">
         <svg class="mx-cycle-wires" id="cycleWires" aria-hidden="true">
           <defs>
-            <marker id="mkGray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
-            <marker id="mkBlack" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#0f172a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
-            <marker id="mkBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+            <marker id="mkBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
           </defs>
-          <path id="wExpEst" fill="none" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#mkGray)"/>
-          <path id="wEstDec" fill="none" stroke="#0f172a" stroke-width="1.8" marker-end="url(#mkBlack)"/>
-          <path id="wDecExp" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#mkBlue)"/>
+          <path id="wDecExp" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#mkBlue)"/>
         </svg>
         <div class="mx-cstep" id="cExp"><h4>Exploration</h4><p id="bbExp"></p></div>
+        <div class="mx-blink">
+          <span class="mx-barrow"></span>
+          <span class="mx-sq" aria-hidden="true"><i></i><i class="m">?</i><i></i><i></i></span>
+          <span class="mx-bcap"><span data-l="en" lang="en">An action whose outcome is still unknown is tried; its data go to the estimator.</span><span data-l="ko" lang="ko">결과를 아직 모르는 행동을 해 보고, 그 데이터를 추정으로 넘긴다.</span></span>
+        </div>
         <div class="mx-cstep" id="cEst"><h4>Estimation</h4><p id="bbEst"></p></div>
+        <div class="mx-blink k">
+          <span class="mx-barrow"></span>
+          <span class="mx-sq" aria-hidden="true"><i></i><i class="m">!</i><i></i><i></i></span>
+          <span class="mx-bcap"><span data-l="en" lang="en">The estimate and its uncertainty single out a candidate.</span><span data-l="ko" lang="ko">추정값과 불확실성이 후보 하나를 짚는다.</span></span>
+        </div>
         <div class="mx-cstep" id="cDec"><h4>Decision</h4><p id="bbDec"></p></div>
+        <div class="mx-blink b" id="bReturn">
+          <span class="mx-barrow" id="bReturnArrow"></span>
+          <span class="mx-sq" aria-hidden="true"><i></i><i class="f"></i><i></i><i></i></span>
+          <span class="mx-bcap"><span data-l="en" lang="en">One action is played; its outcome is new data for the next round of exploration.</span><span data-l="ko" lang="ko">행동 하나를 실행하고, 그 결과가 다음 라운드 탐색의 새 데이터가 된다.</span></span>
+        </div>
       </div>
     </div>
   </div>
+
+  <aside class="mx-lens" aria-label="Lens">
+    <div class="mx-node-head"><h3>Lens</h3><span class="mx-sub"><span data-l="en" lang="en">cuts across the backbone and the proof</span><span data-l="ko" lang="ko">backbone과 proof를 가로지른다</span></span></div>
+    <p class="mx-lens-feed"><span data-l="en" lang="en">Highlighted where it matters for the chosen algorithm.</span><span data-l="ko" lang="ko">고른 알고리즘에서 중요한 관점이 강조된다.</span></p>
+    <div class="mx-lens-item" data-lens="g"><h5>Geometry</h5><p><span data-l="en" lang="en">Confidence ellipsoids, decision regions and cones, gaps</span><span data-l="ko" lang="ko">신뢰 타원, 결정 영역과 cone, 격차</span></p></div>
+    <div class="mx-lens-item" data-lens="r"><h5>Representation</h5><p><span data-l="en" lang="en">Features and dimension, sparsity, misspecification</span><span data-l="ko" lang="ko">특징과 차원, 희소성, 모형 오설정</span></p></div>
+    <div class="mx-lens-item" data-lens="o"><h5>Optimization</h5><p><span data-l="en" lang="en">Computing estimators, optimal allocations, minimax problems over exploration distributions</span><span data-l="ko" lang="ko">추정량 계산, 최적 배분, 탐색 분포의 minimax 문제</span></p></div>
+    <div class="mx-lens-item" data-lens="v"><h5>Observation</h5><p><span data-l="en" lang="en">What of the data is seen: partial or missing features, bandit and partial feedback, delay and censoring</span><span data-l="ko" lang="ko">데이터 중 무엇이 보이나: 일부만 관측되거나 빠진 특징, 밴딧·부분 피드백, 지연과 검열</span></p></div>
+  </aside>
 
   <div class="mx-node mx-proof" id="nodeProof">
     <div class="mx-node-head">
@@ -690,12 +721,15 @@ function renderGauge() {
 function drawCycle() {
   const box = document.getElementById('cycle').getBoundingClientRect();
   const r = id => { const q = document.getElementById(id).getBoundingClientRect(); return {l: q.left - box.left, r: q.right - box.left, t: q.top - box.top, b: q.bottom - box.top, cx: (q.left + q.right) / 2 - box.left, cy: (q.top + q.bottom) / 2 - box.top}; };
-  const e = r('cExp'), s = r('cEst'), d = r('cDec'), W = document.getElementById('cycleWires');
+  const e = r('cExp'), a = r('bReturnArrow'), W = document.getElementById('cycleWires');
   W.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
   W.setAttribute('width', box.width); W.setAttribute('height', box.height);
-  document.getElementById('wExpEst').setAttribute('d', 'M' + (e.r + 4) + ' ' + e.cy + ' L' + (s.l - 4) + ' ' + s.cy);
-  document.getElementById('wEstDec').setAttribute('d', 'M' + s.cx + ' ' + (s.b + 4) + ' Q' + s.cx + ' ' + d.cy + ' ' + (d.r + 4) + ' ' + d.cy);
-  document.getElementById('wDecExp').setAttribute('d', 'M' + (d.l - 4) + ' ' + d.cy + ' Q' + e.cx + ' ' + d.cy + ' ' + e.cx + ' ' + (e.b + 4));
+  /* Decision → down → into the left gutter → up → back into Exploration */
+  const x = a.cx, yb = a.b - 6, g = 7, k = 9, ye = Math.min(e.cy, e.t + 22);
+  document.getElementById('wDecExp').setAttribute('d',
+    'M' + x + ' ' + a.t + ' L' + x + ' ' + (yb - k) + ' Q' + x + ' ' + yb + ' ' + (x - k) + ' ' + yb +
+    ' L' + (g + k) + ' ' + yb + ' Q' + g + ' ' + yb + ' ' + g + ' ' + (yb - k) +
+    ' L' + g + ' ' + (ye + k) + ' Q' + g + ' ' + ye + ' ' + (g + k) + ' ' + ye + ' L' + (e.l - 3) + ' ' + ye);
 }
 window.addEventListener('resize', drawCycle);
 document.querySelectorAll('.lang-toggle button').forEach(b => b.addEventListener('click', () => setTimeout(drawCycle, 0)));
@@ -716,6 +750,7 @@ function render() {
   document.getElementById('bbExp').innerHTML = bi(A.exp);
   document.getElementById('bbEst').innerHTML = bi(A.est);
   document.getElementById('bbDec').innerHTML = bi(A.dec);
+  document.querySelectorAll('.mx-lens-item').forEach(e => e.classList.toggle('on', A.lens.includes(e.dataset.lens)));
   document.getElementById('prUp').innerHTML = bi(A.up);
   document.getElementById('prLo').innerHTML = bi(A.lo);
   document.getElementById('prCx').innerHTML = bi(A.cx);
