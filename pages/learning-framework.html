@@ -125,7 +125,13 @@ html[lang="ko"] .lf-dl::before { content: "다운로드"; }
 
 /* axis cards */
 .lf-axes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-items: start; }
-#axes-env { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr); }
+#axes-env { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+#axes-env > .lf-card { grid-column: span 6; }
+#axes-env > #card-rm { grid-column: span 8; } #axes-env > #card-fb { grid-column: span 4; }
+/* reward model: options on the left, its sub-choices beside them */
+#card-rm { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 1.1rem; align-items: start; }
+#card-rm > h3, #card-rm > .lf-q { grid-column: 1 / -1; }
+#card-rm > .lf-sub { grid-column: 2; grid-row: 3; margin-top: 0; padding: 0 0 0 1.1rem; border-top: 0; border-left: 1px dashed var(--border); }
 .lf-card {
   position: relative; overflow: hidden;
   border: 1px solid var(--border); border-radius: var(--radius-md);
@@ -179,7 +185,12 @@ html[lang="ko"] .lf-dl::before { content: "다운로드"; }
 .lf-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
 .lf-back:hover { color: var(--accent); }
 
-@media (max-width: 760px) { .lf-axes, #axes-env { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .lf-axes, #axes-env { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #card-rm { display: block; }
+  #axes-env > .lf-card, #axes-env > #card-rm, #axes-env > #card-fb { grid-column: auto; }
+  #card-rm > .lf-sub { margin-top: 0.85rem; padding: 0.75rem 0 0; border-left: 0; border-top: 1px dashed var(--border); }
+}
 @media (max-width: 680px) { .lf-head { padding-top: 1.5rem; } }
 @media (prefers-reduced-motion: reduce) {
   #fig .link, #fig .fade, #fig .col, #fig .xsq, #fig #dots, #fig .ell, .lf-card, .lf-card::before { transition: none; }
