@@ -435,7 +435,7 @@ const AXES = [
     ['None', 'No structure shared across actions; each arm has its own mean.', '행동 사이에 공유되는 구조가 없다. 팔마다 평균이 따로 있다.'],
     ['Linear', 'The mean reward is linear in the features: ⟨x, θ⋆⟩.', '평균 보상이 특징에 대해 선형이다: ⟨x, θ⋆⟩.'],
     ['Generalized linear', 'A known link function of a linear score: σ(⟨x, θ⋆⟩).', '선형 점수에 알려진 연결 함수를 씌운 값이다: σ(⟨x, θ⋆⟩).'],
-    ['General function', 'A general function class, e.g. kernels or neural networks: f⋆(x).', '커널, 신경망 같은 일반 함수 클래스다: f⋆(x).']]},
+    ['Function approximation', 'The mean reward is approximated within a general function class, e.g. kernels or neural networks: f⋆(x).', '평균 보상을 커널, 신경망 같은 일반 함수 클래스로 근사한다: f⋆(x).']]},
   {id:'fb', name:'Reward feedback',
    q:['What is observed?', '무엇을 관측하나'],
    where:['Rows rᵗ and oᵗ: filled cells are observed', 'rᵗ와 oᵗ의 행: 채워진 칸이 보이는 칸'], vals:[
@@ -454,8 +454,8 @@ const FAM = [
   ['Linear Bandit', {acq:3, fb:2, temp:1, rm:1, env:1, dec:1, obj:1}],
   ['GLM Bandit', {acq:3, fb:2, temp:1, rm:2, env:1, dec:1, obj:1}],
   ['Combinatorial Semi-bandit', {acq:3, fb:1, temp:1, rm:1, env:1, dec:2, obj:1}],
-  ['Partial Monitoring', {acq:3, fb:3, temp:1, rm:0, env:2, dec:1, obj:1}],
-  ['Reinforcement Learning', {acq:3, fb:2, temp:3, rm:0, env:0, dec:3, obj:1}]
+  ['Partial Monitoring', {acq:3, fb:3, temp:1, rm:3, env:2, dec:1, obj:1}],
+  ['Reinforcement Learning', {acq:3, fb:2, temp:3, rm:3, env:0, dec:3, obj:1}]
 ];
 const state = Object.assign({}, FAM.find(f => f[0] === 'Contextual Bandit')[1]);
 let focus = null;
