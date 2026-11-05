@@ -1,92 +1,119 @@
 ---
 layout: page
 title: "Maps of MLxIDM"
-description: "A map for studying machine learning and interactive decision making, in five layers: Framework, Mechanism, Principle, Proof, and Data."
+description: "A map from frameworks to algorithms: pick a problem class, then an algorithm, and follow how it explores, estimates and decides, and what can be proved about it."
 permalink: /pages/mlxidm-maps/
 ---
 
 <style>
 /* ---------- page-scoped styles (Maps of MLxIDM) -------------------------- */
-/* Math symbols in Computer Modern, same files as the Learning Framework page. */
 @font-face { font-family: "CM Roman"; src: url("{{ '/assets/fonts/cm/KaTeX_Main-Regular.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "CM Math"; src: url("{{ '/assets/fonts/cm/KaTeX_Math-Italic.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
-.mp-m { font-family: "CM Math", "CM Roman", serif; font-style: normal; font-size: 1.1em; line-height: 0; }
+@font-face { font-family: "CM Cal"; src: url("{{ '/assets/fonts/cm/KaTeX_Caligraphic-Regular.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "CM BB"; src: url("{{ '/assets/fonts/cm/KaTeX_AMS-Regular.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 
-.mp-head { padding: 2.5rem 0 0.5rem; }
-.mp-head h1 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.08; margin-bottom: 0.9rem; }
-.mp-lede { font-size: 0.97rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 1.25rem; }
-.mp-lede[data-l="ko"] { line-height: 1.85; }
+.mx-head { padding: 2.5rem 0 0.5rem; }
+.mx-head h1 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.08; margin-bottom: 0.9rem; }
+.mx-lede { font-size: 0.97rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 1.5rem; }
+.mx-lede[data-l="ko"] { line-height: 1.85; }
 
-.mp-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; font-size: 0.82rem; color: var(--text-secondary); margin: 0 0 1.75rem; }
-.mp-legend > span { display: inline-flex; align-items: center; gap: 9px; }
-.mp-legend i { display: inline-block; width: 3px; height: 16px; border-left: 3px solid var(--accent); }
-.mp-legend i.later { border-left: 3px dashed var(--text-muted); }
+/* math: single letters italic, words roman, as in LaTeX */
+.mx-m { font-family: "CM Roman", serif; font-size: 1.08em; }
+.mx-m i { font-family: "CM Math", "CM Roman", serif; font-style: normal; }
+.mx-m .mx-cal { font-family: "CM Cal", "CM Roman", serif; }
+.mx-m .mx-bb { font-family: "CM BB", "CM Roman", serif; }
+.mx-m sub, .mx-m sup { font-size: 0.72em; line-height: 0; }
 
-/* overview: five layers, five questions */
-.mp-overview { margin: 0; border-top: 1px solid var(--border); }
-.mp-overview > div {
-  display: grid; grid-template-columns: 11.5rem minmax(0, 1fr); gap: 0.25rem 1.25rem; align-items: baseline;
-  padding: 0.7rem 0 0.7rem 0.25rem; border-bottom: 1px solid var(--border);
+/* ---------- the flowchart ---------- */
+.mx-flow { display: grid; gap: 0; }
+.mx-node {
+  border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface);
+  padding: 1rem 1.15rem 1.1rem;
 }
-.mp-overview dt a { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text); }
-.mp-overview dt a:hover { color: var(--accent); }
-.mp-overview dt .num { font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; color: var(--accent); letter-spacing: 0.1em; margin-right: 0.7rem; }
-.mp-overview dd { margin: 0; font-size: 0.92rem; color: var(--text-secondary); }
+.mx-node-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; }
+.mx-node-head svg { width: 26px; height: 26px; flex-shrink: 0; }
+.mx-node-head h3 { font-size: 1.1rem; font-weight: 700; margin: 0; }
+.mx-node-head .mx-sub { font-size: 0.82rem; color: var(--text-muted); margin-left: auto; text-align: right; }
+.mx-wire { display: flex; align-items: center; justify-content: center; gap: 0.5rem; height: 2.4rem; color: var(--text-muted); font-size: 0.78rem; }
+.mx-wire::before { content: ""; width: 1.5px; height: 100%; background: var(--border-strong); }
+.mx-wire span { position: absolute; margin-left: 9rem; }
+.mx-wire { position: relative; }
+.mx-wire::after { content: ""; position: absolute; left: 50%; bottom: 2px; width: 7px; height: 7px; border-right: 1.5px solid var(--border-strong); border-bottom: 1.5px solid var(--border-strong); transform: translateX(-50%) rotate(45deg); }
 
-/* layers */
-.mp-q { font-size: 0.97rem; color: var(--text-secondary); margin: -0.35rem 0 1rem; }
-.mp-parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
-.mp-part {
-  border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface);
-  padding: 1rem 1.1rem 0.6rem 1.2rem;
+.mx-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.mx-chip {
+  font: inherit; font-size: 0.8rem; font-weight: 500; line-height: 1.2;
+  color: var(--text-secondary); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  padding: 7px 13px; cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
 }
-.mp-part.is-now   { border-left: 3px solid var(--accent); }
-.mp-part.is-later { border-left: 3px dashed var(--text-muted); }
-.mp-part-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
-.mp-part h3 { font-size: 1.05rem; font-weight: 700; margin: 0; }
-.mp-mark { color: var(--accent); font-weight: 400; margin-right: 0.15rem; }
-.mp-status {
-  flex-shrink: 0; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 3px 9px; border-radius: var(--radius-pill); border: 1px solid var(--border); color: var(--text-muted);
-}
-.mp-status.is-now { color: var(--accent); border-color: rgba(37, 99, 235, 0.3); background: var(--accent-soft); }
-.mp-status [data-l="ko"] { text-transform: none; letter-spacing: 0.01em; }
-.mp-note { font-size: 0.85rem; color: var(--text-muted); margin: 0.15rem 0 0.6rem; }
-
-.mp-loop { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 0 0.5rem; font-size: 0.82rem; }
-.mp-loop > span:not(.ar):not(.back) { color: var(--accent); background: var(--accent-soft); border-radius: var(--radius-pill); padding: 2px 10px; font-weight: 500; }
-.mp-loop .ar { color: var(--text-muted); }
-.mp-loop .back { color: var(--text-muted); font-size: 0.8rem; margin-left: 2px; }
-
-.mp-items { list-style: none; margin: 0; padding: 0; }
-.mp-items li { padding: 0.6rem 0; border-top: 1px solid var(--border); }
-.mp-items li:first-child { border-top: 0; }
-.mp-name { display: block; font-family: var(--font-display); font-weight: 600; font-size: 0.98rem; color: var(--text); line-height: 1.35; }
-.mp-gloss { display: block; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-top: 0.15rem; }
-.mp-gloss[data-l="ko"] { line-height: 1.7; }
-.mp-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 0.4rem; }
-.mp-chip {
-  font-size: 0.74rem; line-height: 1.3; color: var(--text-secondary); background: var(--surface-2);
-  border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 3px 9px;
+.mx-chip:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.mx-chip[aria-pressed="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+.mx-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mx-note { font-size: 0.88rem; color: var(--text-secondary); margin: 0.7rem 0 0; line-height: 1.65; }
+.mx-tag {
+  display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.02em;
+  color: var(--accent); background: var(--accent-soft); border-radius: var(--radius-pill); padding: 2px 9px; margin-right: 0.4rem;
 }
 
-.mp-frame {
+/* backbone + proof on the left, lens on the right feeding both */
+.mx-lower { display: grid; grid-template-columns: minmax(0, 1fr); }
+.mx-lower-main { display: grid; }
+.mx-steps { display: grid; grid-template-columns: minmax(0, 1fr) 1.4rem minmax(0, 1fr) 1.4rem minmax(0, 1fr); align-items: stretch; }
+.mx-steps.mx-three-even { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.mx-step { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.7rem 0.8rem; background: var(--surface-2); min-width: 0; }
+.mx-step h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; margin: 0 0 0.3rem; }
+.mx-step p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin: 0; overflow-wrap: anywhere; }
+.mx-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1rem; }
+.mx-loop { font-size: 0.78rem; color: var(--text-muted); margin: 0.5rem 0 0; text-align: center; }
+.mx-tools { font-size: 0.82rem; color: var(--text-muted); margin: 0.7rem 0 0; }
+.mx-tools b { font-weight: 600; color: var(--text-secondary); }
+
+.mx-lens {
+  border: 1px dashed var(--border-strong); border-radius: var(--radius); padding: 1rem 1.15rem 1.1rem;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem 10px; position: relative;
+}
+.mx-lens .mx-node-head, .mx-lens .mx-lens-feed { grid-column: 1 / -1; }
+.mx-wire.up::after { bottom: auto; top: 2px; transform: translateX(-50%) rotate(-135deg); }
+.mx-lens .mx-node-head { margin-bottom: 0.2rem; }
+.mx-lens-feed { font-size: 0.76rem; color: var(--text-muted); margin: 0 0 0.3rem; }
+.mx-lens-item { border-radius: var(--radius-md); padding: 0.5rem 0.65rem; border: 1px solid var(--border); transition: border-color 0.2s, background 0.2s; }
+.mx-lens-item h5 { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; margin: 0 0 0.15rem; color: var(--text-muted); }
+.mx-lens-item p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
+.mx-lens-item.on { border-color: rgba(37, 99, 235, 0.45); background: var(--accent-soft); }
+.mx-lens-item.on h5 { color: var(--accent); }
+.mx-lens-item.on p { color: var(--text-secondary); }
+
+/* data appendix */
+.mx-parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.mx-part { border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); padding: 1rem 1.1rem 0.6rem 1.2rem; }
+.mx-part h3 { font-size: 1.05rem; font-weight: 700; margin: 0; }
+.mx-part .mx-pnote { font-size: 0.85rem; color: var(--text-muted); margin: 0.15rem 0 0.6rem; }
+.mx-items { list-style: none; margin: 0; padding: 0; }
+.mx-items li { padding: 0.55rem 0; border-top: 1px solid var(--border); font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; }
+.mx-items li:first-child { border-top: 0; }
+
+.mx-frame {
   font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; line-height: 1.5;
-  color: var(--text); border-left: 3px solid var(--accent);
-  padding: 0.15rem 0 0.15rem 1rem; margin: 3rem 0 0;
+  color: var(--text); border-left: 3px solid var(--accent); padding: 0.15rem 0 0.15rem 1rem; margin: 3rem 0 0;
 }
-.mp-frame[data-l="ko"] { font-size: 1.1rem; font-weight: 500; letter-spacing: -0.005em; }
-.mp-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
-.mp-back:hover { color: var(--accent); }
+.mx-frame[data-l="ko"] { font-size: 1.1rem; font-weight: 500; }
+.mx-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
+.mx-back:hover { color: var(--accent); }
 
-@media (max-width: 680px) {
-  .mp-parts { grid-template-columns: 1fr; }
-  .mp-head { padding-top: 1.5rem; }
+@media (max-width: 760px) {
+  .mx-lens { grid-template-columns: 1fr; }
+  .mx-steps { grid-template-columns: 1fr; gap: 0; }
+  .mx-steps .mx-arrow { transform: rotate(90deg); height: 1.6rem; }
+  .mx-steps.mx-three-even { grid-template-columns: 1fr; gap: 8px; }
+  .mx-parts { grid-template-columns: 1fr; }
+  .mx-head { padding-top: 1.5rem; }
+  .mx-wire span { margin-left: 7rem; }
 }
-@media (max-width: 560px) { .mp-overview > div { grid-template-columns: 1fr; } }
 </style>
 
-<section class="mp-head">
+<section class="mx-head">
   <div class="hero-top">
     <span class="hero-label">
       <span class="dot"></span>
@@ -100,200 +127,383 @@ permalink: /pages/mlxidm-maps/
   </div>
 
   <h1>Maps of MLxIDM</h1>
-  <p class="mp-lede" data-l="en" lang="en">A map for studying sequential decision-making AI. Five layers each answer a different question, and each layer splits into two parts. The line on the left of each part marks the scope of my master's program.</p>
-  <p class="mp-lede" data-l="ko" lang="ko">순차적 의사결정 AI를 공부하기 위한 지도. 다섯 개의 층이 각자 다른 질문에 답하고, 층마다 두 부분으로 나뉜다. 각 부분 왼쪽의 선은 석사 과정 동안의 범위를 나타낸다.</p>
-
-  <div class="mp-legend">
-    <span><i></i><span data-l="en" lang="en">In scope now</span><span data-l="ko" lang="ko">지금 다루는 영역</span></span>
-    <span><i class="later"></i><span data-l="en" lang="en">Later</span><span data-l="ko" lang="ko">나중에 다룰 영역</span></span>
-  </div>
-
-  <dl class="mp-overview">
-    <div><dt><a href="#framework"><span class="num">01</span>Framework</a></dt><dd><span data-l="en" lang="en">What is given, and what is optimized?</span><span data-l="ko" lang="ko">무엇이 주어지고 무엇을 최적화하나?</span></dd></div>
-    <div><dt><a href="#mechanism"><span class="num">02</span>Mechanism</a></dt><dd><span data-l="en" lang="en">How does data reduce uncertainty and change decisions?</span><span data-l="ko" lang="ko">데이터가 불확실성을 어떻게 줄이고 결정을 바꾸나?</span></dd></div>
-    <div><dt><a href="#principle"><span class="num">03</span>Principle</a></dt><dd><span data-l="en" lang="en">How do we turn that mechanism into a rule for acting?</span><span data-l="ko" lang="ko">그 작동 방식으로 어떻게 행동 규칙을 만드나?</span></dd></div>
-    <div><dt><a href="#proof"><span class="num">04</span>Proof</a></dt><dd><span data-l="en" lang="en">How do we show that it is guaranteed?</span><span data-l="ko" lang="ko">그게 보장됨을 어떻게 보이나?</span></dd></div>
-    <div><dt><a href="#data"><span class="num">05</span>Data</a></dt><dd><span data-l="en" lang="en">What kind of data do we work with?</span><span data-l="ko" lang="ko">어떤 데이터를 다루나?</span></dd></div>
-  </dl>
+  <p class="mx-lede" data-l="en" lang="en">An algorithm lives inside a framework, so each problem class comes with its own algorithms. Pick a problem class, then an algorithm, and follow how it explores, estimates and decides (its backbone) and what can be proved about it. The lens on the side is how both are analysed.</p>
+  <p class="mx-lede" data-l="ko" lang="ko">알고리즘은 프레임워크 안에 있으므로, 문제 계열마다 알고리즘이 다르다. 문제 계열을 고르고 알고리즘을 고르면, 그 알고리즘이 어떻게 탐색하고 추정하고 결정하는지(backbone)와 무엇을 증명할 수 있는지(proof)를 따라갈 수 있다. 옆의 lens는 그 둘을 분석하는 관점이다.</p>
 </section>
 
-<section class="section mp-layer" id="framework">
+<section class="section" id="map">
   <h2 class="section-title">
     <span class="num">01</span>
-    <span>Framework</span>
+    <span><span data-l="en" lang="en">From framework to proof</span><span data-l="ko" lang="ko">프레임워크에서 증명까지</span></span>
     <span class="line"></span>
   </h2>
-  <p class="mp-q"><span data-l="en" lang="en">What is given, and what is optimized?</span><span data-l="ko" lang="ko">무엇이 주어지고 무엇을 최적화하나?</span></p>
-  <div class="mp-parts">
-<div class="mp-part is-now">
-<div class="mp-part-head">
-<h3><span class="mp-mark">①</span> <span data-l="en" lang="en">Problem class</span><span data-l="ko" lang="ko">문제 계열</span></h3>
-<span class="mp-status is-now"><span data-l="en" lang="en">Now</span><span data-l="ko" lang="ko">지금</span></span>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">Categorized by reward model</span><span data-l="ko" lang="ko">보상 모델로 분류</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Statistical Learning</span><span class="mp-gloss" data-l="en" lang="en">Learn from data drawn from a fixed distribution</span><span class="mp-gloss" data-l="ko" lang="ko">고정된 분포의 데이터로 학습</span><span class="mp-chips"><span class="mp-chip">Batch learning</span></span></li>
-<li><span class="mp-name">Imitation Learning</span><span class="mp-gloss" data-l="en" lang="en">Learn a policy from expert demonstrations; the learner's own actions shift the states it later sees</span><span class="mp-gloss" data-l="ko" lang="ko">전문가 시연으로 정책을 학습. 내 행동이 이후에 보게 될 상태 분포를 바꿈</span><span class="mp-chips"><span class="mp-chip">Behavior cloning</span><span class="mp-chip">DAgger</span></span></li>
-<li><span class="mp-name">Online Learning</span><span class="mp-gloss" data-l="en" lang="en">Data arrive sequentially and a prediction is made every round</span><span class="mp-gloss" data-l="ko" lang="ko">데이터가 순차적으로 오고 매번 예측</span></li>
-<li><span class="mp-name">Bandit</span><span class="mp-gloss" data-l="en" lang="en">Only the reward of the chosen action is observed</span><span class="mp-gloss" data-l="ko" lang="ko">고른 행동의 보상만 관측</span><span class="mp-chips"><span class="mp-chip">multi-armed</span><span class="mp-chip">contextual</span><span class="mp-chip">structured</span></span></li>
-<li><span class="mp-name">Partial Monitoring</span><span class="mp-gloss" data-l="en" lang="en">Feedback in which what is observed can differ from the loss</span><span class="mp-gloss" data-l="ko" lang="ko">관측과 손실이 다를 수 있는 피드백</span></li>
-<li><span class="mp-name">Reinforcement Learning</span><span class="mp-gloss" data-l="en" lang="en">Actions change the state</span><span class="mp-gloss" data-l="ko" lang="ko">행동이 상태를 바꾸는 문제</span></li>
-</ul></div>
-<div class="mp-part is-now">
-<div class="mp-part-head">
-<h3><span class="mp-mark">②</span> <span data-l="en" lang="en">Learning objective</span><span data-l="ko" lang="ko">학습 목적</span></h3>
-<span class="mp-status is-now"><span data-l="en" lang="en">Now</span><span data-l="ko" lang="ko">지금</span></span>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">Works independently of the problem class</span><span data-l="ko" lang="ko">문제 계열과 독립적으로 작동</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Regret Minimization</span><span class="mp-gloss" data-l="en" lang="en">Minimize cumulative loss</span><span class="mp-gloss" data-l="ko" lang="ko">누적 손실을 최소화</span></li>
-<li><span class="mp-name">Pure Exploration</span><span class="mp-gloss" data-l="en" lang="en">Accuracy of the final answer</span><span class="mp-gloss" data-l="ko" lang="ko">최종 답의 정확도</span><span class="mp-chips"><span class="mp-chip">BAI</span><span class="mp-chip">top-<span class="mp-m">k</span></span></span></li>
-<li><span class="mp-name">Statistical Inference</span><span class="mp-gloss" data-l="en" lang="en">Statistical validity of the conclusions</span><span class="mp-gloss" data-l="ko" lang="ko">결론의 통계적 타당성</span></li>
-</ul></div>
+
+  <div class="mx-flow">
+    <div class="mx-node" id="nodeFw">
+      <div class="mx-node-head">
+        <svg viewBox="0 0 26 26" aria-hidden="true"><g fill="none" stroke="var(--text)" stroke-width="1.3"><circle cx="13" cy="13" r="10"/><ellipse cx="13" cy="13" rx="4" ry="10"/><line x1="3.6" y1="9.5" x2="22.4" y2="9.5"/><line x1="3.6" y1="16.5" x2="22.4" y2="16.5"/></g></svg>
+        <h3>Framework</h3>
+        <span class="mx-sub"><span data-l="en" lang="en">problem class</span><span data-l="ko" lang="ko">문제 계열</span></span>
+      </div>
+      <div class="mx-chips" id="fwChips" role="group" aria-label="Problem class"></div>
+      <p class="mx-note" id="fwNote"></p>
+    </div>
+
+    <div class="mx-wire"><span data-l="en" lang="en">contains</span><span data-l="ko" lang="ko">안에 든</span></div>
+
+    <div class="mx-node" id="nodeAlg">
+      <div class="mx-node-head">
+        <svg viewBox="0 0 26 26" aria-hidden="true"><g fill="none" stroke="var(--text)" stroke-width="1.3"><rect x="4" y="8" width="18" height="14" rx="2"/><line x1="8" y1="8" x2="6.5" y2="4"/><line x1="18" y1="8" x2="19.5" y2="4"/></g><circle cx="10" cy="15" r="1.4" fill="var(--text)"/><circle cx="16" cy="15" r="1.4" fill="var(--text)"/></svg>
+        <h3>Algorithm</h3>
+        <span class="mx-sub"><span data-l="en" lang="en">for this framework</span><span data-l="ko" lang="ko">이 프레임워크의 알고리즘</span></span>
+      </div>
+      <div class="mx-chips" id="algChips" role="group" aria-label="Algorithm"></div>
+      <p class="mx-note" id="algNote"></p>
+    </div>
+
+    <div class="mx-wire"><span data-l="en" lang="en">runs on</span><span data-l="ko" lang="ko">작동 방식</span></div>
+
+    <div class="mx-lower">
+      <div class="mx-lower-main">
+        <div class="mx-node" id="nodeBackbone">
+          <div class="mx-node-head">
+            <h3>Backbone</h3>
+            <span class="mx-sub"><span data-l="en" lang="en">the loop one round runs through</span><span data-l="ko" lang="ko">한 라운드가 도는 고리</span></span>
+          </div>
+          <div class="mx-steps">
+            <div class="mx-step"><h4>Exploration</h4><p id="bbExp"></p></div>
+            <div class="mx-arrow" aria-hidden="true">→</div>
+            <div class="mx-step"><h4>Estimation</h4><p id="bbEst"></p></div>
+            <div class="mx-arrow" aria-hidden="true">→</div>
+            <div class="mx-step"><h4>Decision</h4><p id="bbDec"></p></div>
+          </div>
+          <p class="mx-loop"><span data-l="en" lang="en">↻ the decision produces the next data, and the loop starts again</span><span data-l="ko" lang="ko">↻ 결정이 다음 데이터를 만들고, 고리가 다시 돈다</span></p>
+        </div>
+
+        <div class="mx-wire"><span data-l="en" lang="en">guarantees</span><span data-l="ko" lang="ko">보장</span></div>
+
+        <div class="mx-node" id="nodeProof">
+          <div class="mx-node-head">
+            <h3>Proof</h3>
+            <span class="mx-sub"><span data-l="en" lang="en">what is guaranteed</span><span data-l="ko" lang="ko">무엇이 보장되나</span></span>
+          </div>
+          <div class="mx-steps mx-three-even">
+            <div class="mx-step"><h4>Upper bound</h4><p id="prUp"></p></div>
+            <div class="mx-step"><h4>Lower bound</h4><p id="prLo"></p></div>
+            <div class="mx-step"><h4>Complexity measure</h4><p id="prCx"></p></div>
+          </div>
+          <p class="mx-tools" id="prTools"></p>
+        </div>
+      </div>
+
+      <div class="mx-wire up"><span data-l="en" lang="en">analysed through</span><span data-l="ko" lang="ko">분석 관점</span></div>
+      <aside class="mx-lens" aria-label="Lens">
+        <div class="mx-node-head"><h3>Lens</h3><span class="mx-sub"><span data-l="en" lang="en">cuts across the backbone and the proof</span><span data-l="ko" lang="ko">backbone과 proof를 가로지른다</span></span></div>
+        <p class="mx-lens-feed"><span data-l="en" lang="en">Highlighted where it matters for the chosen algorithm.</span><span data-l="ko" lang="ko">고른 알고리즘에서 중요한 관점이 강조된다.</span></p>
+        <div class="mx-lens-item" data-lens="g"><h5>Geometry</h5><p><span data-l="en" lang="en">Confidence ellipsoids, decision regions and cones, gaps</span><span data-l="ko" lang="ko">신뢰 타원, 결정 영역과 cone, 격차</span></p></div>
+        <div class="mx-lens-item" data-lens="r"><h5>Representation</h5><p><span data-l="en" lang="en">Features and dimension, sparsity, misspecification</span><span data-l="ko" lang="ko">특징과 차원, 희소성, 모형 오설정</span></p></div>
+        <div class="mx-lens-item" data-lens="o"><h5>Optimization</h5><p><span data-l="en" lang="en">Computing estimators, optimal allocations, minimax problems over exploration distributions</span><span data-l="ko" lang="ko">추정량 계산, 최적 배분, 탐색 분포의 minimax 문제</span></p></div>
+      </aside>
+    </div>
   </div>
 </section>
 
-<section class="section mp-layer" id="mechanism">
+<section class="section" id="data">
   <h2 class="section-title">
     <span class="num">02</span>
-    <span>Mechanism</span>
+    <span><span data-l="en" lang="en">Data</span><span data-l="ko" lang="ko">데이터</span></span>
     <span class="line"></span>
   </h2>
-  <p class="mp-q"><span data-l="en" lang="en">How does data reduce uncertainty and change decisions?</span><span data-l="ko" lang="ko">데이터가 불확실성을 어떻게 줄이고 결정을 바꾸나?</span></p>
-  <div class="mp-parts">
-<div class="mp-part is-now">
-<div class="mp-part-head">
-<h3><span class="mp-mark">①</span> <span>Backbone</span></h3>
-<span class="mp-status is-now"><span data-l="en" lang="en">Now</span><span data-l="ko" lang="ko">지금</span></span>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">The loop that one round runs through</span><span data-l="ko" lang="ko">한 라운드가 도는 고리</span></p>
-<p class="mp-loop"><span>Exploration</span><span class="ar">→</span><span>Estimation</span><span class="ar">→</span><span>Decision</span><span class="back">↻ <span data-l="en" lang="en">back to Exploration</span><span data-l="ko" lang="ko">다시 Exploration으로</span></span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Exploration</span><span class="mp-gloss" data-l="en" lang="en">Data gathered by exploring, and how informative it is</span><span class="mp-gloss" data-l="ko" lang="ko">탐색으로 쌓인 데이터와 그 정보량</span></li>
-<li><span class="mp-name">Estimation</span><span class="mp-gloss" data-l="en" lang="en">Estimators, confidence sets, and how fast uncertainty shrinks</span><span class="mp-gloss" data-l="ko" lang="ko">추정량, 신뢰집합, 불확실성이 줄어드는 속도</span></li>
-<li><span class="mp-name">Decision</span><span class="mp-gloss" data-l="en" lang="en">Choose actions from the estimates and their uncertainty</span><span class="mp-gloss" data-l="ko" lang="ko">추정과 불확실성으로 행동을 정함</span></li>
-</ul></div>
-<div class="mp-part is-now">
-<div class="mp-part-head">
-<h3><span class="mp-mark">②</span> <span>Lens</span></h3>
-<span class="mp-status is-now"><span data-l="en" lang="en">Now</span><span data-l="ko" lang="ko">지금</span></span>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">Cuts across every stage of the backbone</span><span data-l="ko" lang="ko">backbone의 모든 단계를 가로지름</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Geometry</span><span class="mp-gloss" data-l="en" lang="en">Confidence ellipsoids, decision regions and cones, gaps</span><span class="mp-gloss" data-l="ko" lang="ko">신뢰 타원, 결정 영역과 cone, 격차</span></li>
-<li><span class="mp-name">Representation</span><span class="mp-gloss" data-l="en" lang="en">Features and dimension, sparsity, model misspecification</span><span class="mp-gloss" data-l="ko" lang="ko">특징과 차원, 희소성, 모형 오설정</span></li>
-<li><span class="mp-name">Optimization</span><span class="mp-gloss" data-l="en" lang="en">Computing estimators, optimal allocations, minimax problems over exploration distributions</span><span class="mp-gloss" data-l="ko" lang="ko">추정량 계산, 최적 배분, 탐색 분포의 minimax 문제</span></li>
-</ul></div>
+  <p class="mx-lede" data-l="en" lang="en">What kind of data the framework runs on.</p>
+  <p class="mx-lede" data-l="ko" lang="ko">프레임워크가 다루는 데이터의 종류.</p>
+  <div class="mx-parts">
+    <div class="mx-part">
+      <h3>Structure</h3>
+      <p class="mx-pnote"><span data-l="en" lang="en">How the elements are connected to each other</span><span data-l="ko" lang="ko">원소들이 서로 어떻게 연결되어 있나</span></p>
+      <ul class="mx-items"><li>Sequential / Temporal</li><li>Spatial / Grid-structured</li><li>Relational / Graph-structured</li><li>Attribute / Tabular</li><li>Composite / Multimodal</li></ul>
+    </div>
+    <div class="mx-part">
+      <h3>Modality</h3>
+      <p class="mx-pnote"><span data-l="en" lang="en">Where the data come from</span><span data-l="ko" lang="ko">데이터가 어디서 오나</span></p>
+      <ul class="mx-items"><li>Text / Language</li><li>Image</li><li>Audio / Speech</li><li>Video</li><li>Tabular</li><li>Graph</li></ul>
+    </div>
   </div>
 </section>
 
-<section class="section mp-layer" id="principle">
-  <h2 class="section-title">
-    <span class="num">03</span>
-    <span>Principle</span>
-    <span class="line"></span>
-  </h2>
-  <p class="mp-q"><span data-l="en" lang="en">How do we turn that mechanism into a rule for acting?</span><span data-l="ko" lang="ko">그 작동 방식으로 어떻게 행동 규칙을 만드나?</span></p>
-  <div class="mp-parts">
-<div class="mp-part is-now">
-<div class="mp-part-head">
-<h3><span class="mp-mark">①</span> <span>Algorithm</span></h3>
-<span class="mp-status is-now"><span data-l="en" lang="en">Now</span><span data-l="ko" lang="ko">지금</span></span>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">How is uncertainty used?</span><span data-l="ko" lang="ko">불확실성을 어떻게 쓰나</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Non-adaptive Exploration / Dithering</span><span class="mp-chips"><span class="mp-chip"><span class="mp-m">ε</span>-greedy</span><span class="mp-chip">ETC</span></span></li>
-<li><span class="mp-name">Optimism in the Face of Uncertainty</span><span class="mp-chips"><span class="mp-chip">UCB</span><span class="mp-chip">LinUCB</span></span></li>
-<li><span class="mp-name">Action Elimination / Racing</span><span class="mp-chips"><span class="mp-chip">successive elimination</span><span class="mp-chip">phased elimination</span></span></li>
-<li><span class="mp-name">Posterior Sampling / Probability Matching</span><span class="mp-chips"><span class="mp-chip">Thompson sampling</span></span></li>
-<li><span class="mp-name">Exponential Weights</span><span class="mp-chips"><span class="mp-chip">EXP3</span></span></li>
-<li><span class="mp-name">Regret-Information Trade-off</span><span class="mp-chips"><span class="mp-chip">IDS</span><span class="mp-chip">E2D / DEC</span><span class="mp-chip">IGW / SquareCB</span><span class="mp-chip">optimal design</span><span class="mp-chip">Track-and-Stop</span></span></li>
-</ul></div>
-<div class="mp-part is-now">
-<div class="mp-part-head">
-<h3><span class="mp-mark">②</span> <span>Rule</span></h3>
-<span class="mp-status is-now"><span data-l="en" lang="en">Now</span><span data-l="ko" lang="ko">지금</span></span>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">The components an algorithm is built from</span><span data-l="ko" lang="ko">알고리즘을 이루는 구성 요소</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Sampling Rule</span><span class="mp-gloss" data-l="en" lang="en">Which action to take next</span><span class="mp-gloss" data-l="ko" lang="ko">다음에 어떤 행동을 할지</span></li>
-<li><span class="mp-name">Update Rule</span><span class="mp-gloss" data-l="en" lang="en">How to revise the estimates with new data</span><span class="mp-gloss" data-l="ko" lang="ko">새 데이터로 추정을 어떻게 고칠지</span></li>
-<li><span class="mp-name">Stopping Rule</span><span class="mp-gloss" data-l="en" lang="en">When to stop collecting</span><span class="mp-gloss" data-l="ko" lang="ko">언제 수집을 멈출지</span></li>
-<li><span class="mp-name">Recommendation Rule</span><span class="mp-gloss" data-l="en" lang="en">What to give as the answer after stopping</span><span class="mp-gloss" data-l="ko" lang="ko">멈춘 뒤 무엇을 답으로 낼지</span></li>
-<li><span class="mp-name">Structural Device</span><span class="mp-gloss" data-l="en" lang="en">Devices that set the skeleton of an algorithm</span><span class="mp-gloss" data-l="ko" lang="ko">알고리즘의 골격을 짜는 장치</span><span class="mp-chips"><span class="mp-chip" data-l="en" lang="en">phases and batches</span><span class="mp-chip" data-l="ko" lang="ko">phase와 배치</span><span class="mp-chip">doubling trick</span><span class="mp-chip" data-l="en" lang="en">oracle reduction</span><span class="mp-chip" data-l="ko" lang="ko">오라클 환원</span></span></li>
-</ul></div>
-  </div>
-</section>
+<p class="mx-frame" data-l="en" lang="en">Change the framework and the algorithm changes with it, and so do its backbone and its proof.</p>
+<p class="mx-frame" data-l="ko" lang="ko">프레임워크가 바뀌면 알고리즘이 바뀌고, 그 backbone과 proof도 함께 바뀐다.</p>
 
-<section class="section mp-layer" id="proof">
-  <h2 class="section-title">
-    <span class="num">04</span>
-    <span>Proof</span>
-    <span class="line"></span>
-  </h2>
-  <p class="mp-q"><span data-l="en" lang="en">How do we show that it is guaranteed?</span><span data-l="ko" lang="ko">그게 보장됨을 어떻게 보이나?</span></p>
-  <div class="mp-parts">
-<div class="mp-part is-now">
-<div class="mp-part-head">
-<h3><span class="mp-mark">①</span> <span>Guarantee</span></h3>
-<span class="mp-status is-now"><span data-l="en" lang="en">Now</span><span data-l="ko" lang="ko">지금</span></span>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">What is proved</span><span data-l="ko" lang="ko">무엇을 증명하나</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Upper Bound</span><span class="mp-chips"><span class="mp-chip">generalization bound / excess risk</span><span class="mp-chip">regret bound</span><span class="mp-chip"><span class="mp-m">δ</span>-correctness / sample complexity</span><span class="mp-chip">coverage</span></span></li>
-<li><span class="mp-name">Lower Bound</span><span class="mp-gloss" data-l="en" lang="en">The limit that no algorithm can beat</span><span class="mp-gloss" data-l="ko" lang="ko">이보다 잘할 수 없다는 한계</span></li>
-<li><span class="mp-name">Complexity Measure</span><span class="mp-gloss" data-l="en" lang="en">What the guarantee scales with</span><span class="mp-gloss" data-l="ko" lang="ko">보장이 무엇에 비례하나</span><span class="mp-chips"><span class="mp-chip" data-l="en" lang="en">arms <span class="mp-m">K</span></span><span class="mp-chip" data-l="ko" lang="ko">팔 <span class="mp-m">K</span></span><span class="mp-chip" data-l="en" lang="en">dimension <span class="mp-m">d</span></span><span class="mp-chip" data-l="ko" lang="ko">차원 <span class="mp-m">d</span></span><span class="mp-chip" data-l="en" lang="en">sparsity <span class="mp-m">s</span></span><span class="mp-chip" data-l="ko" lang="ko">희소도 <span class="mp-m">s</span></span><span class="mp-chip" data-l="en" lang="en">VC dimension</span><span class="mp-chip" data-l="ko" lang="ko">VC 차원</span></span></li>
-</ul></div>
-<div class="mp-part is-later">
-<div class="mp-part-head">
-<h3><span class="mp-mark">②</span> <span>Tool</span></h3>
-<span class="mp-status is-later"><span data-l="en" lang="en">Later</span><span data-l="ko" lang="ko">나중에</span></span>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">How it is proved</span><span data-l="ko" lang="ko">어떻게 증명하나</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Regret Decomposition</span></li>
-<li><span class="mp-name">Concentration Inequalities</span></li>
-<li><span class="mp-name">Martingale / Sequential Inequalities</span></li>
-<li><span class="mp-name">Uniform Convergence</span></li>
-<li><span class="mp-name">High-dim Tools</span></li>
-</ul></div>
-  </div>
-</section>
+<a class="mx-back" href="{{ '/pages/' | relative_url }}">← <span data-l="en" lang="en">All pages</span><span data-l="ko" lang="ko">페이지 목록</span></a>
 
-<section class="section mp-layer" id="data">
-  <h2 class="section-title">
-    <span class="num">05</span>
-    <span>Data</span>
-    <span class="line"></span>
-  </h2>
-  <p class="mp-q"><span data-l="en" lang="en">What kind of data do we work with?</span><span data-l="ko" lang="ko">어떤 데이터를 다루나?</span></p>
-  <div class="mp-parts">
-<div class="mp-part">
-<div class="mp-part-head">
-<h3><span class="mp-mark">①</span> <span>Structure</span></h3>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">How the elements are connected to each other</span><span data-l="ko" lang="ko">원소들이 서로 어떻게 연결되어 있나</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Sequential / Temporal</span></li>
-<li><span class="mp-name">Spatial / Grid-structured</span></li>
-<li><span class="mp-name">Relational / Graph-structured</span></li>
-<li><span class="mp-name">Attribute / Tabular</span></li>
-<li><span class="mp-name">Composite / Multimodal</span></li>
-</ul></div>
-<div class="mp-part">
-<div class="mp-part-head">
-<h3><span class="mp-mark">②</span> <span>Modality</span></h3>
-</div>
-<p class="mp-note"><span data-l="en" lang="en">Where the data come from</span><span data-l="ko" lang="ko">데이터가 어디서 오나</span></p>
-<ul class="mp-items">
-<li><span class="mp-name">Text / Language</span></li>
-<li><span class="mp-name">Image</span></li>
-<li><span class="mp-name">Audio / Speech</span></li>
-<li><span class="mp-name">Video</span></li>
-<li><span class="mp-name">Tabular</span></li>
-<li><span class="mp-name">Graph</span></li>
-</ul></div>
-  </div>
-</section>
+<script>
+(function () {
+/* Each entry: [en, ko]. Text between $…$ is math: single letters italic, words roman,
+   _x / ^x and _{…} / ^{…} for sub/superscripts, \cal{X} and \bb{R} for script and blackboard letters. */
+const FW = [
+  {name: 'Statistical Learning',
+   note: ['Learn from an i.i.d. sample drawn from a fixed distribution; decisions do not affect the data.', '고정된 분포에서 뽑은 i.i.d. 표본으로 학습한다. 결정이 데이터에 영향을 주지 않는다.'],
+   algs: [
+    {name: 'ERM', fam: 'Empirical risk minimization', lens: 'ro',
+     exp: ['None: an i.i.d. sample of size $n$ is given.', '없음: 크기 $n$의 i.i.d. 표본이 주어진다.'],
+     est: ['Minimize the empirical risk: $h_n = argmin_{h ∈ \\cal{H}} L_n(h)$.', '경험적 위험을 최소화한다: $h_n = argmin_{h ∈ \\cal{H}} L_n(h)$.'],
+     dec: ['Predict with $h_n$.', '$h_n$으로 예측한다.'],
+     up: ['Excess risk $O(√(d / n))$ (agnostic, up to log factors).', '초과 위험 $O(√(d / n))$ (agnostic, 로그 인자 제외).'],
+     lo: ['$Ω(√(d / n))$ for any learner in the agnostic setting.', 'agnostic 설정에서 어떤 학습자도 $Ω(√(d / n))$.'],
+     cx: ['VC dimension $d$ of $\\cal{H}$, or its Rademacher complexity.', '$\\cal{H}$의 VC 차원 $d$ 또는 Rademacher 복잡도.'],
+     tools: ['Uniform convergence, symmetrization', '균등 수렴, 대칭화']},
+    {name: 'SGD', fam: 'Stochastic approximation', lens: 'go',
+     exp: ['None: an i.i.d. stream of examples.', '없음: i.i.d. 표본이 하나씩 들어온다.'],
+     est: ['Gradient steps $w_{t+1} = w_t − η g_t$, then average the iterates.', '경사 단계 $w_{t+1} = w_t − η g_t$ 후 반복값을 평균한다.'],
+     dec: ['Output the averaged iterate.', '평균한 반복값을 낸다.'],
+     up: ['$O(GB / √n)$ for convex, $G$-Lipschitz losses on a ball of radius $B$.', '반지름 $B$의 공에서 볼록이고 $G$-Lipschitz인 손실에 대해 $O(GB / √n)$.'],
+     lo: ['$Ω(GB / √n)$, so SGD is minimax optimal here.', '$Ω(GB / √n)$. 이 설정에서 SGD는 minimax 최적이다.'],
+     cx: ['Lipschitz constant $G$ and radius $B$; no dimension.', 'Lipschitz 상수 $G$와 반지름 $B$. 차원은 들어가지 않는다.'],
+     tools: ['Online-to-batch conversion, martingale concentration', 'online-to-batch 변환, 마팅게일 집중 부등식']}
+   ]},
+  {name: 'Imitation Learning',
+   note: ['Learn a policy from expert demonstrations; the learner\'s own actions shift the states it later sees.', '전문가 시연으로 정책을 학습한다. 내 행동이 이후에 보게 될 상태 분포를 바꾼다.'],
+   algs: [
+    {name: 'Behavior cloning', fam: 'Reduction to supervised learning', lens: 'r',
+     exp: ['None: states come from the expert\'s trajectories.', '없음: 상태는 전문가의 궤적에서 온다.'],
+     est: ['Supervised learning on pairs $(s, π_E(s))$, with error $ε$ under the expert\'s state distribution.', '$(s, π_E(s))$ 쌍으로 지도학습한다. 전문가 상태 분포에서의 오차가 $ε$.'],
+     dec: ['Execute the learned policy $π$.', '학습한 정책 $π$를 실행한다.'],
+     up: ['$J(π_E) − J(π) ≤ O(H^2 ε)$: errors compound over the horizon.', '$J(π_E) − J(π) ≤ O(H^2 ε)$: 오차가 horizon을 따라 누적된다.'],
+     lo: ['The $H^2$ dependence is tight for behavior cloning (Ross & Bagnell, 2010).', '행동 복제에서 $H^2$ 의존성은 개선할 수 없다(Ross & Bagnell, 2010).'],
+     cx: ['Horizon $H$ and the classification error $ε$.', 'horizon $H$와 분류 오차 $ε$.'],
+     tools: ['Performance-difference lemma, distribution-shift arguments', 'performance-difference 보조정리, 분포 이동 논증']},
+    {name: 'DAgger', fam: 'Reduction to no-regret online learning', lens: 'ro',
+     exp: ['Roll out the current policy and ask the expert to label the states it visits.', '현재 정책을 실행하고, 방문한 상태에 전문가 라벨을 받는다.'],
+     est: ['Aggregate all labelled data and train with a no-regret learner.', '모든 라벨 데이터를 모아 no-regret 학습기로 학습한다.'],
+     dec: ['Use the next policy $π_{i+1}$.', '다음 정책 $π_{i+1}$을 쓴다.'],
+     up: ['$J(π_E) − J(π) ≤ O(H ε)$ plus a vanishing regret term: linear in $H$.', '$J(π_E) − J(π) ≤ O(H ε)$와 사라지는 regret 항: $H$에 선형.'],
+     lo: ['No separate bound here; see Rajaraman et al. (2020) for the fundamental limits of imitation learning.', '별도 하한은 없다. 모방학습의 근본적 한계는 Rajaraman et al. (2020) 참고.'],
+     cx: ['Horizon $H$, error $ε$ on the learner\'s own distribution, regret of the online learner.', 'horizon $H$, 학습자 분포에서의 오차 $ε$, 온라인 학습기의 regret.'],
+     tools: ['Reduction to online learning, performance-difference lemma', '온라인 학습으로의 환원, performance-difference 보조정리']}
+   ]},
+  {name: 'Online Learning',
+   note: ['A prediction every round against an arbitrary sequence, with full information about the losses.', '임의의 수열에 대해 매 라운드 예측하고, 손실 전체를 관측한다.'],
+   algs: [
+    {name: 'Hedge', fam: 'Exponential weights', lens: 'o',
+     exp: ['None: full information, every expert\'s loss is seen.', '없음: 완전 정보라 모든 전문가의 손실이 보인다.'],
+     est: ['Cumulative losses $L_{t−1}(i)$ of each expert.', '각 전문가의 누적 손실 $L_{t−1}(i)$.'],
+     dec: ['Weights $p_t(i) ∝ exp(−η L_{t−1}(i))$.', '가중치 $p_t(i) ∝ exp(−η L_{t−1}(i))$.'],
+     up: ['$O(√(T log K))$.', '$O(√(T log K))$.'],
+     lo: ['$Ω(√(T log K))$: optimal.', '$Ω(√(T log K))$: 최적.'],
+     cx: ['Number of experts $K$, through $log K$.', '전문가 수 $K$ ($log K$로 들어간다).'],
+     tools: ['Potential-function argument', '포텐셜 함수 논증']},
+    {name: 'OGD / FTRL', fam: 'Regularized online optimization', lens: 'go',
+     exp: ['None: the gradient of each loss is revealed.', '없음: 각 손실의 경사가 주어진다.'],
+     est: ['Gradients $g_t$, accumulated with a regularizer $R$.', '경사 $g_t$를 정규화 함수 $R$과 함께 누적한다.'],
+     dec: ['$w_{t+1} = argmin_w Σ_{s≤t} ⟨g_s, w⟩ + R(w) / η$.', '$w_{t+1} = argmin_w Σ_{s≤t} ⟨g_s, w⟩ + R(w) / η$.'],
+     up: ['$O(GD √T)$ for convex losses; $O((G^2 / λ) log T)$ if $λ$-strongly convex.', '볼록 손실에서 $O(GD √T)$, $λ$-강볼록이면 $O((G^2 / λ) log T)$.'],
+     lo: ['$Ω(GD √T)$ for convex losses.', '볼록 손실에서 $Ω(GD √T)$.'],
+     cx: ['Diameter $D$, Lipschitz constant $G$, curvature $λ$.', '지름 $D$, Lipschitz 상수 $G$, 곡률 $λ$.'],
+     tools: ['Bregman divergences, be-the-leader lemma', 'Bregman 발산, be-the-leader 보조정리']}
+   ]},
+  {name: 'Multi-armed Bandit',
+   note: ['$K$ arms with stochastic rewards; only the chosen arm\'s reward is seen.', '확률적 보상을 주는 $K$개의 팔. 고른 팔의 보상만 보인다.'],
+   algs: [
+    {name: 'ETC / ε-greedy', fam: 'Non-adaptive exploration', lens: 'g',
+     exp: ['Pull every arm $m$ times first (or a uniform arm with probability $ε$).', '먼저 모든 팔을 $m$번씩 당긴다(또는 확률 $ε$로 무작위 팔).'],
+     est: ['Empirical means $μ_i$.', '경험적 평균 $μ_i$.'],
+     dec: ['Commit to the arm with the largest empirical mean.', '경험적 평균이 가장 큰 팔에 고정한다.'],
+     up: ['$O(K^{1/3} T^{2/3})$ up to logs when $m$ is tuned without knowing the gaps.', '격차를 모른 채 $m$을 맞추면 로그 인자 제외 $O(K^{1/3} T^{2/3})$.'],
+     lo: ['Every algorithm suffers $Ω(√(KT))$, so non-adaptive exploration is suboptimal.', '모든 알고리즘이 $Ω(√(KT))$이므로, 비적응적 탐색은 최적이 아니다.'],
+     cx: ['Number of arms $K$, gaps $Δ_i$.', '팔 개수 $K$, 격차 $Δ_i$.'],
+     tools: ['Hoeffding\'s inequality, regret decomposition', 'Hoeffding 부등식, regret 분해']},
+    {name: 'UCB', fam: 'Optimism in the face of uncertainty', lens: 'g',
+     exp: ['Optimism: a bonus $√(2 log t / n_i)$ for rarely pulled arms.', '낙관주의: 덜 당긴 팔에 보너스 $√(2 log t / n_i)$.'],
+     est: ['Empirical mean plus confidence width.', '경험적 평균과 신뢰 폭.'],
+     dec: ['Pull the arm with the largest upper confidence bound.', '상한 신뢰 경계가 가장 큰 팔을 당긴다.'],
+     up: ['$O(Σ_{i: Δ_i > 0} log T / Δ_i)$; $O(√(KT log T))$ in the worst case.', '$O(Σ_{i: Δ_i > 0} log T / Δ_i)$, 최악의 경우 $O(√(KT log T))$.'],
+     lo: ['Lai & Robbins: $Σ_i Δ_i log T / KL(ν_i, ν^∗)$ asymptotically; $Ω(√(KT))$ minimax.', 'Lai & Robbins: 점근적으로 $Σ_i Δ_i log T / KL(ν_i, ν^∗)$, minimax $Ω(√(KT))$.'],
+     cx: ['Gaps $Δ_i$ (or the KL divergences) and $K$.', '격차 $Δ_i$(또는 KL 발산)와 $K$.'],
+     tools: ['Concentration, regret decomposition, change of measure (lower bound)', '집중 부등식, regret 분해, 측도 변환(하한)']},
+    {name: 'Thompson sampling', fam: 'Posterior sampling', lens: 'g',
+     exp: ['Randomness from sampling a mean vector from the posterior.', '사후분포에서 평균 벡터를 뽑는 무작위성.'],
+     est: ['Bayesian posterior over the means (Beta or Gaussian).', '평균에 대한 베이즈 사후분포(Beta 또는 가우시안).'],
+     dec: ['Pull the arm that is best for the sampled means.', '뽑은 평균에서 가장 좋은 팔을 당긴다.'],
+     up: ['Matches Lai & Robbins asymptotically for Bernoulli rewards; $O(√(KT log T))$.', '베르누이 보상에서 점근적으로 Lai & Robbins와 일치, $O(√(KT log T))$.'],
+     lo: ['Same as UCB.', 'UCB와 같다.'],
+     cx: ['Gaps $Δ_i$ and $K$.', '격차 $Δ_i$와 $K$.'],
+     tools: ['Posterior concentration and anti-concentration', '사후분포의 집중·반집중']},
+    {name: 'EXP3', fam: 'Exponential weights', lens: 'o',
+     exp: ['Sample an arm from $p_t$; importance weighting fills in the unseen losses.', '$p_t$에서 팔을 뽑고, 보지 못한 손실은 중요도 가중으로 채운다.'],
+     est: ['Unbiased estimates $ℓ_t(i) 1\\{A_t = i\\} / p_t(i)$.', '불편 추정 $ℓ_t(i) 1\\{A_t = i\\} / p_t(i)$.'],
+     dec: ['$p_{t+1}(i) ∝ exp(−η Σ_{s≤t} ℓ_s(i))$ over the estimates.', '추정값으로 $p_{t+1}(i) ∝ exp(−η Σ_{s≤t} ℓ_s(i))$.'],
+     up: ['$O(√(KT log K))$ against an adversary.', '적대적 환경에서 $O(√(KT log K))$.'],
+     lo: ['$Ω(√(KT))$.', '$Ω(√(KT))$.'],
+     cx: ['Number of arms $K$.', '팔 개수 $K$.'],
+     tools: ['Importance weighting, potential argument', '중요도 가중, 포텐셜 논증']},
+    {name: 'Track-and-Stop', fam: 'Regret–information trade-off (pure exploration)', lens: 'go',
+     exp: ['Track the optimal allocation $w^∗(μ_t)$, with a little forced exploration.', '최적 배분 $w^∗(μ_t)$를 따라가며 약간의 강제 탐색을 한다.'],
+     est: ['Empirical means and the generalized likelihood ratio (GLR) statistic.', '경험적 평균과 일반화 우도비(GLR) 통계량.'],
+     dec: ['Stop when the GLR exceeds $β(t, δ)$ and recommend the best arm.', 'GLR이 $β(t, δ)$를 넘으면 멈추고 최적 팔을 추천한다.'],
+     up: ['$limsup \\bb{E}[τ] / log(1/δ) ≤ T^∗(μ)$: asymptotically optimal.', '$limsup \\bb{E}[τ] / log(1/δ) ≤ T^∗(μ)$: 점근적으로 최적.'],
+     lo: ['$\\bb{E}[τ] ≥ T^∗(μ) kl(δ, 1 − δ)$ for any $δ$-correct algorithm (Garivier & Kaufmann, 2016).', '모든 $δ$-correct 알고리즘에 대해 $\\bb{E}[τ] ≥ T^∗(μ) kl(δ, 1 − δ)$ (Garivier & Kaufmann, 2016).'],
+     cx: ['Characteristic time $T^∗(μ)$, roughly $Σ_i 1 / Δ_i^2$.', '특성 시간 $T^∗(μ)$, 대략 $Σ_i 1 / Δ_i^2$.'],
+     tools: ['Change of measure, GLR concentration, optimal allocation', '측도 변환, GLR 집중, 최적 배분']}
+   ]},
+  {name: 'Linear Bandit',
+   note: ['Rewards are linear in known features, $r = ⟨x, θ_⋆⟩ + η$; the structure is shared across arms.', '보상이 알려진 특징에 선형, $r = ⟨x, θ_⋆⟩ + η$. 구조를 팔들이 공유한다.'],
+   algs: [
+    {name: 'LinUCB / OFUL', fam: 'Optimism in the face of uncertainty', lens: 'gro',
+     exp: ['Optimism: bonus $β_t ‖x‖_{V_t^{−1}}$.', '낙관주의: 보너스 $β_t ‖x‖_{V_t^{−1}}$.'],
+     est: ['Ridge regression $θ_t$ and the confidence ellipsoid $‖θ − θ_t‖_{V_t} ≤ β_t$.', '릿지 회귀 $θ_t$와 신뢰 타원 $‖θ − θ_t‖_{V_t} ≤ β_t$.'],
+     dec: ['$x_t = argmax_x ⟨x, θ_t⟩ + β_t ‖x‖_{V_t^{−1}}$.', '$x_t = argmax_x ⟨x, θ_t⟩ + β_t ‖x‖_{V_t^{−1}}$.'],
+     up: ['$O(d √T log T)$ (Abbasi-Yadkori et al., 2011).', '$O(d √T log T)$ (Abbasi-Yadkori et al., 2011).'],
+     lo: ['$Ω(d √T)$.', '$Ω(d √T)$.'],
+     cx: ['Dimension $d$, not the number of arms.', '팔 개수가 아니라 차원 $d$.'],
+     tools: ['Self-normalized martingale bound, elliptical potential lemma', '자기정규화 마팅게일 부등식, 타원 포텐셜 보조정리']},
+    {name: 'Phased elimination', fam: 'Elimination with optimal design', lens: 'go',
+     exp: ['A G-optimal design over the surviving arms (Kiefer–Wolfowitz).', '남은 팔들에 대한 G-최적 설계(Kiefer–Wolfowitz).'],
+     est: ['Least squares within each phase.', '각 단계마다 최소제곱.'],
+     dec: ['Eliminate arms whose gap is certified; halve the accuracy target.', '격차가 확인된 팔을 제거하고 목표 정확도를 절반으로 줄인다.'],
+     up: ['$O(√(dT log(KT)))$ for $K$ arms.', '$K$개 팔에서 $O(√(dT log(KT)))$.'],
+     lo: ['$Ω(√(dT))$ up to log factors for finite arms.', '유한 팔에서 로그 인자 제외 $Ω(√(dT))$.'],
+     cx: ['Dimension $d$ and $log K$.', '차원 $d$와 $log K$.'],
+     tools: ['Kiefer–Wolfowitz theorem, fixed-design concentration', 'Kiefer–Wolfowitz 정리, 고정 설계 집중 부등식']},
+    {name: 'Linear TS', fam: 'Posterior sampling', lens: 'g',
+     exp: ['Sample $θ$ from an inflated Gaussian around $θ_t$.', '$θ_t$ 주변의 부풀린 가우시안에서 $θ$를 뽑는다.'],
+     est: ['Ridge regression $θ_t$, covariance $V_t^{−1}$.', '릿지 회귀 $θ_t$, 공분산 $V_t^{−1}$.'],
+     dec: ['Play the best arm for the sampled $θ$.', '뽑은 $θ$에서 가장 좋은 팔을 고른다.'],
+     up: ['$Õ(d^{3/2} √T)$ (Agrawal & Goyal, 2013).', '$Õ(d^{3/2} √T)$ (Agrawal & Goyal, 2013).'],
+     lo: ['$Ω(d √T)$.', '$Ω(d √T)$.'],
+     cx: ['Dimension $d$.', '차원 $d$.'],
+     tools: ['Anti-concentration of the sampled parameter', '샘플 파라미터의 반집중']},
+    {name: 'XY-allocation', fam: 'Optimal design (pure exploration)', lens: 'go',
+     exp: ['A transductive design that targets the directions $x^∗ − x$ between arms.', '팔 사이 방향 $x^∗ − x$를 겨냥하는 transductive 설계.'],
+     est: ['Least squares $θ_t$.', '최소제곱 $θ_t$.'],
+     dec: ['Stop when every direction is certified, then recommend the best arm.', '모든 방향이 확인되면 멈추고 최적 팔을 추천한다.'],
+     up: ['$O(ρ^∗ log(1/δ))$ samples up to log factors (Soare et al., 2014; Fiez et al., 2019).', '로그 인자 제외 $O(ρ^∗ log(1/δ))$ 표본 (Soare et al., 2014; Fiez et al., 2019).'],
+     lo: ['$\\bb{E}[τ] ≳ ρ^∗ log(1/δ)$ for any $δ$-correct algorithm.', '모든 $δ$-correct 알고리즘에 대해 $\\bb{E}[τ] ≳ ρ^∗ log(1/δ)$.'],
+     cx: ['$ρ^∗ = min_λ max_{x ≠ x^∗} ‖x^∗ − x‖^2_{A(λ)^{−1}} / Δ_x^2$.', '$ρ^∗ = min_λ max_{x ≠ x^∗} ‖x^∗ − x‖^2_{A(λ)^{−1}} / Δ_x^2$.'],
+     tools: ['Optimal experimental design, change of measure', '최적 실험 설계, 측도 변환']}
+   ]},
+  {name: 'Contextual Bandit',
+   note: ['A context arrives each round, the reward depends on it through a function class $\\cal{F}$ or a policy class $Π$.', '매 라운드 맥락이 오고, 보상은 함수 클래스 $\\cal{F}$ 또는 정책 클래스 $Π$를 통해 맥락에 의존한다.'],
+   algs: [
+    {name: 'EXP4', fam: 'Exponential weights over policies', lens: 'o',
+     exp: ['Sample an action from the mixture of the policies\' advice; importance weighting.', '정책들의 조언을 섞은 분포에서 행동을 뽑고, 중요도 가중을 쓴다.'],
+     est: ['Importance-weighted reward estimates for every policy in $Π$.', '$Π$의 모든 정책에 대한 중요도 가중 보상 추정.'],
+     dec: ['Exponential weights over $Π$.', '$Π$ 위의 지수 가중치.'],
+     up: ['$O(√(KT log |Π|))$, even against an adversary.', '적대적 환경에서도 $O(√(KT log |Π|))$.'],
+     lo: ['$Ω(√(KT log |Π| / log K))$.', '$Ω(√(KT log |Π| / log K))$.'],
+     cx: ['$K$ and the size of the policy class, $log |Π|$.', '$K$와 정책 클래스 크기 $log |Π|$.'],
+     tools: ['Importance weighting, potential argument', '중요도 가중, 포텐셜 논증']},
+    {name: 'SquareCB', fam: 'Regret–information trade-off (inverse gap weighting)', lens: 'ro',
+     exp: ['Inverse gap weighting: $p(a) = 1 / (K + γ (f_t(x, â) − f_t(x, a)))$.', '역격차 가중: $p(a) = 1 / (K + γ (f_t(x, â) − f_t(x, a)))$.'],
+     est: ['An online square-loss regression oracle $f_t ∈ \\cal{F}$.', '온라인 제곱 손실 회귀 오라클 $f_t ∈ \\cal{F}$.'],
+     dec: ['Sample $a ∼ p$.', '$a ∼ p$를 뽑는다.'],
+     up: ['$O(√(KT · Reg_{Sq}(T)))$, e.g. $O(√(KT log |\\cal{F}|))$ (Foster & Rakhlin, 2020).', '$O(√(KT · Reg_{Sq}(T)))$, 예: $O(√(KT log |\\cal{F}|))$ (Foster & Rakhlin, 2020).'],
+     lo: ['$Ω(√(KT log |\\cal{F}|))$ for finite classes.', '유한 클래스에서 $Ω(√(KT log |\\cal{F}|))$.'],
+     cx: ['$K$ and the regression complexity of $\\cal{F}$.', '$K$와 $\\cal{F}$의 회귀 복잡도.'],
+     tools: ['Reduction to online regression', '온라인 회귀로의 환원']}
+   ]},
+  {name: 'Partial Monitoring',
+   note: ['The loss is never seen directly; only a feedback signal is, and how informative it is decides the rate.', '손실은 직접 보이지 않고 피드백 신호만 보인다. 그 신호가 얼마나 정보적인지가 수렴 속도를 정한다.'],
+   algs: [
+    {name: 'Exp3-type (global)', fam: 'Exponential weights with forced exploration', lens: 'g',
+     exp: ['Forced exploration of the informative actions.', '정보를 주는 행동을 강제로 탐색한다.'],
+     est: ['Loss differences estimated from the feedback through the observability structure.', '관측 가능성 구조를 통해 피드백에서 손실 차이를 추정한다.'],
+     dec: ['Exponential weights on the estimates.', '추정값에 대한 지수 가중치.'],
+     up: ['$O(T^{2/3})$ for globally observable games.', '전역 관측 가능 게임에서 $O(T^{2/3})$.'],
+     lo: ['$Ω(T^{2/3})$ when the game is globally but not locally observable (Bartók et al., 2014).', '전역적으로만 관측 가능하면 $Ω(T^{2/3})$ (Bartók et al., 2014).'],
+     cx: ['Observability of the game (global vs. local).', '게임의 관측 가능성(전역 대 국소).'],
+     tools: ['Observability conditions, importance weighting', '관측 가능성 조건, 중요도 가중']},
+    {name: 'IDS', fam: 'Regret–information trade-off', lens: 'go',
+     exp: ['Information-directed: trade expected regret against information gained.', '정보 지향: 기대 regret과 얻는 정보를 맞바꾼다.'],
+     est: ['Posterior or confidence set over the loss model.', '손실 모델에 대한 사후분포 또는 신뢰 집합.'],
+     dec: ['Minimize the information ratio $Δ(p)^2 / I(p)$ over action distributions $p$.', '행동 분포 $p$에 대해 정보 비율 $Δ(p)^2 / I(p)$를 최소화한다.'],
+     up: ['$Õ(√T)$ for locally observable games (Kirschner et al., 2020).', '국소 관측 가능 게임에서 $Õ(√T)$ (Kirschner et al., 2020).'],
+     lo: ['$Ω(√T)$.', '$Ω(√T)$.'],
+     cx: ['Information ratio, local observability.', '정보 비율, 국소 관측 가능성.'],
+     tools: ['Information ratio, convex duality', '정보 비율, 볼록 쌍대성']}
+   ]},
+  {name: 'Reinforcement Learning',
+   note: ['Actions change the state; episodes of horizon $H$ in an MDP with $S$ states and $A$ actions, $T$ steps in total.', '행동이 상태를 바꾼다. 상태 $S$개, 행동 $A$개인 MDP에서 horizon $H$의 에피소드, 총 $T$ 단계.'],
+   algs: [
+    {name: 'UCBVI', fam: 'Optimism in the face of uncertainty', lens: 'g',
+     exp: ['Optimism: exploration bonuses inside the Bellman backup.', '낙관주의: Bellman backup 안의 탐색 보너스.'],
+     est: ['Empirical transitions $P_t$ and rewards, optimistic $Q$-values.', '경험적 전이 $P_t$와 보상, 낙관적 $Q$ 값.'],
+     dec: ['Act greedily with respect to the optimistic $Q$.', '낙관적 $Q$에 대해 탐욕적으로 행동한다.'],
+     up: ['$Õ(√(HSAT))$ with Bernstein bonuses (Azar et al., 2017).', 'Bernstein 보너스로 $Õ(√(HSAT))$ (Azar et al., 2017).'],
+     lo: ['$Ω(√(HSAT))$: minimax optimal up to logs.', '$Ω(√(HSAT))$: 로그 인자 제외 minimax 최적.'],
+     cx: ['$S$, $A$ and the horizon $H$.', '$S$, $A$, horizon $H$.'],
+     tools: ['Concentration of transitions, law of total variance', '전이의 집중 부등식, 전분산 법칙']},
+    {name: 'PSRL', fam: 'Posterior sampling', lens: 'g',
+     exp: ['Sample an MDP from the posterior at the start of each episode.', '에피소드마다 사후분포에서 MDP를 하나 뽑는다.'],
+     est: ['Posterior over transitions and rewards.', '전이와 보상에 대한 사후분포.'],
+     dec: ['Follow the optimal policy of the sampled MDP.', '뽑은 MDP의 최적 정책을 따른다.'],
+     up: ['Bayesian regret $Õ(HS √(AT))$ (Osband et al., 2013).', '베이즈 regret $Õ(HS √(AT))$ (Osband et al., 2013).'],
+     lo: ['$Ω(√(HSAT))$.', '$Ω(√(HSAT))$.'],
+     cx: ['$S$, $A$, $H$.', '$S$, $A$, $H$.'],
+     tools: ['Posterior sampling lemma, concentration', '사후 샘플링 보조정리, 집중 부등식']},
+    {name: 'E2D', fam: 'Regret–information trade-off (DEC)', lens: 'ro',
+     exp: ['Each round, solve $min_p max_M \\bb{E}_{π∼p}[f^M(π_M) − f^M(π) − γ D_H^2(M, M_t)]$.', '매 라운드 $min_p max_M \\bb{E}_{π∼p}[f^M(π_M) − f^M(π) − γ D_H^2(M, M_t)]$를 푼다.'],
+     est: ['An online estimation oracle $M_t$ in Hellinger distance.', 'Hellinger 거리의 온라인 추정 오라클 $M_t$.'],
+     dec: ['Sample $π ∼ p$.', '$π ∼ p$를 뽑는다.'],
+     up: ['$Reg ≲ DEC_γ(\\cal{M}) · T + γ · Est_H(T)$ (Foster et al., 2021).', '$Reg ≲ DEC_γ(\\cal{M}) · T + γ · Est_H(T)$ (Foster et al., 2021).'],
+     lo: ['$Reg ≳ DEC_γ(\\cal{M}) · T$ for suitable $γ$: the DEC is necessary.', '적절한 $γ$에서 $Reg ≳ DEC_γ(\\cal{M}) · T$: DEC는 필요조건이다.'],
+     cx: ['Decision-estimation coefficient $DEC_γ(\\cal{M})$ of the model class.', '모델 클래스의 decision-estimation coefficient $DEC_γ(\\cal{M})$.'],
+     tools: ['Minimax duality, Hellinger estimation', 'minimax 쌍대성, Hellinger 추정']}
+   ]}
+];
 
-<a class="mp-back" href="{{ '/pages/' | relative_url }}">← <span data-l="en" lang="en">All pages</span><span data-l="ko" lang="ko">페이지 목록</span></a>
+/* ---------- tiny TeX-ish renderer ---------- */
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+const UP_GREEK = /[ΓΔΘΛΞΠΣΦΨΩ]/;
+function tex(t) {
+  let out = '', i = 0;
+  while (i < t.length) {
+    const c = t[i];
+    if (c === '_' || c === '^') {
+      let arg;
+      if (t[i + 1] === '{') { let d = 1, j = i + 2; while (d && j < t.length) { if (t[j] === '{') d++; else if (t[j] === '}') d--; j++; } arg = t.slice(i + 2, j - 1); i = j; }
+      else { arg = t[i + 1]; i += 2; }
+      const tag = c === '_' ? 'sub' : 'sup'; out += '<' + tag + '>' + tex(arg) + '</' + tag + '>'; continue;
+    }
+    if (c === '\\') {
+      const m = /^\\(cal|bb)\{([^}]*)\}/.exec(t.slice(i));
+      if (m) { out += '<span class="mx-' + m[1] + '">' + esc(m[2]) + '</span>'; i += m[0].length; continue; }
+      if (t[i + 1] === '{' || t[i + 1] === '}') { out += t[i + 1]; i += 2; continue; }
+    }
+    const w = /^[A-Za-z]{2,}/.exec(t.slice(i));
+    if (w) { out += w[0]; i += w[0].length; continue; }
+    if (/[A-Za-zα-ωΑ-Ω]/.test(c) && !UP_GREEK.test(c)) { out += '<i>' + c + '</i>'; i++; continue; }
+    out += esc(c); i++;
+  }
+  return out;
+}
+function rich(s) {
+  return s.split('$').map((part, k) => k % 2 ? '<span class="mx-m">' + tex(part) + '</span>' : esc(part)).join('');
+}
+function bi(pair) { return '<span data-l="en" lang="en">' + rich(pair[0]) + '</span><span data-l="ko" lang="ko">' + rich(pair[1]) + '</span>'; }
+
+/* ---------- state + render ---------- */
+let fw = FW.findIndex(f => f.name === 'Linear Bandit'), alg = 0;
+const fwChips = document.getElementById('fwChips'), algChips = document.getElementById('algChips');
+FW.forEach((f, k) => {
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'mx-chip'; b.textContent = f.name; b.dataset.k = k;
+  fwChips.appendChild(b);
+});
+function render() {
+  const F = FW[fw], A = F.algs[alg];
+  fwChips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.k === fw)));
+  document.getElementById('fwNote').innerHTML = bi(F.note);
+  algChips.innerHTML = F.algs.map((a, k) => '<button type="button" class="mx-chip" data-k="' + k + '" aria-pressed="' + (k === alg) + '">' + esc(a.name) + '</button>').join('');
+  document.getElementById('algNote').innerHTML = '<span class="mx-tag">' + esc(A.fam) + '</span>';
+  document.getElementById('bbExp').innerHTML = bi(A.exp);
+  document.getElementById('bbEst').innerHTML = bi(A.est);
+  document.getElementById('bbDec').innerHTML = bi(A.dec);
+  document.getElementById('prUp').innerHTML = bi(A.up);
+  document.getElementById('prLo').innerHTML = bi(A.lo);
+  document.getElementById('prCx').innerHTML = bi(A.cx);
+  document.getElementById('prTools').innerHTML = '<b><span data-l="en" lang="en">Tools</span><span data-l="ko" lang="ko">도구</span></b> · ' + bi(A.tools);
+  document.querySelectorAll('.mx-lens-item').forEach(e => e.classList.toggle('on', A.lens.includes(e.dataset.lens)));
+}
+fwChips.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; fw = +b.dataset.k; alg = 0; render(); });
+algChips.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; alg = +b.dataset.k; render(); });
+render();
+})();
+</script>
