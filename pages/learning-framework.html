@@ -150,6 +150,9 @@ html[lang="ko"] .lf-dl::before { content: "다운로드"; }
 .lf-sub-lead { font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 0.45rem; }
 .lf-sub-lead [data-l="ko"] { text-transform: none; letter-spacing: 0.02em; }
 .lf-sub-desc { margin-top: 0.6rem; font-size: 0.86rem; }
+.lf-sub-note { font-family: var(--cm); font-size: 0.86rem; color: var(--text-secondary); margin: 0 0 0.5rem; }
+.lf-sub-note i { font-family: var(--cm-math); font-style: normal; }
+.lf-sub-note sub, .lf-sub-note sup { font-size: 0.7em; line-height: 0; }
 .lf-desc[data-l="ko"] { line-height: 1.8; }
 
 .lf-factors { margin: 0 0 1.5rem; border-top: 1px solid var(--border); }
@@ -468,7 +471,13 @@ const FAM = [
 ];
 const state = Object.assign({}, FAM.find(f => f[0] === 'Contextual Bandit')[1]);
 // function approximation comes in several classes; this only refines the reward model, not the preset match
-let faSub = 0;
+let faSub = 0, glmSub = 0;
+// a GLM is an exponential family: p(r | x) ∝ exp(r·z − b(z)) with z = ⟨x, θ⋆⟩, and the link is σ = b′
+const GLM_SUB = [
+  ['Bernoulli', 'Binary rewards. The canonical link is the logistic function σ(z) = 1/(1 + exp(−z)), as in logistic bandits.', '이진 보상. 정준 연결 함수는 로지스틱 함수 σ(z) = 1/(1 + exp(−z))이다(logistic bandit).'],
+  ['Poisson', 'Count rewards. The canonical link is σ(z) = exp(z).', '횟수(카운트) 보상. 정준 연결 함수는 σ(z) = exp(z)이다.'],
+  ['Gaussian', 'Real rewards with known variance. σ is the identity, so the model reduces to the linear one.', '분산이 알려진 실수 보상. σ가 항등 함수라 선형 모델로 돌아간다.']
+];
 const FA_SUB = [
   ['General class', 'A realizable class ℱ ∋ f⋆, learned through a regression oracle (e.g. SquareCB, E2D).', '실현 가능한 함수 클래스 ℱ ∋ f⋆. 회귀 오라클로 학습한다(예: SquareCB, E2D).',
     [['mi', 'f'], ['rm', '⋆', 'sub'], ['rm', ' ∈ '], ['cal', 'F']]],
@@ -535,6 +544,11 @@ function rewardLines(lang) {
   const H = [['cal', 'H'], ['mi', 't', 'sub'], ['rm', '−1', 'sub']];
   const ko = lang === 'ko';
   let line2;
+  if (rm === 2 && env <= 1) {
+    const mean = [['bb', 'E'], ['rm', '[']].concat(R, [['rm', ' | ']], X, [['rm', '] = ']], core);
+    const fam = [['rm', ' ∼ ' + GLM_SUB[glmSub][0] + ', ']], link = [['mi', 'σ'], ['rm', ' = '], ['mi', 'b'], ['rm', '′', 'sup']];
+    return [mean, R.concat([['rm', ' | ']], X, fam, link, env === 0 ? [['rm', ', i.i.d.']] : [])];
+  }
   if (env === 0) line2 = [['rm', '('], ['mi', 'x'], ['rm', ', '], ['mi', 'r'], ['rm', ') ∼ '], ['cal', 'D'], ['rm', ko ? ' 에서 i.i.d.' : ' i.i.d.']];
   else if (env === 1) line2 = [['bb', 'E'], ['rm', '['], ['mi', 'η'], ['mi', 't', 'sub'], ['rm', ' | ']].concat(H, [['rm', '] = 0']]);
   else if (env === 2) line2 = [['mi', sym], ['rm', '1', 'sub'], ['rm', ', …, '], ['mi', sym], ['mi', 'T', 'sub'], ['rm', ' ∈ ']].concat(set, [['rm', ko ? ', 미리 고정' : ', fixed in advance']]);
@@ -626,7 +640,12 @@ AXES.forEach(a => {
     '<div class="lf-opts" role="group" aria-label="' + a.name + '">' +
     a.vals.map((v, k) => '<button type="button" class="lf-chip sm" data-ax="' + a.id + '" data-k="' + k + '">' + v[0] + '</button>').join('') + '</div>' +
     '<p class="lf-desc" data-l="en" lang="en"></p><p class="lf-desc" data-l="ko" lang="ko"></p>' +
-    (a.id === 'rm' ? '<div class="lf-sub"><p class="lf-sub-lead">' + bi('Function class', '함수 클래스') + '</p><div class="lf-opts" role="group" aria-label="Function class">' +
+    (a.id === 'rm' ? '<div class="lf-sub lf-sub-glm"><p class="lf-sub-lead">' + bi('Exponential family', '지수족') + '</p>' +
+      '<p class="lf-sub-note">' + 'p(<i>r</i> | <i>x</i>) ∝ exp(<i>r</i>·<i>z</i> − <i>b</i>(<i>z</i>)),&nbsp; <i>z</i> = ⟨<i>x</i>, <i>θ</i><sub>⋆</sub>⟩,&nbsp; <i>σ</i> = <i>b</i><sup>′</sup>' + '</p>' +
+      '<div class="lf-opts" role="group" aria-label="Exponential family">' +
+      GLM_SUB.map((v, k) => '<button type="button" class="lf-chip sm" data-glm="' + k + '">' + v[0] + '</button>').join('') +
+      '</div><p class="lf-desc lf-sub-desc" data-l="en" lang="en"></p><p class="lf-desc lf-sub-desc" data-l="ko" lang="ko"></p></div>' : '') +
+    (a.id === 'rm' ? '<div class="lf-sub lf-sub-fa"><p class="lf-sub-lead">' + bi('Function class', '함수 클래스') + '</p><div class="lf-opts" role="group" aria-label="Function class">' +
       FA_SUB.map((v, k) => '<button type="button" class="lf-chip sm" data-sub="' + k + '">' + v[0] + '</button>').join('') +
       '</div><p class="lf-desc lf-sub-desc" data-l="en" lang="en"></p><p class="lf-desc lf-sub-desc" data-l="ko" lang="ko"></p></div>' : '');
   document.getElementById(['acq', 'dec', 'obj'].includes(a.id) ? 'axes-agent' : 'axes-env').appendChild(c);
@@ -637,11 +656,16 @@ function renderCards() {
     c.classList.toggle('on', focus === a.id);
     c.querySelectorAll('.lf-opts button[data-k]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.k === state[a.id])));
     if (a.id === 'rm') {
-      const sub = c.querySelector('.lf-sub');
+      const sub = c.querySelector('.lf-sub-fa');
       sub.hidden = state.rm !== 3;
       sub.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.sub === faSub)));
       const sd = sub.querySelectorAll('.lf-sub-desc');
       sd[0].textContent = FA_SUB[faSub][1]; sd[1].textContent = FA_SUB[faSub][2];
+      const gs = c.querySelector('.lf-sub-glm');
+      gs.hidden = state.rm !== 2;
+      gs.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.glm === glmSub)));
+      const gd = gs.querySelectorAll('.lf-sub-desc');
+      gd[0].textContent = GLM_SUB[glmSub][1]; gd[1].textContent = GLM_SUB[glmSub][2];
     }
     const d = c.querySelectorAll('.lf-desc');
     d[0].textContent = a.vals[state[a.id]][1];
@@ -654,6 +678,7 @@ axesEl.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
   if (b.dataset.focus) { focus = focus === b.dataset.focus ? null : b.dataset.focus; render(); return; }
   if (b.dataset.sub) { faSub = +b.dataset.sub; focus = 'rm'; render(); return; }
+  if (b.dataset.glm) { glmSub = +b.dataset.glm; focus = 'rm'; render(); return; }
   state[b.dataset.ax] = +b.dataset.k; focus = b.dataset.ax; render();
 });
 document.getElementById('fig').addEventListener('click', e => {
