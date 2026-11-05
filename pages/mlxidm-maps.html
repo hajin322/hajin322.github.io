@@ -86,8 +86,8 @@ permalink: /pages/mlxidm-maps/
 .mx-lens-item.on p { color: var(--text-secondary); }
 
 /* environment → algorithm, side by side */
-.mx-pick { display: grid; grid-template-columns: minmax(0, 1fr) 1.6rem minmax(0, 1fr); align-items: stretch; margin-bottom: 14px; }
-.mx-pick-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 1.1rem; }
+.mx-pick { display: grid; grid-template-columns: minmax(0, 1fr); margin-bottom: 14px; }
+.mx-pick-arrow { display: flex; align-items: center; justify-content: center; height: 1.9rem; color: var(--text-muted); font-size: 1.1rem; }
 
 /* bound gauge + backbone cycle */
 .mx-analysis { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: 0; margin-bottom: 14px; align-items: stretch; }
@@ -187,7 +187,6 @@ permalink: /pages/mlxidm-maps/
 .mx-back:hover { color: var(--accent); }
 
 @media (max-width: 760px) {
-  .mx-pick { grid-template-columns: 1fr; } .mx-pick-arrow { transform: rotate(90deg); height: 1.6rem; }
   .mx-analysis { grid-template-columns: 1fr; }
   .mx-gauge-node { padding: 0 0 1.1rem; }
   .mx-cycle-node { padding: 1rem 0 0; border-left: 0; border-top: 1px dashed var(--border-strong); }
@@ -222,7 +221,7 @@ permalink: /pages/mlxidm-maps/
 <section class="section" id="map">
   <h2 class="section-title">
     <span class="num">01</span>
-    <span><span data-l="en" lang="en">From environment to bound</span><span data-l="ko" lang="ko">환경에서 bound까지</span></span>
+    <span><span data-l="en" lang="en">From environment to algorithms</span><span data-l="ko" lang="ko">환경에서 알고리즘까지</span></span>
     <span class="line"></span>
   </h2>
 
@@ -235,7 +234,7 @@ permalink: /pages/mlxidm-maps/
       <div class="mx-chips" id="fwChips" role="group" aria-label="Environment"></div>
       <p class="mx-note" id="fwNote"></p>
     </div>
-    <div class="mx-pick-arrow" aria-hidden="true">→</div>
+    <div class="mx-pick-arrow" aria-hidden="true">↓</div>
     <div class="mx-node" id="nodeAlg">
       <div class="mx-node-head">
         <svg viewBox="0 0 26 26" aria-hidden="true"><g fill="none" stroke="var(--text)" stroke-width="1.3"><rect x="4" y="8" width="18" height="14" rx="2"/><line x1="8" y1="8" x2="6.5" y2="4"/><line x1="18" y1="8" x2="19.5" y2="4"/></g><circle cx="10" cy="15" r="1.4" fill="var(--text)"/><circle cx="16" cy="15" r="1.4" fill="var(--text)"/></svg>
@@ -249,7 +248,7 @@ permalink: /pages/mlxidm-maps/
   <div class="mx-node mx-analysis">
     <div class="mx-gauge-node">
       <div class="mx-node-head">
-        <h3>Bound</h3>
+        <h3>Performance</h3>
         <span class="mx-sub" id="gMetric"></span>
       </div>
       <svg id="gauge" viewBox="0 0 300 330" role="img" aria-label="Upper bound of the algorithm against the lower bound of the environment"></svg>
@@ -259,7 +258,7 @@ permalink: /pages/mlxidm-maps/
 
     <div class="mx-cycle-node">
       <div class="mx-node-head">
-        <h3>Backbone</h3>
+        <h3>Mechanism</h3>
       </div>
       <div class="mx-cycle" id="cycle">
         <svg class="mx-cycle-wires" id="cycleWires" aria-hidden="true">
@@ -287,8 +286,8 @@ permalink: /pages/mlxidm-maps/
     </div>
   </div>
 
-  <aside class="mx-lens" aria-label="Lens">
-    <div class="mx-node-head"><h3>Lens</h3></div>
+  <aside class="mx-lens" aria-label="Principle">
+    <div class="mx-node-head"><h3>Principle</h3></div>
     <div class="mx-lens-item" data-lens="g"><h5>Geometry</h5><p><span data-l="en" lang="en">Confidence ellipsoids, decision regions and cones, gaps</span><span data-l="ko" lang="ko">신뢰 타원, 결정 영역과 cone, 격차</span></p></div>
     <div class="mx-lens-item" data-lens="r"><h5>Representation</h5><p><span data-l="en" lang="en">Features and dimension, sparsity, misspecification</span><span data-l="ko" lang="ko">특징과 차원, 희소성, 모형 오설정</span></p></div>
     <div class="mx-lens-item" data-lens="o"><h5>Optimization</h5><p><span data-l="en" lang="en">Computing estimators, optimal allocations, minimax problems over exploration distributions</span><span data-l="ko" lang="ko">추정량 계산, 최적 배분, 탐색 분포의 minimax 문제</span></p></div>
