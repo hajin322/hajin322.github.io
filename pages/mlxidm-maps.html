@@ -72,7 +72,7 @@ permalink: /pages/mlxidm-maps/
 
 .mx-lens {
   border: 1px dashed var(--border-strong); border-radius: var(--radius); padding: 1rem 1.15rem 1.1rem;
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem 10px; position: relative;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem 10px; position: relative;
 }
 .mx-lens .mx-node-head, .mx-lens .mx-lens-feed { grid-column: 1 / -1; }
 .mx-wire.up::after { bottom: auto; top: 2px; transform: translateX(-50%) rotate(-135deg); }
@@ -84,6 +84,33 @@ permalink: /pages/mlxidm-maps/
 .mx-lens-item.on { border-color: rgba(37, 99, 235, 0.45); background: var(--accent-soft); }
 .mx-lens-item.on h5 { color: var(--accent); }
 .mx-lens-item.on p { color: var(--text-secondary); }
+
+/* data graph */
+.mx-graph-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 0.75rem 0.5rem; }
+#dataGraph { display: block; width: 100%; min-width: 640px; }
+#dataGraph .e { fill: none; transition: opacity 0.2s, stroke 0.2s, stroke-width 0.2s; }
+#dataGraph .e.up { stroke: var(--text-secondary); stroke-width: 1.5; }
+#dataGraph .e.down { stroke: var(--border-strong); stroke-width: 1; }
+#dataGraph .n { cursor: pointer; transition: opacity 0.2s; }
+#dataGraph .n rect { transition: fill 0.2s, stroke 0.2s; }
+#dataGraph .n.st rect { fill: var(--surface); stroke: var(--text); stroke-width: 1.6; }
+#dataGraph .n.st text { font-family: var(--font-display); font-weight: 700; font-size: 13.5px; fill: var(--text); }
+#dataGraph .n.mo rect { fill: var(--accent-soft); stroke: rgba(37, 99, 235, 0.45); stroke-width: 1; }
+#dataGraph .n.mo text { font-family: var(--font-body); font-weight: 500; font-size: 13px; fill: var(--accent-deep); }
+#dataGraph .n:hover rect { stroke: var(--accent); }
+#dataGraph .n:focus { outline: none; }
+#dataGraph .n:focus-visible rect { stroke: var(--accent); stroke-width: 2.2; }
+#dataGraph.has-sel .e, #dataGraph.has-sel .n { opacity: 0.18; }
+#dataGraph.has-sel .e.hl { opacity: 1; stroke: var(--accent); stroke-width: 2.2; }
+#dataGraph.has-sel .n.nb, #dataGraph.has-sel .n.sel { opacity: 1; }
+#dataGraph .n.sel rect { fill: var(--accent); stroke: var(--accent); }
+#dataGraph .n.sel text { fill: #fff; }
+.mx-glegend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.25rem; font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.7rem; }
+.mx-glegend > span { display: inline-flex; align-items: center; gap: 8px; }
+.mx-glegend i { display: inline-block; width: 22px; height: 14px; border-radius: 4px; }
+.mx-glegend i.st { border: 1.6px solid var(--text); background: var(--surface); }
+.mx-glegend i.mo { border: 1px solid rgba(37, 99, 235, 0.45); background: var(--accent-soft); border-radius: 8px; }
+.mx-gsel { margin-left: auto; color: var(--text-muted); }
 
 /* data appendix */
 .mx-parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
@@ -203,6 +230,7 @@ permalink: /pages/mlxidm-maps/
         <div class="mx-lens-item" data-lens="g"><h5>Geometry</h5><p><span data-l="en" lang="en">Confidence ellipsoids, decision regions and cones, gaps</span><span data-l="ko" lang="ko">신뢰 타원, 결정 영역과 cone, 격차</span></p></div>
         <div class="mx-lens-item" data-lens="r"><h5>Representation</h5><p><span data-l="en" lang="en">Features and dimension, sparsity, misspecification</span><span data-l="ko" lang="ko">특징과 차원, 희소성, 모형 오설정</span></p></div>
         <div class="mx-lens-item" data-lens="o"><h5>Optimization</h5><p><span data-l="en" lang="en">Computing estimators, optimal allocations, minimax problems over exploration distributions</span><span data-l="ko" lang="ko">추정량 계산, 최적 배분, 탐색 분포의 minimax 문제</span></p></div>
+        <div class="mx-lens-item" data-lens="v"><h5>Observation</h5><p><span data-l="en" lang="en">What of the data is seen: partial or missing features, bandit and partial feedback, delay and censoring</span><span data-l="ko" lang="ko">데이터 중 무엇이 보이나: 일부만 관측되거나 빠진 특징, 밴딧·부분 피드백, 지연과 검열</span></p></div>
       </aside>
     </div>
   </div>
@@ -214,19 +242,15 @@ permalink: /pages/mlxidm-maps/
     <span><span data-l="en" lang="en">Data</span><span data-l="ko" lang="ko">데이터</span></span>
     <span class="line"></span>
   </h2>
-  <p class="mx-lede" data-l="en" lang="en">What kind of data the framework runs on.</p>
-  <p class="mx-lede" data-l="ko" lang="ko">프레임워크가 다루는 데이터의 종류.</p>
-  <div class="mx-parts">
-    <div class="mx-part">
-      <h3>Structure</h3>
-      <p class="mx-pnote"><span data-l="en" lang="en">How the elements are connected to each other</span><span data-l="ko" lang="ko">원소들이 서로 어떻게 연결되어 있나</span></p>
-      <ul class="mx-items"><li>Sequential / Temporal</li><li>Spatial / Grid-structured</li><li>Relational / Graph-structured</li><li>Attribute / Tabular</li><li>Composite / Multimodal</li></ul>
-    </div>
-    <div class="mx-part">
-      <h3>Modality</h3>
-      <p class="mx-pnote"><span data-l="en" lang="en">Where the data come from</span><span data-l="ko" lang="ko">데이터가 어디서 오나</span></p>
-      <ul class="mx-items"><li>Text / Language</li><li>Image</li><li>Audio / Speech</li><li>Video</li><li>Tabular</li><li>Graph</li></ul>
-    </div>
+  <p class="mx-lede" data-l="en" lang="en">Modalities sit in the middle. Above them are the primitive structures they are built on; below are the compound structures that any modality can enter. Click an item to trace its connections.</p>
+  <p class="mx-lede" data-l="ko" lang="ko">가운데가 모달리티다. 위에는 모달리티가 기대는 기본 구조가, 아래에는 어떤 모달리티든 들어갈 수 있는 복합 구조가 있다. 항목을 누르면 연결이 강조된다.</p>
+  <div class="mx-graph-wrap">
+    <svg id="dataGraph" viewBox="0 0 760 300" role="img" aria-label="Data structures and modalities"></svg>
+  </div>
+  <div class="mx-glegend">
+    <span><i class="st"></i><span data-l="en" lang="en">Structure</span><span data-l="ko" lang="ko">구조</span></span>
+    <span><i class="mo"></i><span data-l="en" lang="en">Modality</span><span data-l="ko" lang="ko">모달리티</span></span>
+    <span class="mx-gsel" id="dataSel" aria-live="polite"></span>
   </div>
 </section>
 
@@ -271,7 +295,7 @@ const FW = [
      lo: ['The $H^2$ dependence is tight for behavior cloning (Ross & Bagnell, 2010).', '행동 복제에서 $H^2$ 의존성은 개선할 수 없다(Ross & Bagnell, 2010).'],
      cx: ['Horizon $H$ and the classification error $ε$.', 'horizon $H$와 분류 오차 $ε$.'],
      tools: ['Performance-difference lemma, distribution-shift arguments', 'performance-difference 보조정리, 분포 이동 논증']},
-    {name: 'DAgger', fam: 'Reduction to no-regret online learning', lens: 'ro',
+    {name: 'DAgger', fam: 'Reduction to no-regret online learning', lens: 'rov',
      exp: ['Roll out the current policy and ask the expert to label the states it visits.', '현재 정책을 실행하고, 방문한 상태에 전문가 라벨을 받는다.'],
      est: ['Aggregate all labelled data and train with a no-regret learner.', '모든 라벨 데이터를 모아 no-regret 학습기로 학습한다.'],
      dec: ['Use the next policy $π_{i+1}$.', '다음 정책 $π_{i+1}$을 쓴다.'],
@@ -327,7 +351,7 @@ const FW = [
      lo: ['Same as UCB.', 'UCB와 같다.'],
      cx: ['Gaps $Δ_i$ and $K$.', '격차 $Δ_i$와 $K$.'],
      tools: ['Posterior concentration and anti-concentration', '사후분포의 집중·반집중']},
-    {name: 'EXP3', fam: 'Exponential weights', lens: 'o',
+    {name: 'EXP3', fam: 'Exponential weights', lens: 'ov',
      exp: ['Sample an arm from $p_t$; importance weighting fills in the unseen losses.', '$p_t$에서 팔을 뽑고, 보지 못한 손실은 중요도 가중으로 채운다.'],
      est: ['Unbiased estimates $ℓ_t(i) 1\\{A_t = i\\} / p_t(i)$.', '불편 추정 $ℓ_t(i) 1\\{A_t = i\\} / p_t(i)$.'],
      dec: ['$p_{t+1}(i) ∝ exp(−η Σ_{s≤t} ℓ_s(i))$ over the estimates.', '추정값으로 $p_{t+1}(i) ∝ exp(−η Σ_{s≤t} ℓ_s(i))$.'],
@@ -383,7 +407,7 @@ const FW = [
   {name: 'Contextual Bandit',
    note: ['A context arrives each round, the reward depends on it through a function class $\\cal{F}$ or a policy class $Π$.', '매 라운드 맥락이 오고, 보상은 함수 클래스 $\\cal{F}$ 또는 정책 클래스 $Π$를 통해 맥락에 의존한다.'],
    algs: [
-    {name: 'EXP4', fam: 'Exponential weights over policies', lens: 'o',
+    {name: 'EXP4', fam: 'Exponential weights over policies', lens: 'ov',
      exp: ['Sample an action from the mixture of the policies\' advice; importance weighting.', '정책들의 조언을 섞은 분포에서 행동을 뽑고, 중요도 가중을 쓴다.'],
      est: ['Importance-weighted reward estimates for every policy in $Π$.', '$Π$의 모든 정책에 대한 중요도 가중 보상 추정.'],
      dec: ['Exponential weights over $Π$.', '$Π$ 위의 지수 가중치.'],
@@ -391,7 +415,7 @@ const FW = [
      lo: ['$Ω(√(KT log |Π| / log K))$.', '$Ω(√(KT log |Π| / log K))$.'],
      cx: ['$K$ and the size of the policy class, $log |Π|$.', '$K$와 정책 클래스 크기 $log |Π|$.'],
      tools: ['Importance weighting, potential argument', '중요도 가중, 포텐셜 논증']},
-    {name: 'SquareCB', fam: 'Regret–information trade-off (inverse gap weighting)', lens: 'ro',
+    {name: 'SquareCB', fam: 'Regret–information trade-off (inverse gap weighting)', lens: 'rov',
      exp: ['Inverse gap weighting: $p(a) = 1 / (K + γ (f_t(x, â) − f_t(x, a)))$.', '역격차 가중: $p(a) = 1 / (K + γ (f_t(x, â) − f_t(x, a)))$.'],
      est: ['An online square-loss regression oracle $f_t ∈ \\cal{F}$.', '온라인 제곱 손실 회귀 오라클 $f_t ∈ \\cal{F}$.'],
      dec: ['Sample $a ∼ p$.', '$a ∼ p$를 뽑는다.'],
@@ -403,7 +427,7 @@ const FW = [
   {name: 'Partial Monitoring',
    note: ['The loss is never seen directly; only a feedback signal is, and how informative it is decides the rate.', '손실은 직접 보이지 않고 피드백 신호만 보인다. 그 신호가 얼마나 정보적인지가 수렴 속도를 정한다.'],
    algs: [
-    {name: 'Exp3-type (global)', fam: 'Exponential weights with forced exploration', lens: 'g',
+    {name: 'Exp3-type (global)', fam: 'Exponential weights with forced exploration', lens: 'gv',
      exp: ['Forced exploration of the informative actions.', '정보를 주는 행동을 강제로 탐색한다.'],
      est: ['Loss differences estimated from the feedback through the observability structure.', '관측 가능성 구조를 통해 피드백에서 손실 차이를 추정한다.'],
      dec: ['Exponential weights on the estimates.', '추정값에 대한 지수 가중치.'],
@@ -411,7 +435,7 @@ const FW = [
      lo: ['$Ω(T^{2/3})$ when the game is globally but not locally observable (Bartók et al., 2014).', '전역적으로만 관측 가능하면 $Ω(T^{2/3})$ (Bartók et al., 2014).'],
      cx: ['Observability of the game (global vs. local).', '게임의 관측 가능성(전역 대 국소).'],
      tools: ['Observability conditions, importance weighting', '관측 가능성 조건, 중요도 가중']},
-    {name: 'IDS', fam: 'Regret–information trade-off', lens: 'go',
+    {name: 'IDS', fam: 'Regret–information trade-off', lens: 'gov',
      exp: ['Information-directed: trade expected regret against information gained.', '정보 지향: 기대 regret과 얻는 정보를 맞바꾼다.'],
      est: ['Posterior or confidence set over the loss model.', '손실 모델에 대한 사후분포 또는 신뢰 집합.'],
      dec: ['Minimize the information ratio $Δ(p)^2 / I(p)$ over action distributions $p$.', '행동 분포 $p$에 대해 정보 비율 $Δ(p)^2 / I(p)$를 최소화한다.'],
@@ -505,5 +529,57 @@ function render() {
 fwChips.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; fw = +b.dataset.k; alg = 0; render(); });
 algChips.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; alg = +b.dataset.k; render(); });
 render();
+
+/* ---------- data graph ---------- */
+const NODES = {
+  seq:  {t: 'st', label: 'Sequential / Temporal', x: 150, y: 46},
+  spa:  {t: 'st', label: 'Spatial / Grid-structured', x: 380, y: 46},
+  att:  {t: 'st', label: 'Attribute / Tabular', x: 615, y: 46},
+  aud:  {t: 'mo', label: 'Audio', x: 70, y: 150},
+  txt:  {t: 'mo', label: 'Text / Language', x: 190, y: 150},
+  img:  {t: 'mo', label: 'Image', x: 310, y: 150},
+  vid:  {t: 'mo', label: 'Video', x: 430, y: 150},
+  tab:  {t: 'mo', label: 'Tabular', x: 550, y: 150},
+  gra:  {t: 'mo', label: 'Graph', x: 670, y: 150},
+  rel:  {t: 'st', label: 'Relational / Graph-structured', x: 245, y: 256},
+  com:  {t: 'st', label: 'Composite / Multimodal', x: 520, y: 256}
+};
+const EDGES = [['seq', 'aud'], ['seq', 'txt'], ['seq', 'vid'], ['spa', 'img'], ['spa', 'vid'], ['att', 'tab']];
+['aud', 'txt', 'img', 'vid', 'tab', 'gra'].forEach(m => { EDGES.push([m, 'rel']); EDGES.push([m, 'com']); });
+const G = document.getElementById('dataGraph'), gE = mkS(G, 'g'), gN = mkS(G, 'g');
+function mkS(parent, tag, attrs) { const e = document.createElementNS('http://www.w3.org/2000/svg', tag); for (const k in attrs || {}) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+const H = {st: 30, mo: 28};
+const half = {};
+Object.entries(NODES).forEach(([id, n]) => {
+  const g = mkS(gN, 'g', {class: 'n ' + n.t, 'data-id': id, tabindex: 0, role: 'button', 'aria-label': n.label});
+  const r = mkS(g, 'rect', {rx: n.t === 'mo' ? 14 : 6});
+  const t = mkS(g, 'text', {x: n.x, y: n.y + 4.5, 'text-anchor': 'middle'}); t.textContent = n.label;
+  const w = t.getComputedTextLength() + (n.t === 'mo' ? 26 : 24), h = H[n.t];
+  r.setAttribute('x', n.x - w / 2); r.setAttribute('y', n.y - h / 2); r.setAttribute('width', w); r.setAttribute('height', h);
+  half[id] = h / 2;
+});
+EDGES.forEach(([a, b]) => {
+  const A = NODES[a], B = NODES[b], y1 = A.y + half[a], y2 = B.y - half[b], my = (y1 + y2) / 2;
+  mkS(gE, 'path', {class: 'e ' + (A.t === 'st' ? 'up' : 'down'), 'data-a': a, 'data-b': b,
+    d: 'M' + A.x + ' ' + y1 + ' C' + A.x + ' ' + my + ' ' + B.x + ' ' + my + ' ' + B.x + ' ' + y2});
+});
+let sel = null;
+function renderGraph() {
+  G.classList.toggle('has-sel', !!sel);
+  const nb = new Set();
+  G.querySelectorAll('.e').forEach(e => {
+    const on = sel && (e.dataset.a === sel || e.dataset.b === sel);
+    e.classList.toggle('hl', !!on);
+    if (on) { nb.add(e.dataset.a); nb.add(e.dataset.b); }
+  });
+  G.querySelectorAll('.n').forEach(n => { n.classList.toggle('sel', n.dataset.id === sel); n.classList.toggle('nb', nb.has(n.dataset.id)); });
+  const out = document.getElementById('dataSel');
+  if (!sel) { out.innerHTML = '<span data-l="en" lang="en">Click an item to highlight it</span><span data-l="ko" lang="ko">항목을 누르면 강조된다</span>'; return; }
+  nb.delete(sel);
+  out.textContent = NODES[sel].label + '  ↔  ' + [...nb].map(k => NODES[k].label).join(', ');
+}
+G.addEventListener('click', e => { const n = e.target.closest('.n'); sel = n ? (sel === n.dataset.id ? null : n.dataset.id) : null; renderGraph(); });
+G.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const n = e.target.closest('.n'); if (!n) return; e.preventDefault(); sel = sel === n.dataset.id ? null : n.dataset.id; renderGraph(); });
+renderGraph();
 })();
 </script>
