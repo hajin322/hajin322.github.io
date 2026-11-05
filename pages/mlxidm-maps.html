@@ -535,8 +535,8 @@ const NODES = {
   seq:  {t: 'st', label: 'Sequential / Temporal', x: 150, y: 46},
   spa:  {t: 'st', label: 'Spatial / Grid-structured', x: 380, y: 46},
   att:  {t: 'st', label: 'Attribute / Tabular', x: 615, y: 46},
-  aud:  {t: 'mo', label: 'Audio', x: 70, y: 150},
-  txt:  {t: 'mo', label: 'Text / Language', x: 190, y: 150},
+  aud:  {t: 'mo', label: 'Audio', x: 205, y: 150},
+  txt:  {t: 'mo', label: 'Text / Language', x: 80, y: 150},
   img:  {t: 'mo', label: 'Image', x: 310, y: 150},
   vid:  {t: 'mo', label: 'Video', x: 430, y: 150},
   tab:  {t: 'mo', label: 'Tabular', x: 550, y: 150},
@@ -545,7 +545,7 @@ const NODES = {
   com:  {t: 'st', label: 'Composite / Multimodal', x: 520, y: 256}
 };
 const EDGES = [['seq', 'aud'], ['seq', 'txt'], ['seq', 'vid'], ['spa', 'img'], ['spa', 'vid'], ['att', 'tab']];
-['aud', 'txt', 'img', 'vid', 'tab', 'gra'].forEach(m => { EDGES.push([m, 'rel']); EDGES.push([m, 'com']); });
+['txt', 'aud', 'img', 'vid', 'tab', 'gra'].forEach(m => { EDGES.push([m, 'rel']); EDGES.push([m, 'com']); });
 const G = document.getElementById('dataGraph'), gE = mkS(G, 'g'), gN = mkS(G, 'g');
 function mkS(parent, tag, attrs) { const e = document.createElementNS('http://www.w3.org/2000/svg', tag); for (const k in attrs || {}) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
 const H = {st: 30, mo: 28};
