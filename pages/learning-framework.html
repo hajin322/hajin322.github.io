@@ -124,11 +124,12 @@ html[lang="ko"] .lf-dl::before { content: "다운로드"; }
 #fig text.focus, #fig g.focus text { fill: var(--accent-deep); font-weight: 700; }
 
 /* axis cards */
-.lf-axes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.lf-axes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-items: start; }
+#axes-env { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr); }
 .lf-card {
   position: relative; overflow: hidden;
   border: 1px solid var(--border); border-radius: var(--radius-md);
-  background: var(--surface); padding: 1rem 1.1rem 1.05rem 1.2rem;
+  background: var(--surface); padding: 0.8rem 0.85rem 0.85rem 0.95rem;
   transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
 }
 .lf-card::before {
@@ -139,11 +140,12 @@ html[lang="ko"] .lf-dl::before { content: "다운로드"; }
 .lf-card:hover { background: var(--surface-2); }
 .lf-card.on { border-color: rgba(37, 99, 235, 0.35); }
 .lf-card.on::before { transform: scaleY(1); }
-.lf-card h3 { font-size: 1.05rem; font-weight: 700; margin: 0 0 0.15rem; }
+.lf-card h3 { font-size: 0.98rem; font-weight: 700; margin: 0 0 0.1rem; }
 .lf-axis-name { all: unset; cursor: pointer; color: var(--text); transition: color 0.2s var(--ease); }
 .lf-axis-name:hover, .lf-card.on .lf-axis-name { color: var(--accent); }
-.lf-q { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.7rem; }
-.lf-opts { display: flex; flex-wrap: wrap; gap: 5px; }
+.lf-q { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 0.55rem; }
+.lf-opts { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
+#axes .lf-opts .lf-chip { max-width: 100%; text-align: left; line-height: 1.35; }
 .lf-desc { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7; margin: 0.75rem 0 0; }
 .lf-sub { margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px dashed var(--border); }
 .lf-sub[hidden] { display: none; }
@@ -177,7 +179,8 @@ html[lang="ko"] .lf-dl::before { content: "다운로드"; }
 .lf-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
 .lf-back:hover { color: var(--accent); }
 
-@media (max-width: 680px) { .lf-axes { grid-template-columns: 1fr; } .lf-head { padding-top: 1.5rem; } }
+@media (max-width: 760px) { .lf-axes, #axes-env { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 680px) { .lf-head { padding-top: 1.5rem; } }
 @media (prefers-reduced-motion: reduce) {
   #fig .link, #fig .fade, #fig .col, #fig .xsq, #fig #dots, #fig .ell, .lf-card, .lf-card::before { transition: none; }
 }
@@ -639,15 +642,14 @@ AXES.forEach(a => {
     '<p class="lf-q">' + bi(a.q[0], a.q[1]) + '</p>' +
     '<div class="lf-opts" role="group" aria-label="' + a.name + '">' +
     a.vals.map((v, k) => '<button type="button" class="lf-chip sm" data-ax="' + a.id + '" data-k="' + k + '">' + v[0] + '</button>').join('') + '</div>' +
-    '<p class="lf-desc" data-l="en" lang="en"></p><p class="lf-desc" data-l="ko" lang="ko"></p>' +
     (a.id === 'rm' ? '<div class="lf-sub lf-sub-glm"><p class="lf-sub-lead">' + bi('Exponential family', '지수족') + '</p>' +
       '<p class="lf-sub-note">' + 'p(<i>r</i> | <i>x</i>) ∝ exp(<i>r</i>·<i>z</i> − <i>b</i>(<i>z</i>)),&nbsp; <i>z</i> = ⟨<i>x</i>, <i>θ</i><sub>⋆</sub>⟩,&nbsp; <i>σ</i> = <i>b</i><sup>′</sup>' + '</p>' +
       '<div class="lf-opts" role="group" aria-label="Exponential family">' +
       GLM_SUB.map((v, k) => '<button type="button" class="lf-chip sm" data-glm="' + k + '">' + v[0] + '</button>').join('') +
-      '</div><p class="lf-desc lf-sub-desc" data-l="en" lang="en"></p><p class="lf-desc lf-sub-desc" data-l="ko" lang="ko"></p></div>' : '') +
+      '</div></div>' : '') +
     (a.id === 'rm' ? '<div class="lf-sub lf-sub-fa"><p class="lf-sub-lead">' + bi('Function class', '함수 클래스') + '</p><div class="lf-opts" role="group" aria-label="Function class">' +
       FA_SUB.map((v, k) => '<button type="button" class="lf-chip sm" data-sub="' + k + '">' + v[0] + '</button>').join('') +
-      '</div><p class="lf-desc lf-sub-desc" data-l="en" lang="en"></p><p class="lf-desc lf-sub-desc" data-l="ko" lang="ko"></p></div>' : '');
+      '</div></div>' : '');
   document.getElementById(['acq', 'dec', 'obj'].includes(a.id) ? 'axes-agent' : 'axes-env').appendChild(c);
 });
 function renderCards() {
@@ -659,17 +661,10 @@ function renderCards() {
       const sub = c.querySelector('.lf-sub-fa');
       sub.hidden = state.rm !== 3;
       sub.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.sub === faSub)));
-      const sd = sub.querySelectorAll('.lf-sub-desc');
-      sd[0].textContent = FA_SUB[faSub][1]; sd[1].textContent = FA_SUB[faSub][2];
       const gs = c.querySelector('.lf-sub-glm');
       gs.hidden = state.rm !== 2;
       gs.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.glm === glmSub)));
-      const gd = gs.querySelectorAll('.lf-sub-desc');
-      gd[0].textContent = GLM_SUB[glmSub][1]; gd[1].textContent = GLM_SUB[glmSub][2];
     }
-    const d = c.querySelectorAll('.lf-desc');
-    d[0].textContent = a.vals[state[a.id]][1];
-    d[1].textContent = a.vals[state[a.id]][2];
   });
 }
 function render() { renderFig(); renderSummary(); renderCards(); }
