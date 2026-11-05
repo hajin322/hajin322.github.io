@@ -431,7 +431,7 @@ const AXES = [
    q:['How is the data generated?', '데이터가 어떻게 생성되나'],
    where:['The box around xᵗ, rᵗ, oᵗ that M* writes', 'M*가 쓰는 xᵗ, rᵗ, oᵗ를 둘러싼 상자'], vals:[
     ['i.i.d.', 'Every data point (x, r) is an independent draw from a fixed distribution 𝒟, whatever the agent does.', '모든 데이터 (x, r)이 에이전트와 상관없이 고정된 분포 𝒟에서 독립적으로 뽑힌다.'],
-    ['Stochastic', 'The reward is the reward model plus zero-mean noise, rₜ = f⋆(xₜ) + ηₜ with 𝔼[ηₜ | ℋₜ₋₁, xₜ, aₜ] = 0. The parameter is fixed; the agent\'s choices decide which samples it sees, so the data as a whole are not i.i.d.', '보상은 보상 모델에 평균이 0인 잡음을 더한 값이다, rₜ = f⋆(xₜ) + ηₜ, 𝔼[ηₜ | ℋₜ₋₁, xₜ, aₜ] = 0. 파라미터는 고정이고, 어떤 표본을 보게 될지는 에이전트의 선택이 정하므로 데이터 전체는 i.i.d.가 아니다.'],
+    ['Stochastic', 'The reward is the reward model plus zero-mean noise, rₜ = f⋆(xₜ) + ηₜ with 𝔼[ηₜ | ℋₜ₋₁] = 0. The parameter is fixed; the agent\'s choices decide which samples it sees, so the data as a whole are not i.i.d.', '보상은 보상 모델에 평균이 0인 잡음을 더한 값이다, rₜ = f⋆(xₜ) + ηₜ, 𝔼[ηₜ | ℋₜ₋₁] = 0. 파라미터는 고정이고, 어떤 표본을 보게 될지는 에이전트의 선택이 정하므로 데이터 전체는 i.i.d.가 아니다.'],
     ['Arbitrary', 'No noise model: the parameters θ₁, …, θ_T are fixed in advance, arbitrarily (an oblivious adversary).', '잡음 모델이 없다. 파라미터 θ₁, …, θ_T가 미리 임의로 정해져 있다(oblivious adversary).'],
     ['Adversarial', 'Each θₜ is chosen after seeing the history ℋₜ₋₁, against the agent (an adaptive adversary).', '각 θₜ를 지금까지의 기록 ℋₜ₋₁을 보고 에이전트에게 불리하게 고른다(adaptive adversary).']]},
   {id:'temp', name:'Temporal context',
