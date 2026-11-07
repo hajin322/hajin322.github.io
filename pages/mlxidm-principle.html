@@ -1,12 +1,12 @@
 ---
 layout: page
-title: "Maps of MLxIDM"
-description: "A map from frameworks to algorithms: pick a problem class, then an algorithm, and follow how it explores, estimates and decides, and what can be proved about it."
-permalink: /pages/mlxidm-maps/
+title: "MLxIDM Principle"
+description: "From environments to algorithms: pick a problem class, then an algorithm, and see its performance against the environment, the principle it runs on, and the lenses it is analysed through."
+permalink: /pages/mlxidm-principle/
 ---
 
 <style>
-/* ---------- page-scoped styles (Maps of MLxIDM) -------------------------- */
+/* ---------- page-scoped styles (MLxIDM Principle) -------------------------- */
 @font-face { font-family: "CM Roman"; src: url("{{ '/assets/fonts/cm/KaTeX_Main-Regular.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "CM Math"; src: url("{{ '/assets/fonts/cm/KaTeX_Math-Italic.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "CM Cal"; src: url("{{ '/assets/fonts/cm/KaTeX_Caligraphic-Regular.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
@@ -213,7 +213,7 @@ permalink: /pages/mlxidm-maps/
     </div>
   </div>
 
-  <h1>Maps of MLxIDM</h1>
+  <h1>MLxIDM Principle</h1>
   <p class="mx-lede" data-l="en" lang="en">An algorithm is studied inside an environment, through a loop of exploration, estimation and decision. The algorithm and its environment meet through a minimax measure: the environment sets a lower bound, and the algorithm achieves an upper bound. To reduce uncertainty and learn a good decision, the algorithm observes and represents the given data, and optimizes through a designed geometry.</p>
   <p class="mx-lede" data-l="ko" lang="ko">알고리즘은 탐색, 추정, 결정의 고리를 따라 환경 안에서 연구된다. 알고리즘과 환경은 minimax 척도를 통해 만난다. 환경은 하한을 정하고, 알고리즘은 상한을 달성한다. 알고리즘은 불확실성을 줄이고 좋은 결정을 배우기 위해, 주어진 데이터를 관측하고 표현하며, 설계된 기하 구조를 통해 최적화한다.</p>
 </section>
@@ -258,7 +258,7 @@ permalink: /pages/mlxidm-maps/
 
     <div class="mx-cycle-node">
       <div class="mx-node-head">
-        <h3>Mechanism</h3>
+        <h3>Principle</h3>
       </div>
       <div class="mx-cycle" id="cycle">
         <svg class="mx-cycle-wires" id="cycleWires" aria-hidden="true">
@@ -286,8 +286,8 @@ permalink: /pages/mlxidm-maps/
     </div>
   </div>
 
-  <aside class="mx-lens" aria-label="Principle">
-    <div class="mx-node-head"><h3>Principle</h3></div>
+  <aside class="mx-lens" aria-label="Lens">
+    <div class="mx-node-head"><h3>Lens</h3></div>
     <div class="mx-lens-item" data-lens="g"><h5>Geometry</h5><p><span data-l="en" lang="en">Confidence ellipsoids, decision regions and cones, gaps</span><span data-l="ko" lang="ko">신뢰 타원, 결정 영역과 cone, 격차</span></p></div>
     <div class="mx-lens-item" data-lens="r"><h5>Representation</h5><p><span data-l="en" lang="en">Features and dimension, sparsity, misspecification</span><span data-l="ko" lang="ko">특징과 차원, 희소성, 모형 오설정</span></p></div>
     <div class="mx-lens-item" data-lens="o"><h5>Optimization</h5><p><span data-l="en" lang="en">Computing estimators, optimal allocations, minimax problems over exploration distributions</span><span data-l="ko" lang="ko">추정량 계산, 최적 배분, 탐색 분포의 minimax 문제</span></p></div>
