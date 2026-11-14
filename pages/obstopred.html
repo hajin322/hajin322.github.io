@@ -63,7 +63,11 @@ canvas.op-c { display: block; width: 100%; }
 .op-seg button.m i { font-family: var(--cm-math); font-style: normal; }
 .op-seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
 
-.op-der { margin-top: 12px; }
+.op-ders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; align-items: start; }
+.op-ders-col { display: grid; gap: 12px; }
+.op-der { margin-top: 0; }
+.op-der .op-d .op-l2 { display: block; }
+@media (max-width: 720px) { .op-der .op-d .op-l2m { display: block; } }
 .op-der h3 { font-size: 1.02rem; font-weight: 700; margin: 0 0 0.45rem; }
 .op-der p.op-t { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin: 0.35rem 0; }
 .op-der p.op-t[data-l="ko"] { line-height: 1.8; }
@@ -82,7 +86,7 @@ canvas.op-c { display: block; width: 100%; }
 .op-back:hover { color: var(--accent); }
 
 @media (max-width: 720px) {
-  .op-right { grid-template-columns: 1fr; }
+  .op-right, .op-ders { grid-template-columns: 1fr; }
   .op-hero { padding-top: 1.5rem; }
 }
 </style>
@@ -160,13 +164,21 @@ canvas.op-c { display: block; width: 100%; }
     </div>
   </div>
 
+  <div class="op-ders">
   <div class="op-box op-der">
     <h3>Success rate</h3>
     <p class="op-t" data-l="en" lang="en">A run with <i>s</i> successes and <i>n</i> − <i>s</i> fails has probability</p>
     <p class="op-t" data-l="ko" lang="ko">성공 <i>s</i>번, 실패 <i>n</i> − <i>s</i>번이 나올 확률은</p>
-    <p class="op-f op-d"><i>p</i> · <i>p</i> ⋯ <i>p</i> · (1 − <i>p</i>) ⋯ (1 − <i>p</i>) = <i>p</i><sup><i>s</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>s</i></sup>,</p>
+    <p class="op-f op-d"><i>p</i> · <i>p</i> ⋯ <i>p</i> · (1 − <i>p</i>) ⋯ (1 − <i>p</i>)<span class="op-l2m"> = <i>p</i><sup><i>s</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>s</i></sup>,</span></p>
     <p class="op-t" data-l="en" lang="en">and read as a function of <i>p</i>, this is the shape of the estimate.</p>
     <p class="op-t" data-l="ko" lang="ko">이고, 이를 <i>p</i>의 함수로 보면 그대로 추정의 모양이 된다.</p>
+  </div>
+  <div class="op-box op-der">
+    <h3>Success event</h3>
+    <p class="op-t" data-l="en" lang="en">Any one order of <i>j</i> successes and <i>m</i> − <i>j</i> fails has probability <span class="op-x"><i>p</i><sup><i>j</i></sup>(1 − <i>p</i>)<sup><i>m</i>−<i>j</i></sup></span>, and there are <span class="op-x">C(<i>m</i>, <i>j</i>)</span> ways to choose which trials succeed. So</p>
+    <p class="op-t" data-l="ko" lang="ko">성공 <i>j</i>번과 실패 <i>m</i> − <i>j</i>번의 순서 하나의 확률은 <span class="op-x"><i>p</i><sup><i>j</i></sup>(1 − <i>p</i>)<sup><i>m</i>−<i>j</i></sup></span>이고, <i>m</i>번 중 어느 시행이 성공할지 고르는 방법이 <span class="op-x">C(<i>m</i>, <i>j</i>)</span>가지다. 따라서</p>
+    <p class="op-f op-d"><i>P</i>(<i>S</i> = <i>j</i>) = C(<i>m</i>, <i>j</i>) <i>p</i><sup><i>j</i></sup>(1 − <i>p</i>)<sup><i>m</i>−<i>j</i></sup>.</p>
+  </div>
   </div>
 
   <div class="op-bridge">
@@ -223,14 +235,35 @@ canvas.op-c { display: block; width: 100%; }
       </div>
     </div>
   </div>
+  <div class="op-ders">
   <div class="op-box op-der">
     <h3>Speed</h3>
     <p class="op-t" data-l="en" lang="en">Cut the <i>t</i> seconds into <i>n</i> slices of width <span class="op-x">Δ = <i>t</i> / <i>n</i></span>. A slice climbs at most one step, so its mean number of steps, <span class="op-x"><i>p</i> = <i>λ</i>Δ = <i>λt</i> / <i>n</i></span>, is also the probability that it climbs. <i>N</i> steps in <i>n</i> slices then have probability</p>
     <p class="op-t" data-l="ko" lang="ko"><i>t</i>초를 폭 <span class="op-x">Δ = <i>t</i> / <i>n</i></span>인 조각 <i>n</i>개로 쪼갠다. 조각 하나는 최대 한 칸만 오르므로, 조각의 평균 칸 수 <span class="op-x"><i>p</i> = <i>λ</i>Δ = <i>λt</i> / <i>n</i></span>가 곧 한 칸 오를 확률이다. <i>n</i>개 조각에서 <i>N</i>칸 오를 확률은</p>
-    <p class="op-f op-d"><i>p</i><sup><i>N</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>N</i></sup> = Δ<sup><i>N</i></sup> · <i>λ</i><sup><i>N</i></sup> · (1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>N</i></sup>.</p>
+    <p class="op-f op-d"><i>p</i><sup><i>N</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>N</i></sup><span class="op-l2">= Δ<sup><i>N</i></sup> · <i>λ</i><sup><i>N</i></sup> · (1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>N</i></sup>.</span></p>
     <p class="op-t" data-l="en" lang="en">As <i>n</i> → ∞, Δ<sup><i>N</i></sup> does not depend on <i>λ</i> and cancels when the estimate is normalized, while <span class="op-x">(1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>N</i></sup> → <i>e</i><sup>−<i>λt</i></sup></span>. So</p>
     <p class="op-t" data-l="ko" lang="ko"><i>n</i> → ∞이면 Δ<sup><i>N</i></sup>은 <i>λ</i>와 무관해 추정을 정규화할 때 약분되고, <span class="op-x">(1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>N</i></sup> → <i>e</i><sup>−<i>λt</i></sup></span>이다. 따라서</p>
     <p class="op-f op-d"><i>f</i>(<i>λ</i>) ∝ <i>λ</i><sup><i>N</i></sup> <i>e</i><sup>−<i>λt</i></sup>.</p>
+  </div>
+  <div class="op-ders-col">
+  <div class="op-box op-der">
+    <h3>Number of counts</h3>
+    <p class="op-t" data-l="en" lang="en">With the same slices, <i>k</i> steps in <i>n</i> slices is a binomial count:</p>
+    <p class="op-t" data-l="ko" lang="ko">같은 조각으로 보면, <i>n</i>개 조각에서 <i>k</i>칸 오르는 것은 이항 개수다.</p>
+    <p class="op-f op-d"><i>P</i>(<i>N</i> = <i>k</i>) = C(<i>n</i>, <i>k</i>)<span class="op-l2m"> (<i>λt</i> / <i>n</i>)<sup><i>k</i></sup> (1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>k</i></sup></span></p>
+    <p class="op-t" data-l="en" lang="en">As <i>n</i> → ∞, <span class="op-x">C(<i>n</i>, <i>k</i>) / <i>n</i><sup><i>k</i></sup> → 1 / <i>k</i>!</span> and <span class="op-x">(1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>k</i></sup> → <i>e</i><sup>−<i>λt</i></sup></span>, so</p>
+    <p class="op-t" data-l="ko" lang="ko"><i>n</i> → ∞이면 <span class="op-x">C(<i>n</i>, <i>k</i>) / <i>n</i><sup><i>k</i></sup> → 1 / <i>k</i>!</span>, <span class="op-x">(1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>k</i></sup> → <i>e</i><sup>−<i>λt</i></sup></span>이므로</p>
+    <p class="op-f op-d"><i>P</i>(<i>N</i> = <i>k</i>) = (<i>λt</i>)<sup><i>k</i></sup> <i>e</i><sup>−<i>λt</i></sup> / <i>k</i>!</p>
+  </div>
+  <div class="op-box op-der">
+    <h3>Waiting time</h3>
+    <p class="op-t" data-l="en" lang="en">The <i>k</i>-th step lands in <span class="op-x">[<i>w</i>, <i>w</i> + <i>dw</i>)</span> exactly when <span class="op-x"><i>k</i> − 1</span> steps happen before <i>w</i> and one happens in <i>dw</i>:</p>
+    <p class="op-t" data-l="ko" lang="ko"><i>k</i>번째 칸이 <span class="op-x">[<i>w</i>, <i>w</i> + <i>dw</i>)</span>에 오르는 것은 <i>w</i> 전까지 <span class="op-x"><i>k</i> − 1</span>칸을 오르고 <i>dw</i> 안에서 한 칸을 오를 때다.</p>
+    <p class="op-f op-d"><i>f</i>(<i>w</i>) <i>dw</i> = (<i>λw</i>)<sup><i>k</i>−1</sup><i>e</i><sup>−<i>λw</i></sup> / (<i>k</i> − 1)! · <i>λ</i> <i>dw</i></p>
+    <p class="op-t" data-l="en" lang="en">So <span class="op-x"><i>f</i>(<i>w</i>) = <i>λ</i><sup><i>k</i></sup><i>w</i><sup><i>k</i>−1</sup><i>e</i><sup>−<i>λw</i></sup> / (<i>k</i> − 1)!</span>, and <span class="op-x"><i>k</i> = 1</span> gives <span class="op-x"><i>λe</i><sup>−<i>λw</i></sup></span>.</p>
+    <p class="op-t" data-l="ko" lang="ko">따라서 <span class="op-x"><i>f</i>(<i>w</i>) = <i>λ</i><sup><i>k</i></sup><i>w</i><sup><i>k</i>−1</sup><i>e</i><sup>−<i>λw</i></sup> / (<i>k</i> − 1)!</span>이고, <span class="op-x"><i>k</i> = 1</span>이면 <span class="op-x"><i>λe</i><sup>−<i>λw</i></sup></span>이다.</p>
+  </div>
+  </div>
   </div>
 </section>
 
