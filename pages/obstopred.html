@@ -1,0 +1,519 @@
+---
+layout: page
+title: "Observation to Prediction through Estimation"
+description: "Binomial and Poisson: observe a process, estimate its hidden rate as a distribution, and predict what comes next."
+permalink: /pages/obstopred/
+---
+
+<style>
+/* ---------- page-scoped styles (Observation to Prediction through Estimation) ---------- */
+@font-face { font-family: "CM Roman"; src: url("{{ '/assets/fonts/cm/KaTeX_Main-Regular.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "CM Math"; src: url("{{ '/assets/fonts/cm/KaTeX_Math-Italic.woff2' | relative_url }}") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+:root {
+  --cm: "CM Roman", "Noto Serif KR", serif;
+  --cm-math: "CM Math", "CM Roman", serif;
+  --op-red: #dc2626;
+}
+.op-hero { padding: 2.5rem 0 0.5rem; }
+.op-hero h1 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.08; margin-bottom: 1rem; }
+
+.op-f { font-family: var(--cm); font-size: 1.02rem; color: var(--text); margin: 0 0 0.35rem; }
+.op-f .nw, p.op-f.nw { white-space: nowrap; } .op-f .nw { display: inline-block; }
+p.op-f.nw, p.op-f[data-v] { overflow-x: auto; white-space: nowrap; }
+.op-f i { font-family: var(--cm-math); font-style: normal; }
+.op-f sup { font-size: 0.72em; }
+
+.op-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.6rem; margin: 0 0 0.5rem; }
+.op-legend > span { display: inline-flex; align-items: center; gap: 9px; }
+.op-legend .op-f { margin: 0; }
+.op-legend i.k { display: inline-block; width: 22px; height: 0; border-top: 2.4px solid var(--accent); }
+.op-legend i.k.d { border-top: 2px dashed var(--text-muted); }
+.op-legend i.k.r { border-top: 2px dashed var(--op-red); }
+
+.op-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 12px; align-items: stretch; }
+.op-right { display: grid; gap: 12px; align-content: start; }
+.op-box { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 0.85rem 1rem 0.95rem; min-width: 0; }
+.op-obs { display: flex; flex-direction: column; }
+.op-bh { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin: 0 0 0.4rem; min-height: 26px; }
+.op-bh h3 { font-size: 1.02rem; font-weight: 700; margin: 0; }
+.op-fill { position: relative; flex: 1; min-height: 260px; }
+@media (max-width: 720px) { .op-fill { min-height: 300px; } }
+.op-fill canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+canvas.op-c { display: block; width: 100%; }
+
+.op-rate { display: grid; grid-template-columns: auto minmax(0, 1fr) 4.6rem; align-items: center; gap: 10px; margin-top: 0.55rem; font-size: 0.85rem; color: var(--text-secondary); }
+.op-rate .op-f { margin: 0; font-size: 0.98rem; color: var(--op-red); }
+.op-rate input { width: 100%; accent-color: var(--op-red); }
+.op-rate output { font-family: var(--cm); font-size: 1rem; color: var(--op-red); text-align: right; }
+.op-ctrl { display: flex; gap: 8px; margin-top: 0.6rem; }
+.op-btn { font: 500 0.85rem var(--font-body); color: var(--text); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-pill); padding: 6px 15px; cursor: pointer; transition: border-color 0.2s var(--ease); }
+.op-btn:hover { border-color: var(--accent); }
+.op-btn.primary { background: var(--text); color: #fff; border-color: var(--text); }
+.op-btn:focus-visible, .op-seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.op-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px 10px; margin-top: 0.75rem; padding-top: 0.6rem; border-top: 1px dashed var(--border); }
+.op-stat .op-f { margin: 0; font-size: 0.92rem; color: var(--text-muted); }
+.op-stat b { display: block; font-family: var(--cm); font-weight: 400; font-size: 1.2rem; color: var(--text); line-height: 1.3; }
+
+.op-seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: var(--radius-pill); overflow: hidden; flex-shrink: 0; }
+.op-seg button { all: unset; cursor: pointer; font-size: 0.78rem; line-height: 1.4; padding: 3px 10px; color: var(--text-secondary); }
+.op-seg button.m { font-family: var(--cm); font-size: 0.9rem; }
+.op-seg button.m i { font-family: var(--cm-math); font-style: normal; }
+.op-seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+
+.op-bridge { margin: 2.6rem 0 0; padding: 0.9rem 1rem; border: 1px dashed var(--border-strong); border-radius: var(--radius); text-align: center; }
+.op-bridge .op-f { margin: 0; font-size: 1.15rem; white-space: normal; }
+.op-bridge .op-ar { color: var(--accent); margin: 0 0.4em; }
+.op-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
+.op-back:hover { color: var(--accent); }
+
+@media (max-width: 720px) {
+  .op-grid { grid-template-columns: 1fr; }
+  .op-hero { padding-top: 1.5rem; }
+}
+</style>
+
+<section class="op-hero">
+  <div class="hero-top">
+    <span class="hero-label">
+      <span class="dot"></span>
+      <span data-l="en" lang="en">Probability</span>
+      <span data-l="ko" lang="ko">확률</span>
+    </span>
+    <div class="lang-toggle" role="group" aria-label="Language / 언어">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ko" lang="ko">한국어</button>
+    </div>
+  </div>
+
+  <h1>Observation to Prediction through Estimation</h1>
+  <div class="op-legend">
+    <span><i class="k"></i><span class="op-f">∫ <i>P</i>(· | <i>θ</i>) <i>f</i>(<i>θ</i>) <i>dθ</i></span></span>
+    <span><i class="k d"></i><span class="op-f"><i>P</i>(· | <i>θ</i><sup>⋆</sup>)</span></span>
+    <span><i class="k r"></i><span class="op-f"><i>θ</i><sup>⋆</sup></span></span>
+  </div>
+</section>
+
+<!-- ======================= BINOMIAL ======================= -->
+<section class="section" id="binomial">
+  <h2 class="section-title">
+    <span class="num">01</span>
+    <span>Binomial</span>
+    <span class="line"></span>
+  </h2>
+  <div class="op-grid">
+    <div class="op-box op-obs">
+      <div class="op-bh"><h3>Observation</h3></div>
+      <div class="op-fill"><canvas id="bv" role="img" aria-label="Successes and fails over trials"></canvas></div>
+      <label class="op-rate">
+        <span class="op-f"><i>p</i><sup>⋆</sup></span>
+        <input type="range" id="pp" min="0.1" max="0.9" step="0.05" value="0.5">
+        <output id="ppO" for="pp">0.50</output>
+      </label>
+      <div class="op-ctrl">
+        <button type="button" class="op-btn primary" id="bplay"></button>
+        <button type="button" class="op-btn" id="breset"><span data-l="en" lang="en">Restart</span><span data-l="ko" lang="ko">처음부터</span></button>
+      </div>
+      <div class="op-stats">
+        <div class="op-stat"><span class="op-f"><i>n</i></span><b id="bN">0</b></div>
+        <div class="op-stat"><span class="op-f"><i>s</i></span><b id="bS">0</b></div>
+        <div class="op-stat"><span class="op-f"><i>n</i> − <i>s</i></span><b id="bF">0</b></div>
+        <div class="op-stat"><span class="op-f"><i>s</i> / <i>n</i></span><b id="bR">–</b></div>
+      </div>
+    </div>
+    <div class="op-right">
+      <div class="op-box">
+        <div class="op-bh"><h3>Estimation</h3></div>
+        <p class="op-f"><span class="nw"><i>f</i>(<i>p</i>) ∝ <i>p</i><sup><i>s</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>s</i></sup></span> <span class="nw">&nbsp;→&nbsp; Beta(<i>s</i> + 1, <i>n</i> − <i>s</i> + 1)</span></p>
+        <canvas class="op-c" id="bE" role="img" aria-label="Estimated distribution of the success rate"></canvas>
+      </div>
+      <div class="op-box">
+        <div class="op-bh">
+          <h3>Prediction</h3>
+          <div class="op-seg" role="group" aria-label="Number of future trials" id="bSeg">
+            <button type="button" class="m" data-m="10" aria-pressed="false"><i>m</i> = 10</button>
+            <button type="button" class="m" data-m="50" aria-pressed="true"><i>m</i> = 50</button>
+            <button type="button" class="m" data-m="200" aria-pressed="false"><i>m</i> = 200</button>
+          </div>
+        </div>
+        <p class="op-f nw"><i>P</i>(<i>S</i> = <i>j</i>) = C(<i>m</i>, <i>j</i>) <i>p</i><sup><i>j</i></sup>(1 − <i>p</i>)<sup><i>m</i>−<i>j</i></sup></p>
+        <canvas class="op-c" id="bC" role="img" aria-label="Predicted number of successes in the next m trials"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="op-bridge">
+    <p class="op-f"><span class="nw">Binomial(<i>n</i>, <i>p</i>)<span class="op-ar">⟶</span>Poisson(<i>λ</i>)</span> &nbsp; <span class="nw">as &nbsp;<i>n</i> → ∞, &nbsp;<i>np</i> = <i>λ</i></span></p>
+  </div>
+</section>
+
+<!-- ======================= POISSON ======================= -->
+<section class="section" id="poisson">
+  <h2 class="section-title">
+    <span class="num">02</span>
+    <span>Poisson</span>
+    <span class="line"></span>
+  </h2>
+  <div class="op-grid">
+    <div class="op-box op-obs">
+      <div class="op-bh"><h3>Observation</h3></div>
+      <div class="op-fill"><canvas id="cv" role="img" aria-label="Staircase of count over time, with a person climbing"></canvas></div>
+      <label class="op-rate">
+        <span class="op-f"><i>λ</i><sup>⋆</sup></span>
+        <input type="range" id="lam" min="0.25" max="3" step="0.25" value="1">
+        <output id="lamO" for="lam">1 /s</output>
+      </label>
+      <div class="op-ctrl">
+        <button type="button" class="op-btn primary" id="play"></button>
+        <button type="button" class="op-btn" id="reset"><span data-l="en" lang="en">Restart</span><span data-l="ko" lang="ko">처음부터</span></button>
+      </div>
+      <div class="op-stats">
+        <div class="op-stat"><span class="op-f"><i>t</i></span><b id="sT">0.0</b></div>
+        <div class="op-stat"><span class="op-f"><i>N</i>(<i>t</i>)</span><b id="sN">0</b></div>
+        <div class="op-stat"><span class="op-f"><i>N</i>(<i>t</i>) / <i>t</i></span><b id="sP">–</b></div>
+        <div class="op-stat"><span class="op-f"><i>w</i></span><b id="sG">–</b></div>
+      </div>
+    </div>
+    <div class="op-right">
+      <div class="op-box">
+        <div class="op-bh"><h3>Estimation</h3></div>
+        <p class="op-f"><span class="nw"><i>f</i>(<i>λ</i>) ∝ <i>λ</i><sup><i>N</i></sup> <i>e</i><sup>−<i>λt</i></sup></span> <span class="nw">&nbsp;→&nbsp; Gamma(<i>N</i> + 1, <i>t</i>)</span></p>
+        <canvas class="op-c" id="pS" role="img" aria-label="Estimated distribution of the rate"></canvas>
+      </div>
+      <div class="op-box">
+        <div class="op-bh">
+          <h3>Prediction</h3>
+          <div class="op-seg" role="group" aria-label="Prediction" id="pSeg">
+            <button type="button" data-v="count" aria-pressed="true"><span data-l="en" lang="en">Next 5 s</span><span data-l="ko" lang="ko">다음 5초</span></button>
+            <button type="button" data-v="wait" aria-pressed="false"><span data-l="en" lang="en">Waiting time</span><span data-l="ko" lang="ko">대기 시간</span></button>
+          </div>
+        </div>
+        <p class="op-f" data-v="count"><i>P</i>(<i>N</i> = <i>k</i>) = (<i>λt</i>)<sup><i>k</i></sup> <i>e</i><sup>−<i>λt</i></sup> / <i>k</i>!</p>
+        <p class="op-f" data-v="wait" hidden><i>f</i>(<i>w</i>) = <i>λ</i><sup><i>k</i></sup><i>w</i><sup><i>k</i>−1</sup><i>e</i><sup>−<i>λw</i></sup> / (<i>k</i> − 1)!</p>
+        <canvas class="op-c" id="pP" role="img" aria-label="Predicted count in the next 5 seconds, or waiting time"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<a class="op-back" href="{{ '/pages/' | relative_url }}">← <span data-l="en" lang="en">All pages</span><span data-l="ko" lang="ko">페이지 목록</span></a>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const MATH = '"CM Math", "CM Roman", serif', ROMAN = '"CM Roman", serif';
+  const col = () => ({ ink: css('--text'), soft: css('--text-muted'), line: css('--border'), pen: css('--accent'),
+    penSoft: 'rgba(37, 99, 235, 0.12)', red: css('--op-red'), teal: '#0d9488' });
+
+  /* ---------- math ---------- */
+  function lgam(z) {
+    const g = [76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.1208650973866179e-2, -0.5395239384953e-5];
+    let x = z, y = z, tmp = x + 5.5; tmp -= (x + 0.5) * Math.log(tmp); let s = 1.000000000190015;
+    for (let j = 0; j < 6; j++) s += g[j] / ++y; return -tmp + Math.log(2.5066282746310005 * s / x);
+  }
+  const lbeta = (a, b) => lgam(a) + lgam(b) - lgam(a + b);
+  const lchoose = (n, k) => lgam(n + 1) - lgam(k + 1) - lgam(n - k + 1);
+  const gammaPdf = (x, a, b) => x <= 0 ? 0 : Math.exp(a * Math.log(b) + (a - 1) * Math.log(x) - b * x - lgam(a));
+  const poisPmf = (k, m) => m <= 0 ? (k === 0 ? 1 : 0) : Math.exp(k * Math.log(m) - m - lgam(k + 1));
+  const nbPmf = (k, a, b, s) => Math.exp(lgam(a + k) - lgam(a) - lgam(k + 1) + a * Math.log(b / (b + s)) + k * Math.log(s / (b + s)));
+  const compPdf = (w, k, a, b) => w <= 0 ? (k === 1 ? a / b : 0) : Math.exp(lgam(a + k) - lgam(a) - lgam(k) + a * Math.log(b) + (k - 1) * Math.log(w) - (a + k) * Math.log(b + w));
+  const betaPdf = (x, a, b) => (x <= 0 || x >= 1) ? 0 : Math.exp((a - 1) * Math.log(x) + (b - 1) * Math.log(1 - x) - lbeta(a, b));
+  const binomPmf = (k, n, p) => Math.exp(lchoose(n, k) + k * Math.log(p) + (n - k) * Math.log(1 - p));
+  const bbPmf = (k, n, a, b) => Math.exp(lchoose(n, k) + lbeta(k + a, n - k + b) - lbeta(a, b));
+  const fmt = (n, d) => (Math.round(n * Math.pow(10, d)) / Math.pow(10, d)).toFixed(d);
+  const rateLabel = v => (v % 1 === 0 ? String(v) : v.toFixed(2).replace(/0$/, ''));
+
+  /* ---------- buttons ---------- */
+  const BTN = { start: ['Start', '시작'], pause: ['Pause', '일시정지'], resume: ['Resume', '계속'], again: ['Again', '다시']};
+  const setBtn = (el, k) => { el.innerHTML = '<span data-l="en" lang="en">' + BTN[k][0] + '</span><span data-l="ko" lang="ko">' + BTN[k][1] + '</span>'; };
+
+  /* ---------- canvas helpers ---------- */
+  function prep(canvas, W, H) {
+    const d = window.devicePixelRatio || 1;
+    canvas.width = Math.round(W * d); canvas.height = Math.round(H * d);
+    const c = canvas.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); c.clearRect(0, 0, W, H);
+    c.lineCap = 'round'; c.lineJoin = 'round';
+    return { c, W, H };
+  }
+  function setupFixed(canvas, ratio, maxH) {
+    const W = canvas.clientWidth, H = Math.round(Math.min(W * ratio, maxH));
+    canvas.style.height = H + 'px';
+    return prep(canvas, W, H);
+  }
+  function setupFill(canvas) { const b = canvas.parentElement; return prep(canvas, b.clientWidth, b.clientHeight); }
+  function niceStep(r) { const raw = r / 4, p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; }
+  const fmtTick = v => Math.abs(v - Math.round(v)) < 1e-9 ? String(Math.round(v)) : fmt(v, 1);
+  function arrows(c, pl, pt, gw, gh, ink) {
+    c.strokeStyle = ink; c.lineWidth = 1.5;
+    c.beginPath(); c.moveTo(pl - 4, pt + gh); c.lineTo(pl + gw, pt + gh); c.stroke();
+    c.beginPath(); c.moveTo(pl + gw - 7, pt + gh - 4.5); c.lineTo(pl + gw, pt + gh); c.lineTo(pl + gw - 7, pt + gh + 4.5); c.stroke();
+    c.beginPath(); c.moveTo(pl, pt + gh + 4); c.lineTo(pl, pt - 10); c.stroke();
+    c.beginPath(); c.moveTo(pl - 4.5, pt - 3); c.lineTo(pl, pt - 10); c.lineTo(pl + 4.5, pt - 3); c.stroke();
+  }
+  function frame(c, W, H, xMax, yMax, xLabel, yLabel, discrete) {
+    const K = col(), pl = 14, pr = 12, pt = 24, pb = 32, gw = W - pl - pr, gh = H - pt - pb;
+    const X = x => pl + gw * x / xMax, Y = y => pt + gh - gh * y / yMax;
+    arrows(c, pl, pt, gw, gh, K.ink);
+    c.fillStyle = K.soft; c.font = '12px ' + ROMAN; c.textAlign = 'center';
+    const step = discrete ? Math.max(1, Math.round(niceStep(xMax))) : niceStep(xMax);
+    for (let v = 0; v <= xMax + 1e-9; v += step) c.fillText(fmtTick(v), X(discrete ? v + 0.5 : v), pt + gh + 15);
+    c.fillStyle = K.ink; c.font = '15px ' + MATH;
+    c.textAlign = 'right'; c.fillText(xLabel, pl + gw, pt + gh + 29);
+    c.textAlign = 'left'; c.fillText(yLabel, pl + 9, pt - 4);
+    return { X, Y, pl, pt, gw, gh };
+  }
+  function curve(c, f, xs, ys, color, dashed, fill) {
+    if (fill) {
+      c.beginPath(); c.moveTo(f.X(xs[0]), f.Y(0));
+      xs.forEach((x, i) => c.lineTo(f.X(x), f.Y(ys[i])));
+      c.lineTo(f.X(xs[xs.length - 1]), f.Y(0)); c.closePath(); c.fillStyle = fill; c.fill();
+    }
+    c.beginPath(); xs.forEach((x, i) => i ? c.lineTo(f.X(x), f.Y(ys[i])) : c.moveTo(f.X(x), f.Y(ys[i])));
+    c.strokeStyle = color; c.lineWidth = dashed ? 1.6 : 2.2; c.setLineDash(dashed ? [5, 4] : []); c.stroke(); c.setLineDash([]);
+  }
+  function bars(c, f, ps, kMax) {
+    const K = col(), bw = Math.max(1, Math.min(14, f.gw / (kMax + 1) * 0.62));
+    for (let k = 0; k <= kMax; k++) {
+      const x = f.X(k + 0.5), y = f.Y(ps[k]);
+      c.fillStyle = K.penSoft; c.fillRect(x - bw / 2, y, bw, f.pt + f.gh - y);
+      if (bw > 2) { c.strokeStyle = K.pen; c.lineWidth = 1.2; c.strokeRect(x - bw / 2, y, bw, f.pt + f.gh - y); }
+      else { c.fillStyle = K.pen; c.fillRect(x - bw / 2, y, bw, f.pt + f.gh - y); }
+    }
+  }
+  function dotsLine(c, f, ps, color) {
+    c.strokeStyle = color; c.fillStyle = color; c.lineWidth = 1.5; c.setLineDash([5, 4]);
+    c.beginPath(); ps.forEach((p, k) => k ? c.lineTo(f.X(k + 0.5), f.Y(p)) : c.moveTo(f.X(k + 0.5), f.Y(p))); c.stroke(); c.setLineDash([]);
+    if (ps.length <= 60) ps.forEach((p, k) => { c.beginPath(); c.arc(f.X(k + 0.5), f.Y(p), 2, 0, Math.PI * 2); c.fill(); });
+  }
+  function trueLine(c, f, x, yTop, label) {
+    const red = col().red, xr = f.X(x);
+    c.strokeStyle = red; c.lineWidth = 1.6; c.setLineDash([5, 4]);
+    c.beginPath(); c.moveTo(xr, f.pt + f.gh); c.lineTo(xr, yTop); c.stroke(); c.setLineDash([]);
+    c.fillStyle = red; c.font = '14px ' + MATH; const right = xr > f.pl + f.gw * 0.6; c.textAlign = right ? 'right' : 'left';
+    c.fillText(label, xr + (right ? -6 : 6), yTop + 4);
+  }
+
+  /* ======================= BINOMIAL ======================= */
+  const NMAX = 60, FLIP = 0.2;
+  const B = { p: +$('pp').value, flips: [], running: false, last: null, acc: 0, m: 50 };
+  function bCounts() { const s = B.flips.reduce((a, v) => a + v, 0); return { n: B.flips.length, s, f: B.flips.length - s }; }
+  function bReset() { B.running = false; B.flips = []; B.last = null; B.acc = 0; setBtn($('bplay'), 'start'); bRender(); }
+  function bStats() {
+    const k = bCounts();
+    $('bN').textContent = k.n; $('bS').textContent = k.s; $('bF').textContent = k.f;
+    $('bR').textContent = k.n ? fmt(k.s / k.n, 2) : '–';
+  }
+  function drawSignal() {
+    const { c, W, H } = setupFill($('bv')), K = col();
+    const pl = 30, pr = 12, pt = 26, pb = 34, gw = W - pl - pr, gh = H - pt - pb;
+    const X = i => pl + gw * i / NMAX, hi = pt + gh * 0.14, lo = pt + gh * 0.82;
+    arrows(c, pl, pt, gw, gh, K.ink);
+    c.fillStyle = K.ink; c.font = '15px ' + ROMAN; c.textAlign = 'right';
+    c.fillText('1', pl - 8, hi + 5); c.fillText('0', pl - 8, lo + 5);
+    c.fillStyle = K.soft; c.font = '12px ' + ROMAN; c.textAlign = 'center';
+    for (let i = 0; i <= NMAX; i += 10) c.fillText(i, X(i), pt + gh + 15);
+    c.fillStyle = K.ink; c.font = '15px ' + MATH; c.textAlign = 'right'; c.fillText('n', pl + gw, pt + gh + 29);
+    c.strokeStyle = K.line; c.lineWidth = 1; c.setLineDash([2, 4]);
+    c.beginPath(); c.moveTo(pl, hi); c.lineTo(pl + gw, hi); c.moveTo(pl, lo); c.lineTo(pl + gw, lo); c.stroke(); c.setLineDash([]);
+    B.flips.forEach((v, i) => { if (v) { c.fillStyle = K.penSoft; c.fillRect(X(i), hi, X(i + 1) - X(i), lo - hi); } });
+    if (B.flips.length) {
+      c.strokeStyle = K.pen; c.lineWidth = 2.2; c.beginPath();
+      B.flips.forEach((v, i) => { const y = v ? hi : lo; if (i === 0) c.moveTo(X(0), y); else c.lineTo(X(i), y); c.lineTo(X(i + 1), y); });
+      c.stroke();
+      const last = B.flips.length, y = B.flips[last - 1] ? hi : lo;
+      c.fillStyle = K.pen; c.beginPath(); c.arc(X(last), y, 3.6, 0, Math.PI * 2); c.fill();
+    }
+  }
+  function drawBEst() {
+    const { c, W, H } = setupFixed($('bE'), 0.6, 230), K = col(), k = bCounts(), a = k.s + 1, b = k.f + 1;
+    const n = 120, xs = [], ys = []; let mx = 0;
+    for (let i = 0; i <= n; i++) { const x = i / n; xs.push(x); const y = (a === 1 && b === 1) ? 1 : betaPdf(Math.min(Math.max(x, 1e-6), 1 - 1e-6), a, b); ys.push(y); mx = Math.max(mx, y); }
+    const f = frame(c, W, H, 1, mx * 1.2, 'p', 'f(p)', false);
+    curve(c, f, xs, ys, K.pen, false, K.penSoft);
+    trueLine(c, f, B.p, f.Y(mx * 1.1), 'p⋆ = ' + fmt(B.p, 2));
+  }
+  function drawBPred() {
+    const { c, W, H } = setupFixed($('bC'), 0.6, 230), K = col(), k = bCounts(), a = k.s + 1, b = k.f + 1, m = B.m;
+    const pT = [], pP = []; let mx = 0;
+    for (let j = 0; j <= m; j++) { const u = binomPmf(j, m, B.p), v = bbPmf(j, m, a, b); pT.push(u); pP.push(v); mx = Math.max(mx, u, v); }
+    const f = frame(c, W, H, m + 1, mx * 1.15, 'j', 'P(S = j)', true);
+    bars(c, f, pP, m); dotsLine(c, f, pT, K.soft);
+  }
+  function bRender() { drawSignal(); drawBEst(); drawBPred(); bStats(); }
+  function bTick(ts) {
+    if (!B.running) return;
+    if (B.last === null) B.last = ts;
+    B.acc += Math.min((ts - B.last) / 1000, 0.1); B.last = ts;
+    let changed = false;
+    while (B.acc >= FLIP && B.flips.length < NMAX) { B.acc -= FLIP; B.flips.push(Math.random() < B.p ? 1 : 0); changed = true; }
+    if (B.flips.length >= NMAX) { B.running = false; setBtn($('bplay'), 'again'); changed = true; }
+    if (changed) bRender();
+    if (B.running) requestAnimationFrame(bTick);
+  }
+  $('bplay').addEventListener('click', () => {
+    if (B.flips.length >= NMAX) bReset();
+    B.running = !B.running; setBtn($('bplay'), B.running ? 'pause' : 'resume');
+    if (B.running) { B.last = null; requestAnimationFrame(bTick); }
+  });
+  $('breset').addEventListener('click', bReset);
+  $('pp').addEventListener('input', () => { B.p = +$('pp').value; $('ppO').textContent = fmt(B.p, 2); bRender(); });
+  $('bSeg').addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    B.m = +btn.dataset.m;
+    $('bSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === btn)));
+    drawBPred();
+  });
+
+  /* ======================= POISSON ======================= */
+  const TMAX = 20, S = 5;
+  const P = { lam: +$('lam').value, t: 0, steps: [], nextAt: 0, running: false, last: null, rates: [], flash: 0, view: 'count' };
+  function schedule(from) { P.nextAt = from + (-Math.log(1 - Math.random())) / P.lam; }
+  function post() { return P.t >= 0.5 ? { a: P.steps.length + 1, b: P.t } : null; }
+  function expectedAt(x) {
+    let y = 0;
+    for (let i = 0; i < P.rates.length; i++) {
+      const a = P.rates[i].t, b = i + 1 < P.rates.length ? P.rates[i + 1].t : Infinity;
+      if (x <= a) break; y += P.rates[i].lam * (Math.min(x, b) - a);
+    }
+    return y;
+  }
+  function pReset() {
+    P.running = false; P.t = 0; P.steps = []; P.last = null; P.flash = 0; P.rates = [{t: 0, lam: P.lam}];
+    schedule(0); setBtn($('play'), 'start'); pRender();
+  }
+  function pStats() {
+    const n = P.steps.length;
+    $('sT').textContent = fmt(P.t, 1); $('sN').textContent = n;
+    $('sP').textContent = P.t > 0.3 ? fmt(n / P.t, 2) : '–';
+    $('sG').textContent = n >= 2 ? fmt(P.steps[n - 1] - P.steps[n - 2], 2) : n === 1 ? fmt(P.steps[0], 2) : '–';
+  }
+  function drawStairs() {
+    const { c, W, H } = setupFill($('cv')), K = col();
+    const pl = 34, pr = 12, pt = 30, pb = 34, gw = W - pl - pr, gh = H - pt - pb;
+    const maxLam = Math.max.apply(null, P.rates.map(r => r.lam));
+    const YM = Math.max(Math.ceil(maxLam * TMAX * 1.15) + 3, P.steps.length + 4, 8);
+    const X = x => pl + gw * x / TMAX, Y = k => pt + gh - gh * k / YM;
+    c.fillStyle = K.soft; c.font = '12px ' + ROMAN; c.textAlign = 'right';
+    const ys = YM > 40 ? 10 : YM > 20 ? 5 : 2;
+    for (let k = ys; k <= YM; k += ys) c.fillText(k, pl - 7, Y(k) + 4);
+    c.textAlign = 'center'; for (let x = 0; x <= TMAX; x += 5) c.fillText(x, X(x), pt + gh + 15);
+    arrows(c, pl, pt, gw, gh, K.ink);
+    c.fillStyle = K.ink; c.font = '15px ' + MATH; c.textAlign = 'left'; c.fillText('N(t)', pl + 9, pt - 4);
+    c.textAlign = 'right'; c.fillText('t', pl + gw, pt + gh + 29);
+    // expected count under the true rate
+    c.setLineDash([5, 5]); c.strokeStyle = K.red; c.lineWidth = 1.4; c.globalAlpha = 0.75;
+    c.beginPath(); c.moveTo(X(0), Y(0));
+    P.rates.map(r => r.t).concat([Math.max(P.t, 0.0001)]).forEach(px => { if (px <= TMAX) c.lineTo(X(px), Y(expectedAt(px))); });
+    c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+    c.fillStyle = K.pen; P.steps.forEach(s => { c.beginPath(); c.arc(X(s), pt + gh, 2.3, 0, Math.PI * 2); c.fill(); });
+    c.strokeStyle = K.ink; c.lineWidth = 2.2; c.beginPath(); c.moveTo(X(0), Y(0));
+    let n = 0; for (const s of P.steps) { c.lineTo(X(s), Y(n)); n++; c.lineTo(X(s), Y(n)); }
+    c.lineTo(X(P.t), Y(n)); c.stroke();
+    if (P.steps.length) {
+      const s = P.steps[P.steps.length - 1], prev = P.steps.length > 1 ? P.steps[P.steps.length - 2] : 0, yb = Y(P.steps.length - 1) + 13;
+      if (X(s) - X(prev) > 14) {
+        c.strokeStyle = K.pen; c.lineWidth = 1.3;
+        c.beginPath(); c.moveTo(X(prev) + 2, yb); c.lineTo(X(s) - 2, yb); c.stroke();
+        c.beginPath(); c.moveTo(X(prev) + 2, yb - 4); c.lineTo(X(prev) + 2, yb + 4); c.moveTo(X(s) - 2, yb - 4); c.lineTo(X(s) - 2, yb + 4); c.stroke();
+        c.fillStyle = K.pen; c.font = '13px ' + MATH; c.textAlign = 'center'; c.fillText('w', (X(prev) + X(s)) / 2, yb + 15);
+      }
+    }
+    drawPerson(c, X(P.t), Y(P.steps.length), K.ink, Math.min(gh / YM * 2.2, 42));
+  }
+  function drawPerson(c, x, y, ink, size) {
+    const s = Math.max(size, 28), lift = P.flash, walk = P.running ? Math.sin(performance.now() / 140) : 0;
+    c.strokeStyle = ink; c.lineWidth = 2;
+    const hip = {x: x - s * 0.08, y: y - s * 0.42}, neck = {x: x - s * 0.02, y: y - s * 0.78};
+    c.beginPath(); c.arc(neck.x + s * 0.02, neck.y - s * 0.14, s * 0.13, 0, Math.PI * 2); c.stroke();
+    c.beginPath(); c.moveTo(neck.x, neck.y); c.lineTo(hip.x, hip.y); c.stroke();
+    c.beginPath();
+    c.moveTo(hip.x, hip.y); c.lineTo(hip.x + s * 0.16, hip.y + s * 0.2 - lift * s * 0.25); c.lineTo(hip.x + s * 0.18 + walk * s * 0.04, y - lift * s * 0.15);
+    c.moveTo(hip.x, hip.y); c.lineTo(hip.x - s * 0.1, hip.y + s * 0.22); c.lineTo(hip.x - s * 0.16 - walk * s * 0.04, y);
+    c.stroke();
+    c.beginPath();
+    c.moveTo(neck.x, neck.y + s * 0.08); c.lineTo(neck.x + s * 0.2, neck.y + s * 0.02 - walk * s * 0.05); c.lineTo(neck.x + s * 0.26, neck.y - s * 0.14);
+    c.moveTo(neck.x, neck.y + s * 0.08); c.lineTo(neck.x - s * 0.16, neck.y + s * 0.24 + walk * s * 0.05);
+    c.stroke();
+  }
+  function drawPSpeed() {
+    const { c, W, H } = setupFixed($('pS'), 0.6, 230), K = col(), q = post();
+    if (!q) { const f = frame(c, W, H, 4, 1, 'λ', 'f(λ)', false); trueLine(c, f, P.lam, f.Y(0.9), 'λ⋆ = ' + rateLabel(P.lam)); return; }
+    const mean = q.a / q.b, sd = Math.sqrt(q.a) / q.b, xMax = Math.min(Math.max(mean + 4 * sd, P.lam * 1.4, 1.5), 30);
+    const n = 100, xs = [], ys = []; let mx = 0;
+    for (let i = 0; i <= n; i++) { const x = xMax * i / n; xs.push(x); const y = gammaPdf(x, q.a, q.b); ys.push(y); mx = Math.max(mx, y); }
+    const f = frame(c, W, H, xMax, mx * 1.2, 'λ', 'f(λ)', false);
+    curve(c, f, xs, ys, K.pen, false, K.penSoft);
+    trueLine(c, f, P.lam, f.Y(mx * 1.1), 'λ⋆ = ' + rateLabel(P.lam));
+  }
+  function drawPCount(canvas) {
+    const { c, W, H } = setupFixed(canvas, 0.6, 230), K = col(), q = post(), mT = P.lam * S;
+    let kMax = Math.ceil(mT + 4 * Math.sqrt(mT) + 2);
+    if (q) { const m = q.a / q.b * S, v = m + m * m / q.a; kMax = Math.max(kMax, Math.ceil(m + 3.5 * Math.sqrt(v) + 2)); }
+    kMax = Math.min(Math.max(kMax, 6), 60);
+    const pT = [], pP = []; let mx = 0;
+    for (let k = 0; k <= kMax; k++) { pT.push(poisPmf(k, mT)); mx = Math.max(mx, pT[k]); if (q) { pP.push(nbPmf(k, q.a, q.b, S)); mx = Math.max(mx, pP[k]); } }
+    const f = frame(c, W, H, kMax + 1, mx * 1.2, 'k', 'P(N = k)', true);
+    if (q) bars(c, f, pP, kMax);
+    dotsLine(c, f, pT, K.soft);
+  }
+  function drawPWait(canvas) {
+    const { c, W, H } = setupFixed(canvas, 0.6, 230), K = col(), q = post();
+    let xMax = 8 / P.lam; if (q) xMax = Math.max(xMax, 8 * q.b / q.a); xMax = Math.min(xMax, 40);
+    const n = 100, xs = [], t1 = [], t3 = [], p1 = [], p3 = []; let mx = 0;
+    for (let i = 0; i <= n; i++) {
+      const x = xMax * i / n; xs.push(x);
+      const a = i ? gammaPdf(x, 1, P.lam) : P.lam, b = gammaPdf(x, 3, P.lam); t1.push(a); t3.push(b); mx = Math.max(mx, a, b);
+      if (q) { const u = compPdf(x, 1, q.a, q.b), v = compPdf(x, 3, q.a, q.b); p1.push(u); p3.push(v); mx = Math.max(mx, u, v); }
+    }
+    const f = frame(c, W, H, xMax, mx * 1.15, 'w', 'f(w)', false);
+    curve(c, f, xs, t1, K.soft, true, null); curve(c, f, xs, t3, K.soft, true, null);
+    if (q) { curve(c, f, xs, p1, K.pen, false, null); curve(c, f, xs, p3, K.teal, false, null); }
+    c.font = '14px ' + MATH; c.textAlign = 'left';
+    const arr1 = q ? p1 : t1; c.fillStyle = q ? K.pen : K.soft; c.fillText('k = 1', f.X(0) + 10, f.Y(arr1[0]) + 6);
+    const arr3 = q ? p3 : t3; let im = 0; arr3.forEach((v, i) => { if (v > arr3[im]) im = i; });
+    c.fillStyle = q ? K.teal : K.soft; c.fillText('k = 3', Math.min(f.X(xs[im]) + 14, f.pl + f.gw - 40), f.Y(arr3[im]) - 6);
+  }
+  function drawPPred() { if (P.view === 'count') drawPCount($('pP')); else drawPWait($('pP')); }
+  function pRender() { drawStairs(); drawPSpeed(); drawPPred(); pStats(); }
+  function pTick(ts) {
+    if (!P.running) return;
+    if (P.last === null) P.last = ts;
+    const dt = Math.min((ts - P.last) / 1000, 0.1); P.last = ts; P.t += dt;
+    while (P.nextAt <= P.t && P.nextAt <= TMAX) { P.steps.push(P.nextAt); schedule(P.nextAt); P.flash = 1; }
+    P.flash = Math.max(0, P.flash - dt * 5);
+    if (P.t >= TMAX) { P.t = TMAX; P.running = false; setBtn($('play'), 'again'); }
+    pRender(); if (P.running) requestAnimationFrame(pTick);
+  }
+  $('play').addEventListener('click', () => {
+    if (P.t >= TMAX) pReset();
+    P.running = !P.running; setBtn($('play'), P.running ? 'pause' : 'resume');
+    if (P.running) { P.last = null; requestAnimationFrame(pTick); }
+  });
+  $('reset').addEventListener('click', pReset);
+  $('lam').addEventListener('input', () => {
+    P.lam = +$('lam').value; $('lamO').textContent = rateLabel(P.lam) + ' /s';
+    if (P.t > 0 && P.t < TMAX) {
+      const r = P.rates[P.rates.length - 1];
+      if (Math.abs(r.t - P.t) < 1e-6) r.lam = P.lam; else P.rates.push({t: P.t, lam: P.lam});
+      schedule(P.t);
+    } else if (P.t === 0) { P.rates = [{t: 0, lam: P.lam}]; schedule(0); }
+    pRender();
+  });
+  $('pSeg').addEventListener('click', e => {
+    const btn = e.target.closest('button'); if (!btn) return;
+    P.view = btn.dataset.v;
+    $('pSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === btn)));
+    document.querySelectorAll('#poisson p.op-f[data-v]').forEach(p => { p.hidden = p.dataset.v !== P.view; });
+    drawPPred();
+  });
+
+  /* ---------- redraw on resize and once fonts are in ---------- */
+  function renderAll() { bRender(); pRender(); }
+  let raf = 0;
+  const again = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(renderAll); };
+  if (window.ResizeObserver) { const ro = new ResizeObserver(again); document.querySelectorAll('.op-fill, .op-box').forEach(e => ro.observe(e)); }
+  else window.addEventListener('resize', again);
+  if (document.fonts) Promise.all([document.fonts.load('15px "CM Math"'), document.fonts.load('15px "CM Roman"')]).then(again, again);
+  pReset(); bReset();
+})();
+</script>
