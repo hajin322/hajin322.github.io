@@ -66,6 +66,7 @@ canvas.op-c { display: block; width: 100%; }
 .op-ders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; align-items: start; }
 .op-ders-col { display: grid; gap: 12px; }
 .op-der { margin-top: 0; }
+.op-skew { margin-top: 12px; }
 .op-der .op-d .op-l2 { display: block; }
 @media (max-width: 720px) { .op-der .op-d .op-l2m { display: block; } }
 .op-der h3 { font-size: 1.02rem; font-weight: 700; margin: 0 0 0.45rem; }
@@ -264,6 +265,11 @@ canvas.op-c { display: block; width: 100%; }
     <p class="op-t" data-l="ko" lang="ko">따라서 <span class="op-x"><i>f</i>(<i>w</i>) = <i>λ</i><sup><i>k</i></sup><i>w</i><sup><i>k</i>−1</sup><i>e</i><sup>−<i>λw</i></sup> / (<i>k</i> − 1)!</span>이고, <span class="op-x"><i>k</i> = 1</span>이면 <span class="op-x"><i>λe</i><sup>−<i>λw</i></sup></span>이다.</p>
   </div>
   </div>
+  </div>
+  <div class="op-box op-der op-skew">
+    <h3>Skew</h3>
+    <p class="op-t" data-l="en" lang="en">Counts and speeds cannot go below 0 but have no upper limit, and a Poisson count with mean <i>λt</i> also has variance <i>λt</i>. So the wall at 0 presses the left side and leaves a long right tail (right-skewed); as <i>N</i> and <i>λt</i> grow, the curves move away from the wall and approach a symmetric Gaussian. The success rate has walls at both 0 and 1: symmetric near 0.5, right-skewed near 0, left-skewed near 1.</p>
+    <p class="op-t" data-l="ko" lang="ko">칸 수와 속도는 0보다 작을 수 없고 위로는 끝이 없으며, 포아송은 평균이 <i>λt</i>면 분산도 <i>λt</i>다. 그래서 0이라는 벽이 왼쪽을 누르고 오른쪽 꼬리만 길게 남는다(right-skewed). <i>N</i>과 <i>λt</i>가 커져 벽에서 멀어질수록 좌우대칭인 가우시안에 가까워진다. 성공률은 0과 1 양쪽에 벽이 있어, 0.5 근처면 대칭, 0 근처면 오른쪽, 1 근처면 왼쪽으로 치우친다.</p>
   </div>
 </section>
 
