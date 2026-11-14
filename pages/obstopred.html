@@ -63,6 +63,15 @@ canvas.op-c { display: block; width: 100%; }
 .op-seg button.m i { font-family: var(--cm-math); font-style: normal; }
 .op-seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
 
+.op-der { margin-top: 12px; }
+.op-der h3 { font-size: 1.02rem; font-weight: 700; margin: 0 0 0.45rem; }
+.op-der p.op-t { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin: 0.35rem 0; }
+.op-der p.op-t[data-l="ko"] { line-height: 1.8; }
+.op-der p.op-t i, .op-der p.op-t .op-x { font-family: var(--cm-math); font-style: normal; font-size: 1.05em; color: var(--text); }
+.op-der p.op-t .op-x { font-family: var(--cm); white-space: nowrap; }
+.op-der p.op-t .op-x i { font-family: var(--cm-math); font-size: 1em; }
+.op-der .op-d { text-align: center; font-size: 1.08rem; margin: 0.55rem 0; overflow-x: auto; white-space: nowrap; padding-bottom: 2px; }
+.op-der .op-d .op-u { color: var(--text-muted); }
 .op-bridge { margin: 2.6rem 0 0; padding: 0.9rem 1rem; border: 1px dashed var(--border-strong); border-radius: var(--radius); text-align: center; }
 .op-bridge .op-f { margin: 0; font-size: 1.15rem; white-space: normal; }
 .op-bridge .op-ar { color: var(--accent); margin: 0 0.4em; }
@@ -151,6 +160,15 @@ canvas.op-c { display: block; width: 100%; }
     </div>
   </div>
 
+  <div class="op-box op-der">
+    <h3>Success rate</h3>
+    <p class="op-t" data-l="en" lang="en">A run with <i>s</i> successes and <i>n</i> − <i>s</i> fails has probability</p>
+    <p class="op-t" data-l="ko" lang="ko">성공 <i>s</i>번, 실패 <i>n</i> − <i>s</i>번이 나올 확률은</p>
+    <p class="op-f op-d"><i>p</i> · <i>p</i> ⋯ <i>p</i> · (1 − <i>p</i>) ⋯ (1 − <i>p</i>) = <i>p</i><sup><i>s</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>s</i></sup>,</p>
+    <p class="op-t" data-l="en" lang="en">and read as a function of <i>p</i>, this is the shape of the estimate.</p>
+    <p class="op-t" data-l="ko" lang="ko">이고, 이를 <i>p</i>의 함수로 보면 그대로 추정의 모양이 된다.</p>
+  </div>
+
   <div class="op-bridge">
     <p class="op-f"><span class="nw">Binomial(<i>n</i>, <i>p</i>)<span class="op-ar">⟶</span>Poisson(<i>λ</i>)</span> &nbsp; <span class="nw">as &nbsp;<i>n</i> → ∞, &nbsp;<i>np</i> = <i>λ</i></span></p>
     <p class="op-bt" data-l="en" lang="en">Let the number of trials <i>n</i> grow without bound while the success rate <i>p</i> shrinks, so that their product stays fixed. The binomial then becomes the Poisson, and the speed <i>λ</i> is that product <i>np</i>. In this limit single 1/0 trials can no longer be observed, so the observation becomes a count over time. (With <i>p</i> held fixed instead, the binomial tends to a Gaussian.)</p>
@@ -204,6 +222,15 @@ canvas.op-c { display: block; width: 100%; }
         <canvas class="op-c" id="pP" role="img" aria-label="Predicted count in the next 5 seconds, or waiting time"></canvas>
       </div>
     </div>
+  </div>
+  <div class="op-box op-der">
+    <h3>Speed</h3>
+    <p class="op-t" data-l="en" lang="en">Cut the <i>t</i> seconds into <i>n</i> slices of width <span class="op-x">Δ = <i>t</i> / <i>n</i></span>. A slice climbs at most one step, so its mean number of steps, <span class="op-x"><i>p</i> = <i>λ</i>Δ = <i>λt</i> / <i>n</i></span>, is also the probability that it climbs. <i>N</i> steps in <i>n</i> slices then have probability</p>
+    <p class="op-t" data-l="ko" lang="ko"><i>t</i>초를 폭 <span class="op-x">Δ = <i>t</i> / <i>n</i></span>인 조각 <i>n</i>개로 쪼갠다. 조각 하나는 최대 한 칸만 오르므로, 조각의 평균 칸 수 <span class="op-x"><i>p</i> = <i>λ</i>Δ = <i>λt</i> / <i>n</i></span>가 곧 한 칸 오를 확률이다. <i>n</i>개 조각에서 <i>N</i>칸 오를 확률은</p>
+    <p class="op-f op-d"><i>p</i><sup><i>N</i></sup>(1 − <i>p</i>)<sup><i>n</i>−<i>N</i></sup> = Δ<sup><i>N</i></sup> · <i>λ</i><sup><i>N</i></sup> · (1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>N</i></sup>.</p>
+    <p class="op-t" data-l="en" lang="en">As <i>n</i> → ∞, Δ<sup><i>N</i></sup> does not depend on <i>λ</i> and cancels when the estimate is normalized, while <span class="op-x">(1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>N</i></sup> → <i>e</i><sup>−<i>λt</i></sup></span>. So</p>
+    <p class="op-t" data-l="ko" lang="ko"><i>n</i> → ∞이면 Δ<sup><i>N</i></sup>은 <i>λ</i>와 무관해 추정을 정규화할 때 약분되고, <span class="op-x">(1 − <i>λt</i> / <i>n</i>)<sup><i>n</i>−<i>N</i></sup> → <i>e</i><sup>−<i>λt</i></sup></span>이다. 따라서</p>
+    <p class="op-f op-d"><i>f</i>(<i>λ</i>) ∝ <i>λ</i><sup><i>N</i></sup> <i>e</i><sup>−<i>λt</i></sup>.</p>
   </div>
 </section>
 
