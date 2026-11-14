@@ -15,7 +15,10 @@ permalink: /pages/obstopred/
   --op-red: #dc2626;
 }
 .op-hero { padding: 2.5rem 0 0.5rem; }
-.op-hero h1 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.08; margin-bottom: 1rem; }
+.op-hero h1 { font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.08; margin-bottom: 0.9rem; }
+.op-sub { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; line-height: 1.5; color: var(--text); border-left: 3px solid var(--accent); padding: 0.1rem 0 0.1rem 1rem; margin: 0 0 0.9rem; }
+.op-lede { font-size: 0.97rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 1.25rem; }
+.op-lede[data-l="ko"] { line-height: 1.85; }
 
 .op-f { font-family: var(--cm); font-size: 1.02rem; color: var(--text); margin: 0 0 0.35rem; }
 .op-f .nw, p.op-f.nw { white-space: nowrap; } .op-f .nw { display: inline-block; }
@@ -63,6 +66,9 @@ canvas.op-c { display: block; width: 100%; }
 .op-bridge { margin: 2.6rem 0 0; padding: 0.9rem 1rem; border: 1px dashed var(--border-strong); border-radius: var(--radius); text-align: center; }
 .op-bridge .op-f { margin: 0; font-size: 1.15rem; white-space: normal; }
 .op-bridge .op-ar { color: var(--accent); margin: 0 0.4em; }
+.op-bridge .op-bt { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; margin: 0.6rem auto 0; max-width: 40rem; text-align: left; }
+.op-bridge .op-bt[data-l="ko"] { line-height: 1.8; }
+.op-bridge .op-bt i { font-family: var(--cm-math); font-style: normal; font-size: 1.05em; }
 .op-back { display: inline-block; margin-top: 2.5rem; font-size: 0.85rem; color: var(--text-secondary); }
 .op-back:hover { color: var(--accent); }
 
@@ -86,6 +92,10 @@ canvas.op-c { display: block; width: 100%; }
   </div>
 
   <h1>Observation to Prediction through Estimation</h1>
+  <p class="op-sub" data-l="en" lang="en">From the past as observation to the future as prediction, through estimation.</p>
+  <p class="op-sub" data-l="ko" lang="ko">관측으로서의 과거에서, 추정을 거쳐, 예측으로서의 미래로.</p>
+  <p class="op-lede" data-l="en" lang="en">From past observations, what should we estimate, and what future does that estimate predict? Each section puts the three in one frame. A 1/0 signal and a person climbing a staircase serve as examples, so the graphs can be read intuitively.</p>
+  <p class="op-lede" data-l="ko" lang="ko">과거의 관측으로 무엇을 추정해야 하고, 그 추정으로 어떤 미래를 예측하는가. 각 절은 이 셋을 한 프레임에 담는다. 1/0 신호와 계단을 오르는 사람을 예로 들어 그래프를 직관적으로 읽을 수 있게 했다.</p>
   <div class="op-legend">
     <span><i class="k"></i><span class="op-f">∫ <i>P</i>(· | <i>θ</i>) <i>f</i>(<i>θ</i>) <i>dθ</i></span></span>
     <span><i class="k d"></i><span class="op-f"><i>P</i>(· | <i>θ</i><sup>⋆</sup>)</span></span>
@@ -143,6 +153,8 @@ canvas.op-c { display: block; width: 100%; }
 
   <div class="op-bridge">
     <p class="op-f"><span class="nw">Binomial(<i>n</i>, <i>p</i>)<span class="op-ar">⟶</span>Poisson(<i>λ</i>)</span> &nbsp; <span class="nw">as &nbsp;<i>n</i> → ∞, &nbsp;<i>np</i> = <i>λ</i></span></p>
+    <p class="op-bt" data-l="en" lang="en">Let the number of trials <i>n</i> grow without bound while the success rate <i>p</i> shrinks, so that their product stays fixed. The binomial then becomes the Poisson, and the speed <i>λ</i> is that product <i>np</i>. In this limit single 1/0 trials can no longer be observed, so the observation becomes a count over time. (With <i>p</i> held fixed instead, the binomial tends to a Gaussian.)</p>
+    <p class="op-bt" data-l="ko" lang="ko">시행 횟수 <i>n</i>을 무한히 늘리면서 성공률 <i>p</i>를 줄여 둘의 곱을 일정하게 두면, 이항분포는 포아송 분포가 되고 속도 <i>λ</i>는 그 곱 <i>np</i>이다. 이 극한에서는 1/0 시행 하나하나를 관측할 수 없으므로, 관측은 시간당 개수로 바뀐다. (<i>p</i>를 고정한 채 <i>n</i>만 늘리면 이항분포는 가우시안에 가까워진다.)</p>
   </div>
 </section>
 
