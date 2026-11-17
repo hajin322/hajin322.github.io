@@ -17,6 +17,19 @@ permalink: /pages/mlxidm-principle/
 .mx-lede { font-size: 0.97rem; color: var(--text-secondary); line-height: 1.75; margin: 0 0 1.5rem; }
 .mx-lede[data-l="ko"] { line-height: 1.85; }
 
+/* curriculum: how to study bandit learning theory */
+.mx-cur-title { font-size: 1.15rem; font-weight: 700; margin: 0.4rem 0 0.15rem; }
+.mx-cur-sub { font-size: 0.88rem; color: var(--text-muted); margin: 0 0 0.7rem; }
+.mx-cur { margin: 0 0 1.75rem; border-top: 1px solid var(--border); }
+.mx-cur > div { display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 0.2rem 1.25rem; padding: 0.6rem 0 0.6rem 0.25rem; border-bottom: 1px solid var(--border); }
+.mx-cur > div.step dt { padding-left: 1rem; }
+.mx-cur dt { font-family: var(--font-display); font-weight: 700; font-size: 0.97rem; color: var(--text); }
+.mx-cur dt a { color: inherit; } .mx-cur dt a:hover { color: var(--accent); }
+.mx-cur dt .num { font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; margin-right: 0.55rem; }
+.mx-cur dd { margin: 0; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; }
+.mx-cur dd[data-l="ko"] { line-height: 1.75; }
+@media (max-width: 560px) { .mx-cur > div { grid-template-columns: 1fr; } }
+
 /* math: single letters italic, words roman, as in LaTeX */
 .mx-m { font-family: "CM Roman", serif; font-size: 1.08em; }
 .mx-m i { font-family: "CM Math", "CM Roman", serif; font-style: normal; }
@@ -229,6 +242,18 @@ permalink: /pages/mlxidm-principle/
   <h1>MLxIDM Principle</h1>
   <p class="mx-lede" data-l="en" lang="en">An algorithm is studied inside an environment, through a loop of sampling, estimation and decision. The algorithm and its environment meet through a minimax measure: the environment sets a lower bound, and the algorithm achieves an upper bound. To reduce uncertainty and learn a good decision, the algorithm observes and represents the given data, and optimizes through a designed geometry.</p>
   <p class="mx-lede" data-l="ko" lang="ko">알고리즘은 샘플링, 추정, 결정의 고리를 따라 환경 안에서 연구된다. 알고리즘과 환경은 minimax 척도를 통해 만난다. 환경은 하한을 정하고, 알고리즘은 상한을 달성한다. 알고리즘은 불확실성을 줄이고 좋은 결정을 배우기 위해, 주어진 데이터를 관측하고 표현하며, 설계된 기하 구조를 통해 최적화한다.</p>
+
+  <h3 class="mx-cur-title">Bandit Learning Theory</h3>
+  <p class="mx-cur-sub"><span data-l="en" lang="en">How to study and research bandit algorithms</span><span data-l="ko" lang="ko">밴딧 알고리즘을 어떻게 공부하고 연구할까</span></p>
+  <dl class="mx-cur">
+    <div><dt><span data-l="en" lang="en">Source</span><span data-l="ko" lang="ko">출발점</span></dt><dd data-l="en" lang="en">Landmark papers built on probability theory, statistics and operations research (sequential optimization, optimal allocation, experimental design, decision-making under uncertainty), with a little computer science and machine learning.</dd><dd data-l="ko" lang="ko">확률론, 통계학, 운영과학(순차 최적화, 최적 배분, 실험 설계, 불확실성 아래 의사결정)에 기반하고 컴퓨터과학과 기계학습이 조금 더해진 주요 논문들.</dd></div>
+    <div><dt><span data-l="en" lang="en">Approach</span><span data-l="ko" lang="ko">방법</span></dt><dd data-l="en" lang="en">Read each paper through the view of statistical learning theory, in three steps.</dd><dd data-l="ko" lang="ko">각 논문을 통계적 학습 이론의 관점으로, 세 단계로 읽는다.</dd></div>
+    <div class="step"><dt><a href="#nodePF"><span class="num">01</span>Problem formulation</a></dt><dd data-l="en" lang="en">Definitions and assumptions, across MAB, contextual bandits, RL, and online and imitation learning.</dd><dd data-l="ko" lang="ko">정의와 가정. MAB, contextual bandit, RL, 온라인·모방 학습에 걸쳐 본다.</dd></div>
+    <div class="step"><dt><a href="#nodePrinciple"><span class="num">02</span>Principle</a></dt><dd data-l="en" lang="en">Sampling, estimation and decision, built from probability and statistical modeling, estimation and confidence bounds, optimization and linear algebra, and regret decomposition.</dd><dd data-l="ko" lang="ko">샘플링, 추정, 결정. 확률·통계 모델링, 추정과 신뢰 경계(confidence bounds), 최적화와 선형대수, regret 분해로 이루어진다.</dd></div>
+    <div class="step"><dt><a href="#nodeLens"><span class="num">03</span>Lens</a></dt><dd data-l="en" lang="en">Geometry, representation, optimization and observation.</dd><dd data-l="ko" lang="ko">기하, 표현, 최적화, 관측.</dd></div>
+    <div><dt><span data-l="en" lang="en">Further study</span><span data-l="ko" lang="ko">더 공부할 것</span></dt><dd data-l="en" lang="en">Learning objectives and reward modeling.</dd><dd data-l="ko" lang="ko">학습 목표와 보상 모델링.</dd></div>
+    <div><dt><span data-l="en" lang="en">Goal</span><span data-l="ko" lang="ko">목표</span></dt><dd data-l="en" lang="en">Apply the papers to CS modality domains, e.g. LLM routing and robotic grasping.</dd><dd data-l="ko" lang="ko">논문을 CS 모달리티 도메인에 적용한다. 예: LLM routing, 로봇 grasping.</dd></div>
+  </dl>
 </section>
 
 <section class="section" id="map">
@@ -283,7 +308,7 @@ permalink: /pages/mlxidm-principle/
       <div class="mx-sliders" id="gSliders"></div>
     </div>
 
-    <div class="mx-cycle-node">
+    <div class="mx-cycle-node" id="nodePrinciple">
       <div class="mx-node-head">
         <h3>Principle</h3>
       </div>
@@ -313,7 +338,7 @@ permalink: /pages/mlxidm-principle/
     </div>
   </div>
 
-  <aside class="mx-lens" aria-label="Lens">
+  <aside class="mx-lens" id="nodeLens" aria-label="Lens">
     <div class="mx-node-head"><h3>Lens</h3></div>
     <div class="mx-lens-item" data-lens="g"><h5>Geometry</h5><p><span data-l="en" lang="en">Confidence ellipsoids, decision regions and cones, gaps</span><span data-l="ko" lang="ko">신뢰 타원, 결정 영역과 cone, 격차</span></p></div>
     <div class="mx-lens-item" data-lens="r"><h5>Representation</h5><p><span data-l="en" lang="en">Features and dimension, sparsity, misspecification</span><span data-l="ko" lang="ko">특징과 차원, 희소성, 모형 오설정</span></p></div>
