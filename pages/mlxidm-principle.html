@@ -89,6 +89,18 @@ permalink: /pages/mlxidm-principle/
 .mx-pick { display: grid; grid-template-columns: minmax(0, 1fr); margin-bottom: 14px; }
 .mx-pick-arrow { display: flex; align-items: center; justify-content: center; height: 1.9rem; color: var(--text-muted); font-size: 1.1rem; }
 
+/* problem formulation */
+.mx-pf { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.mx-pf-col { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.55rem 0.7rem 0.6rem; min-width: 0; }
+.mx-pf-col h5 { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; margin: 0 0 0.3rem; color: var(--text); }
+.mx-pf-col h5.sub { margin-top: 0.55rem; font-size: 0.82rem; color: var(--text-secondary); }
+.mx-pf-col ul { list-style: none; margin: 0; padding: 0; }
+.mx-pf-col li { font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary); padding: 0.18rem 0 0.18rem 0.7rem; position: relative; overflow-wrap: anywhere; }
+.mx-pf-col li::before { content: ""; position: absolute; left: 0; top: 0.68em; width: 4px; height: 4px; border-radius: 50%; background: var(--border-strong); }
+.mx-pf-col li.alg::before { background: var(--accent); }
+.mx-pf-key { font-size: 0.76rem; color: var(--text-muted); margin: 0.55rem 0 0; display: flex; align-items: center; gap: 6px; }
+.mx-pf-key i { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
+
 /* bound gauge + backbone cycle */
 .mx-analysis { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: 0; margin-bottom: 14px; align-items: stretch; }
 .mx-gauge-node { padding-right: 1.15rem; min-width: 0; }
@@ -122,7 +134,7 @@ permalink: /pages/mlxidm-principle/
 .mx-slab { text-align: right; }
 .mx-gfine { font-size: 0.74rem; color: var(--text-muted); margin: 0.6rem 0 0; }
 
-/* backbone: vertical, Exploration → Estimation → Decision, return arrow in the left gutter */
+/* backbone: vertical, Sampling → Estimation → Decision, return arrow in the left gutter */
 .mx-cycle { position: relative; padding: 0.3rem 0 0.2rem 1.7rem; }
 .mx-cycle-wires { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
 .mx-cstep { position: relative; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.65rem 0.8rem; background: var(--surface-2); min-width: 0; }
@@ -188,6 +200,7 @@ permalink: /pages/mlxidm-principle/
 
 @media (max-width: 760px) {
   .mx-analysis { grid-template-columns: 1fr; }
+  .mx-pf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mx-gauge-node { padding: 0 0 1.1rem; }
   .mx-cycle-node { padding: 1rem 0 0; border-left: 0; border-top: 1px dashed var(--border-strong); }
   .mx-lens { grid-template-columns: 1fr; }
@@ -214,8 +227,8 @@ permalink: /pages/mlxidm-principle/
   </div>
 
   <h1>MLxIDM Principle</h1>
-  <p class="mx-lede" data-l="en" lang="en">An algorithm is studied inside an environment, through a loop of exploration, estimation and decision. The algorithm and its environment meet through a minimax measure: the environment sets a lower bound, and the algorithm achieves an upper bound. To reduce uncertainty and learn a good decision, the algorithm observes and represents the given data, and optimizes through a designed geometry.</p>
-  <p class="mx-lede" data-l="ko" lang="ko">알고리즘은 탐색, 추정, 결정의 고리를 따라 환경 안에서 연구된다. 알고리즘과 환경은 minimax 척도를 통해 만난다. 환경은 하한을 정하고, 알고리즘은 상한을 달성한다. 알고리즘은 불확실성을 줄이고 좋은 결정을 배우기 위해, 주어진 데이터를 관측하고 표현하며, 설계된 기하 구조를 통해 최적화한다.</p>
+  <p class="mx-lede" data-l="en" lang="en">An algorithm is studied inside an environment, through a loop of sampling, estimation and decision. The algorithm and its environment meet through a minimax measure: the environment sets a lower bound, and the algorithm achieves an upper bound. To reduce uncertainty and learn a good decision, the algorithm observes and represents the given data, and optimizes through a designed geometry.</p>
+  <p class="mx-lede" data-l="ko" lang="ko">알고리즘은 샘플링, 추정, 결정의 고리를 따라 환경 안에서 연구된다. 알고리즘과 환경은 minimax 척도를 통해 만난다. 환경은 하한을 정하고, 알고리즘은 상한을 달성한다. 알고리즘은 불확실성을 줄이고 좋은 결정을 배우기 위해, 주어진 데이터를 관측하고 표현하며, 설계된 기하 구조를 통해 최적화한다.</p>
 </section>
 
 <section class="section" id="map">
@@ -243,6 +256,20 @@ permalink: /pages/mlxidm-principle/
       <div class="mx-chips" id="algChips" role="group" aria-label="Algorithm"></div>
       <p class="mx-note" id="algNote"></p>
     </div>
+    <div class="mx-pick-arrow" aria-hidden="true">↓</div>
+    <div class="mx-node" id="nodePF">
+      <div class="mx-node-head">
+        <h3>Problem formulation</h3>
+      </div>
+      <div class="mx-pf">
+        <div class="mx-pf-col"><h5>Definition</h5><ul id="pfDef"></ul></div>
+        <div class="mx-pf-col"><h5>Assumption</h5><ul id="pfAsm"></ul></div>
+        <div class="mx-pf-col"><h5>Lemma</h5><ul id="pfLem"></ul></div>
+        <div class="mx-pf-col"><h5>Theorem</h5><ul id="pfThm"></ul><div id="pfCorWrap"><h5 class="sub">Corollary</h5><ul id="pfCor"></ul></div></div>
+      </div>
+      <p class="mx-pf-key"><i style="background: var(--border-strong)"></i><span data-l="en" lang="en">environment</span><span data-l="ko" lang="ko">환경</span>
+        &nbsp;<i style="background: var(--accent)"></i><span data-l="en" lang="en">algorithm</span><span data-l="ko" lang="ko">알고리즘</span></p>
+    </div>
   </div>
 
   <div class="mx-node mx-analysis">
@@ -267,7 +294,7 @@ permalink: /pages/mlxidm-principle/
           </defs>
           <path id="wDecExp" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#mkBlue)"/>
         </svg>
-        <div class="mx-cstep" id="cExp"><h4>Exploration</h4><p id="bbExp"></p></div>
+        <div class="mx-cstep" id="cExp"><h4>Sampling</h4><p id="bbExp"></p></div>
         <div class="mx-blink">
           <span class="mx-barrow"></span>
           <span class="mx-sq" aria-hidden="true"><i></i><i class="m">?</i><i></i><i></i></span>
@@ -704,14 +731,14 @@ function renderGauge() {
     (grp.ln ? '<br><span class="g-ln">' + bi(grp.ln) + '</span>' : '');
 }
 
-/* ---------- backbone as a cycle: Exploration → Estimation → Decision → … ---------- */
+/* ---------- backbone as a cycle: Sampling → Estimation → Decision → … ---------- */
 function drawCycle() {
   const box = document.getElementById('cycle').getBoundingClientRect();
   const r = id => { const q = document.getElementById(id).getBoundingClientRect(); return {l: q.left - box.left, r: q.right - box.left, t: q.top - box.top, b: q.bottom - box.top, cx: (q.left + q.right) / 2 - box.left, cy: (q.top + q.bottom) / 2 - box.top}; };
   const e = r('cExp'), a = r('bReturnArrow'), W = document.getElementById('cycleWires');
   W.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
   W.setAttribute('width', box.width); W.setAttribute('height', box.height);
-  /* Decision → down → into the left gutter → up → back into Exploration */
+  /* Decision → down → into the left gutter → up → back into Sampling */
   const x = a.cx, yb = a.b - 6, g = 7, k = 9, ye = Math.min(e.cy, e.t + 22);
   document.getElementById('wDecExp').setAttribute('d',
     'M' + x + ' ' + a.t + ' L' + x + ' ' + (yb - k) + ' Q' + x + ' ' + yb + ' ' + (x - k) + ' ' + yb +
@@ -720,6 +747,61 @@ function drawCycle() {
 }
 window.addEventListener('resize', drawCycle);
 document.querySelectorAll('.lang-toggle button').forEach(b => b.addEventListener('click', () => setTimeout(drawCycle, 0)));
+
+
+/* ---------- problem formulation: keywords only (papers differ in how they split these) ---------- */
+const PF_ENV = {
+  'Statistical Learning': {def: ['hypothesis class $\\cal{H}$', 'loss $ℓ$, risk $R(h) = \\bb{E}[ℓ(h(x), y)]$', 'empirical risk $R_n(h)$', 'excess risk'],
+    asm: ['i.i.d. sample from a fixed $\\cal{D}$', 'bounded loss']},
+  'Imitation Learning': {def: ['expert policy $π_E$', 'cost $J(π)$ over horizon $H$', 'state distribution $d_π$', 'imitation gap $J(π) − J(π_E)$'],
+    asm: ['per-step error $ε$ on the training distribution', 'bounded per-step cost']},
+  'Online Learning': {def: ['loss sequence $ℓ_1, …, ℓ_T$', 'regret against the best fixed comparator', 'full information'],
+    asm: ['arbitrary (adversarial) losses']},
+  'Multi-armed Bandit': {def: ['$K$ arms with means $μ_a$', 'gap $Δ_a = μ^∗ − μ_a$', 'pseudo-regret $R_T$', 'pure exploration: $δ$-correct, stopping time $τ$'],
+    asm: ['stochastic: independent rewards, 1-sub-Gaussian noise', 'adversarial: oblivious, losses in $[0, 1]$']},
+  'Linear Bandit': {def: ['action set $\\cal{A} ⊂ \\bb{R}^d$', 'unknown $θ_⋆$', 'design matrix $V_t = λI + Σ x_s x_s^⊤$', 'confidence ellipsoid'],
+    asm: ['$‖θ_⋆‖ ≤ S$, $‖x‖ ≤ L$', 'conditionally sub-Gaussian (martingale) noise']},
+  'Contextual Bandit': {def: ['context $x_t$', 'policy class $Π$ or function class $\\cal{F}$', 'regret against the best policy'],
+    asm: ['finite $Π$ with $N$ policies (agnostic)', 'or realizability $f_⋆ ∈ \\cal{F}$']},
+  'Partial Monitoring': {def: ['loss matrix $L$, feedback matrix $H$', 'cells and neighbouring actions', 'global / local observability'],
+    asm: ['finite game', 'outcomes adversarial or stochastic']},
+  'Reinforcement Learning': {def: ['MDP $(\\cal{S}, \\cal{A}, H, P, r)$', 'value $V^π$, Bellman equation', 'episodic regret'],
+    asm: ['tabular: finite $S$, $A$', 'episodic, rewards in $[0, 1]$']}
+};
+const PF_ALG = {
+  'ERM':  {asm: ['finite VC dimension $d$'], lem: ['Hoeffding', 'symmetrization', 'Sauer–Shelah'], thm: ['uniform convergence: excess risk $O(√(d / n))$'], cor: ['agnostic PAC learnability']},
+  'SGD':  {asm: ['convex, $G$-Lipschitz loss', 'domain of radius $B$'], lem: ['one-step progress inequality', 'online-to-batch conversion'], thm: ['averaged iterate: excess risk $O(GB / √n)$']},
+  'Behavior cloning': {asm: ['demonstrations only, no expert queries'], lem: ['performance difference lemma', 'compounding errors (distribution shift)'], thm: ['imitation gap $O(H^2 ε)$']},
+  'DAgger': {asm: ['interactive expert queries', 'recoverability $u$'], lem: ['performance difference lemma', 'reduction to no-regret online learning'], thm: ['imitation gap $O(uHε)$']},
+  'Hedge': {asm: ['losses in $[0, 1]$', '$K$ experts'], lem: ['log-sum-exp potential', "Hoeffding's lemma"], thm: ['regret $O(√(T log K))$']},
+  'OGD / FTRL': {asm: ['convex, $G$-Lipschitz losses', 'domain of diameter $D$'], lem: ['one-step inequality', 'be-the-leader lemma', 'strongly convex regularizer'], thm: ['regret $O(GD√T)$']},
+  'ETC / ε-greedy': {lem: ['regret decomposition $R_T = Σ_a Δ_a \\bb{E}[N_a(T)]$', 'Hoeffding'], thm: ['regret $O(K^{1/3} T^{2/3})$ without gap knowledge']},
+  'UCB': {lem: ['regret decomposition', 'concentration with a union bound over rounds'], thm: ['regret $O(Σ_a log T / Δ_a)$', 'gap-free $O(√(KT log T))$']},
+  'Thompson sampling': {lem: ['regret decomposition', 'posterior concentration and anti-concentration'], thm: ['regret $O(√(KT log T))$', 'asymptotically optimal for Bernoulli rewards']},
+  'EXP3': {lem: ['importance-weighted unbiased estimator', 'exponential-weights potential'], thm: ['regret $O(√(KT log K))$']},
+  'Track-and-Stop': {asm: ['unique optimal arm'], lem: ['change of measure (transportation)', 'GLR / Chernoff stopping threshold'], thm: ['$δ$-correct', 'asymptotically optimal: $\\bb{E}[τ] / log(1/δ) → T^∗(μ)$']},
+  'LinUCB / OFUL': {lem: ['self-normalized bound for vector martingales', 'elliptical potential lemma'], thm: ['regret $O(d√T log T)$']},
+  'Phased elimination': {asm: ['finite action set, $|\\cal{A}| = K$'], lem: ['Kiefer–Wolfowitz (G-optimal design)', 'fixed-design concentration'], thm: ['regret $O(√(dT log(KT)))$']},
+  'Linear TS': {lem: ['self-normalized bound', 'anti-concentration: optimism with constant probability'], thm: ['regret $O(d^{3/2} √T)$ up to logs']},
+  'XY-allocation': {asm: ['finite action set'], lem: ['XY-optimal design', 'change of measure'], thm: ['sample complexity $O(ρ^∗ log(1/δ))$ up to logs']},
+  'EXP4': {asm: ['adversarial contexts and rewards'], lem: ['importance weighting', 'exponential weights over experts'], thm: ['regret $O(√(KT log N))$']},
+  'SquareCB': {asm: ['online square-loss regression oracle'], lem: ['inverse gap weighting per-round inequality', 'oracle regret $Reg_{Sq}(T)$'], thm: ['regret $O(√(KT · Reg_{Sq}(T)))$'], cor: ['finite $\\cal{F}$: $O(√(KT log |\\cal{F}|))$']},
+  'Exp3-type (global)': {asm: ['globally observable game'], lem: ['loss estimation through the feedback', 'forced exploration rate'], thm: ['regret $O(T^{2/3})$'], cor: ['classification: $0$, $Θ(√T)$, $Θ(T^{2/3})$, $Θ(T)$']},
+  'IDS': {asm: ['locally observable game'], lem: ['information ratio bound'], thm: ['regret $O(√T)$ through the information ratio']},
+  'UCBVI': {lem: ['Bernstein concentration', 'optimism: $V_t ≥ V^∗$', 'Bellman error decomposition'], thm: ['regret $O(√(HSAT))$ up to logs (Bernstein bonuses)']},
+  'PSRL': {lem: ['posterior sampling lemma: $\\bb{E}[f(M_⋆)] = \\bb{E}[f(M_k)]$', 'concentration of transitions'], thm: ['Bayesian regret $O(HS√(AT))$ up to logs']},
+  'E2D': {asm: ['realizable model class $\\cal{M}$', 'online estimation oracle'], lem: ['DEC lower bound', 'Hellinger estimation error'], thm: ['regret $≲ T · DEC + Est$']}
+};
+function renderPF(F, A) {
+  const E = PF_ENV[F.name] || {}, G = PF_ALG[A.name] || {};
+  const li = (xs, cls) => (xs || []).map(x => '<li' + (cls ? ' class="' + cls + '"' : '') + '>' + rich(x) + '</li>').join('');
+  document.getElementById('pfDef').innerHTML = li(E.def);
+  document.getElementById('pfAsm').innerHTML = li(E.asm) + li(G.asm, 'alg');
+  document.getElementById('pfLem').innerHTML = li(G.lem, 'alg');
+  document.getElementById('pfThm').innerHTML = li(G.thm, 'alg');
+  document.getElementById('pfCor').innerHTML = li(G.cor, 'alg');
+  document.getElementById('pfCorWrap').hidden = !(G.cor && G.cor.length);
+}
 
 /* ---------- state + render ---------- */
 let fw = FW.findIndex(f => f.name === 'Linear Bandit'), alg = 0, lastGroup = null;
@@ -733,6 +815,7 @@ function render() {
   fwChips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.k === fw)));
   document.getElementById('fwNote').innerHTML = bi(F.note);
   algChips.innerHTML = F.algs.map((a, k) => '<button type="button" class="mx-chip" data-k="' + k + '" aria-pressed="' + (k === alg) + '">' + esc(a.name) + '</button>').join('');
+  renderPF(F, A);
   document.getElementById('algNote').innerHTML = '<span class="mx-tag">' + esc(A.fam) + '</span>';
   document.getElementById('bbExp').innerHTML = bi(A.exp);
   document.getElementById('bbEst').innerHTML = bi(A.est);
